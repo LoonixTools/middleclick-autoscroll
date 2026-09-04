@@ -1,21 +1,27 @@
 # middleclick-autoscroll
 
-Middle-click autoscroll for Linux. Hold the middle mouse button, move the
-mouse, the page scrolls — like on Windows. Works with browsers, Electron apps,
-Flatpaks, snaps, Steam, and anything else that runs on Chromium under the hood.
+Middle-click autoscroll is a CLI for Linux that enables autoscroll in every application that supports it.
+Works with browsers, Electron apps like Discord and Spotify, Steam, and anything else that runs on Chromium under the hood.
 
-No app list to maintain. The program looks at what's actually installed, figures
-out what's Chromium-based, and handles it.
+There is no app list. My tool just looks at what uses chromium under the hood and applies the necessary steps to get it working.
 
-## Installing
+## How to install
 
-**Arch, CachyOS, EndeavourOS, Manjaro**
+**Arch**
 
 ```bash
-paru -S middleclick-autoscroll
+yay -S middleclick-autoscroll
 ```
 
-**Debian, Ubuntu, Linux Mint, Pop!_OS**
+**Fedora**
+
+```bash
+sudo curl -fsSL -o /etc/yum.repos.d/middleclick-autoscroll.repo \
+  https://felitendo.github.io/middleclick-autoscroll/middleclick-autoscroll.repo
+sudo dnf install middleclick-autoscroll
+```
+
+**Debian**
 
 ```bash
 sudo install -d -m 0755 /etc/apt/keyrings
@@ -24,14 +30,6 @@ curl -fsSL https://felitendo.github.io/middleclick-autoscroll/KEY.gpg \
 echo "deb [signed-by=/etc/apt/keyrings/middleclick-autoscroll.gpg] https://felitendo.github.io/middleclick-autoscroll/deb ./" \
   | sudo tee /etc/apt/sources.list.d/middleclick-autoscroll.list
 sudo apt update && sudo apt install middleclick-autoscroll
-```
-
-**Fedora, RHEL, CentOS Stream**
-
-```bash
-sudo curl -fsSL -o /etc/yum.repos.d/middleclick-autoscroll.repo \
-  https://felitendo.github.io/middleclick-autoscroll/middleclick-autoscroll.repo
-sudo dnf install middleclick-autoscroll
 ```
 
 **openSUSE**
@@ -43,30 +41,24 @@ sudo zypper addrepo --gpgcheck --refresh \
 sudo zypper install middleclick-autoscroll
 ```
 
-Then run `middleclick-autoscroll enable`. That's it — nothing else to configure.
+## How to use
 
-Updates come through your package manager like anything else. Without a package,
-build [from source](#building-from-source) or grab a `.deb`/`.rpm` from the
-[releases page](https://github.com/Felitendo/middleclick-autoscroll/releases).
+Just run `middleclick-autoscroll`. This will open the configuration TUI that looks like this:
 
-Run `middleclick-autoscroll disable` before removing the package — it undoes
-everything.
+//
 
 ## How it works
 
 Blink (the engine in Chromium, Electron, and CEF) already has autoscroll, but
-it's off on Linux because middle click does primary-selection paste there. One
+it's off on Linux because middle click does primary-selection paste there. This
 flag turns it on:
 
-```
 --enable-blink-features=MiddleClickAutoscroll
-```
 
-Doing that for one app is a five-minute job. Doing it for *all* of them — across
-flag files, desktop entries, Flatpaks, snaps, autostart entries, Steam — so it
-survives upgrades, is not. That's what this does.
+But doing that for every app is kinda bothersome and it also might break with updates.
+That's why I created this small tool to automate that.
 
-New apps are picked up within a second by a systemd path unit that watches the
+New apps are picked up by a systemd path unit that watches the
 relevant directories. Without systemd, `middleclick-autoscroll apply` does the
 same thing manually.
 
@@ -75,15 +67,12 @@ same thing manually.
 Steam's web UI supports autoscroll but has no way to pass extra arguments to its
 helper, so the program patches the script that starts it. Steam checks its own
 files at every start and repairs whatever looks changed, so the patch is written
-to look unchanged: the bytes the argument costs come back out of the script's
-comments and the timestamp is restored, leaving a file exactly as long and as old
-as Steam left it. It survives however you start Steam — the menu, a desktop
-shortcut, a game launcher, a terminal.
+to look unchanged.
 
 As a fallback, for the case where that isn't possible, `-noverifyfiles` goes on
 everything that starts Steam: its launcher, its autostart entry, and the
 shortcuts it writes for single games. That one means Steam won't auto-repair
-damaged files on its own — you can turn it off separately in the settings.
+damaged files on its own just so you're aware of that.
 
 ## Commands
 
@@ -96,8 +85,6 @@ damaged files on its own — you can turn it off separately in the settings.
 | `… apply --rebuild` | Redo from scratch |
 | `… status` | What's covered |
 | `… list` | All apps and how they're handled |
-
-See `man middleclick-autoscroll` for more.
 
 ## Building from source
 
