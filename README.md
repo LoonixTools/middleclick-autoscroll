@@ -18,6 +18,7 @@ Just run `middleclick-autoscroll`. This will open the configuration TUI that loo
   Not identified                 1 - see the applications list
   Steam                          ON
   New applications               ON
+  Middle-click paste             off
   Last applied                   2 minutes ago
 
   Applications pick this up the next time they are started.
