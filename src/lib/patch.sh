@@ -4,19 +4,19 @@
 #
 # There are two ways in, and the order matters:
 #
-#   1. A flag file. Where the distribution wraps Electron and Chromium in a
+#   1. A flag file. Some distributions wrap Electron and Chromium in a
 #      launcher script that reads extra arguments from
-#      $XDG_CONFIG_HOME/<name>-flags.conf - Arch and its derivatives do, and it
-#      is the convention their packages follow - this is the good one: it is
-#      the supported way to pass arguments, it survives package upgrades
+#      $XDG_CONFIG_HOME/<name>-flags.conf. Arch and its derivatives do, and
+#      their packages follow that convention. Where it exists, this is the good
+#      way in: it is the supported way to pass arguments, it survives package upgrades
 #      untouched, and it applies however the program is started, including from
 #      a terminal.
 #
 #      Nothing is assumed about which distribution this is. The launcher itself
 #      is read, and the route is taken only for a launcher that really does
-#      name such a file. Elsewhere - Debian, Ubuntu, Fedora, openSUSE, where
-#      the equivalent file lives under /etc and is the system's to write -
-#      there is no flag file to use and route 2 answers for everything.
+#      name such a file. On Debian, Ubuntu, Fedora and openSUSE the
+#      equivalent file lives under /etc and is the system's to write. There is
+#      no flag file to use there, and route 2 answers for everything.
 #
 #   2. A desktop entry. For applications that ship their own binary with no
 #      wrapper, and for everything a Flatpak or a snap contains, there is
@@ -176,8 +176,8 @@ mca_flags_apply() {
 	done
 	[[ -n $existing_target ]] && return 0
 
-	# None exists yet. The last candidate is the wrapper's own fallback - the
-	# generic electron-flags.conf rather than electron43-flags.conf - so
+	# None exists yet. The last candidate is the wrapper's own fallback (the
+	# generic electron-flags.conf rather than electron43-flags.conf). So
 	# creating that one also covers every other application using the same
 	# shared Electron.
 	target="${candidates[-1]}"
@@ -319,7 +319,7 @@ MCA_MARK_SHADOW='X-MCA-Generated'
 MCA_MARK_INPLACE='X-MCA-Patched'
 
 # _mca_desktop_transform <file> <marker> [flags] [position]
-# The whole file with every Exec line rewritten - the main one and the one in
+# The whole file with every Exec line rewritten: the main one and the one in
 # each Desktop Action, because those are the right-click menu entries and a
 # user who starts Steam from "Library" expects the same behaviour there.
 _mca_desktop_transform() {
@@ -360,8 +360,8 @@ mca_desktop_apply() {
 	local target="$MCA_APPDIR/$id.desktop" content backup
 
 	if [[ "$src" == "$target" ]]; then
-		# The user's own entry - an AppImage, a web app shortcut, something
-		# installed by hand. There is nowhere to shadow it from, so it is
+		# The user's own entry, like an AppImage, a web app shortcut or
+		# something installed by hand. There is nowhere to shadow it from, so it is
 		# edited directly and the original is kept.
 		grep -q "^$MCA_MARK_INPLACE=" "$src" 2>/dev/null && return 0
 
@@ -383,7 +383,7 @@ mca_desktop_apply() {
 	mkdir -p "$MCA_APPDIR" 2>/dev/null || return 1
 
 	# Something is already shadowing this entry. Unless it is a shadow of ours,
-	# it is the user's own file - possibly one we edited in place earlier - and
+	# it is the user's own file (possibly one we edited in place earlier), and
 	# overwriting it here would lose it.
 	if [[ -e $target ]] && ! grep -q "^$MCA_MARK_SHADOW=" "$target" 2>/dev/null; then
 		return 1
@@ -407,8 +407,8 @@ mca_desktop_apply() {
 #   entry in the menu completely, which is why Discord launched at login used
 #   to behave differently from Discord launched from the menu.
 #
-#   The desktop folder, where a shortcut somebody dragged out of the menu -
-#   or asked Steam for - lives and nowhere else.
+#   The desktop folder, where a shortcut somebody dragged out of the menu
+#   (or asked Steam for) lives and nowhere else.
 #
 # Neither can be shadowed from anywhere, so both are edited where they stand,
 # with the original kept.
@@ -568,7 +568,7 @@ mca_spotify_apply() {
 # Uninstalling something deletes its entry from /usr/share/applications, but the
 # copy shadowing it is in the user's home and pacman knows nothing about it. It
 # would sit in the menu forever, offering to start a program that is no longer
-# installed - and the watcher would not notice, because a plain apply only ever
+# installed. And the watcher would not notice, because a plain apply only ever
 # looks at what is there now. A file that was edited where it stood and has
 # since been deleted is the same problem from the other side: its record would
 # have `disable` put the file back.

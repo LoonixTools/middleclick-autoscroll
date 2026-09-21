@@ -4,7 +4,7 @@
 #
 # The detection is deliberately conservative. A wrong "yes" appends an unknown
 # argument to something that is not Chromium, and plenty of programs treat an
-# unrecognised argument as a file name to open - so every rule here is a
+# unrecognised argument as a file name to open. So every rule here is a
 # positive one, and anything that cannot be identified is reported as unknown
 # rather than guessed at.
 
@@ -13,7 +13,7 @@
 # swiftshader libraries) and plain CEF (libcef).
 #
 # Deliberately not in here: libEGL.so and libffmpeg.so. Chromium ships both, but
-# so does the system - /usr/lib/libEGL.so exists on any machine with Mesa - and
+# so does the system (/usr/lib/libEGL.so exists on any machine with Mesa), and
 # a marker that can be somebody else's file is not a marker.
 MCA_MARKERS=(
 	chrome_crashpad_handler chrome-sandbox chrome_100_percent.pak
@@ -22,14 +22,14 @@ MCA_MARKERS=(
 )
 
 # The markers that still mean something when the whole of a tree is searched
-# rather than just the directory the binary sits in - inside a Flatpak, a snap
-# or an AppImage, where there is no "next to the binary" to look at.
+# rather than just the directory the binary sits in. That is the case inside a
+# Flatpak, a snap or an AppImage, where there is no "next to the binary".
 #
 # Three of the names above are missing here on purpose. icudtl.dat is ICU's
 # data file and not Chromium's: a Flutter application ships one in data/, and
 # a whole-tree search would find it. snapshot_blob.bin and resources.pak are
 # the same kind of shared name. Next to a binary they are still evidence,
-# because nothing but Chromium unpacks its payload there - a few directories
+# because nothing but Chromium unpacks its payload there. A few directories
 # deeper they are not.
 MCA_MARKERS_STRICT=(
 	chrome_crashpad_handler chrome-sandbox chrome_100_percent.pak
@@ -81,7 +81,7 @@ MCA_SCRIPT_HINTS='ELECTRON_|app\.asar|chrome-sandbox|libcef|enable-blink-feature
 # ---------------------------------------------------------------------------
 
 # Where Flatpak and snapd put the launchers they export. Both add these to
-# XDG_DATA_DIRS themselves, through a file in /etc/profile.d - but only for a
+# XDG_DATA_DIRS themselves, through a file in /etc/profile.d. But only for a
 # session that was started after they were installed, and only for a session
 # manager that reads it at all. They are appended, after everything XDG names,
 # so a directory that is already in the search path keeps its own position and
@@ -93,7 +93,7 @@ mca_extra_desktop_dirs() {
 		/var/lib/snapd/desktop/applications
 }
 
-# The directories a desktop entry can come from, most specific first - which is
+# The directories a desktop entry can come from, most specific first. This is
 # also XDG lookup order, so the first file found for an id is the one that is
 # actually used.
 mca_desktop_dirs() {
@@ -155,7 +155,7 @@ _mca_desktop_read() {
 # mca_exec_program <exec line>
 # The program a desktop entry actually starts: the first token that is not an
 # environment prefix, resolved to an absolute path. The result is left in
-# MCA_PROG rather than printed - the scan calls this for every desktop entry on
+# MCA_PROG rather than printed. The scan calls this for every desktop entry on
 # the system, and a command substitution each time is a fork each time.
 #
 # Fails for entries this tool has no safe way to rewrite: anything routed
@@ -231,7 +231,7 @@ mca_exec_flatpak_id() {
 # Whether an entry starts something inside Steam rather than starting Steam
 # itself: it carries a steam:// address of its own. Steam writes one of those
 # for every game somebody asks for a shortcut to, and the client's own entry
-# never has one - it takes an address from the outside, through %U.
+# never has one. It takes an address from the outside, through %U.
 mca_exec_is_steam_link() {
 	local line="$1" prog="$2"
 
@@ -251,7 +251,7 @@ _mca_prog_is_steam_name() {
 # _mca_prog_is_steam_wrapper <program>
 # Whether a script in front of the client is a way of starting Steam. People
 # put one there to add a switch of their own, and an entry pointing at it is a
-# Steam start like any other - but the script is not named after Steam, so
+# Steam start like any other. But the script is not named after Steam, so
 # nothing above recognises it.
 #
 # Getting this wrong is worse than it sounds: such a script tends to mention
@@ -282,8 +282,8 @@ _mca_prog_is_steam_wrapper() {
 # mca_prog_is_steam <program>
 # Whether running this program starts the Steam client. Every packaging is in
 # here and every name Valve and the distributions give the launcher, because
-# the answer decides whether an entry gets Steam's own switch - and an entry
-# that starts Steam without it undoes the web helper patch on the way up.
+# the answer decides whether an entry gets Steam's own switch. An entry that
+# starts Steam without it undoes the web helper patch on the way up.
 #
 # The program is what a scan leaves behind: an absolute path for a native
 # install, flatpak:<id> or snap:<name> for the other two.
@@ -328,7 +328,7 @@ _mca_stat_batch() {
 # The first line of the cache file, and the reason it is there: the verdicts
 # below it are keyed on size and mtime, so an entry for a file that has not
 # changed is never looked at again. A cache written when a verdict meant
-# something else - before an AppImage could come out as anything but "no" -
+# something else (before an AppImage could come out as anything but "no")
 # would therefore keep answering the old way forever. Bumping this is how such
 # a cache gets dropped instead.
 MCA_CACHE_FORMAT='# middleclick-autoscroll detect 2'
@@ -380,7 +380,7 @@ _mca_has_markers() {
 		[[ $dir == "$s" ]] && return 1
 	done
 	for s in "${MCA_SYSTEM_DIR_GLOBS[@]}"; do
-		# Unquoted on purpose - these are patterns, not names.
+		# Unquoted on purpose: these are patterns, not names.
 		# shellcheck disable=SC2053
 		[[ $dir == $s ]] && return 1
 	done
@@ -396,7 +396,7 @@ _mca_has_markers() {
 # The same question for a whole tree, which is the shape a Flatpak, a snap and
 # an unpacked AppImage come in: everything the application ships is somewhere
 # under one root and there is no single directory that is "next to the binary".
-# Hence the narrower list - see MCA_MARKERS_STRICT.
+# Hence the narrower list, see MCA_MARKERS_STRICT.
 _mca_find_markers() {
 	local root="$1" depth="$2" m
 	local -a names=()
@@ -423,9 +423,9 @@ declare -A MCA_SCRIPT_VARS=()
 # The text with $NAME and ${NAME} replaced by what the script assigned to them,
 # left in MCA_SUBST.
 #
-# Fails as soon as something turns up that only a running shell could work out
-# - a positional parameter, a name the script never set, a default value. That
-# is the point: an unresolvable path has to come out as no path at all, never
+# Fails as soon as something turns up that only a running shell could work out,
+# like a positional parameter, a name the script never set or a default value.
+# That is the point: an unresolvable path has to come out as no path at all, never
 # as a wrong one.
 MCA_SUBST=''
 
@@ -465,8 +465,8 @@ _mca_script_subst() {
 # openSUSE all set the directory and the program name into variables at the top
 # of the script and end on `exec -a "$APPNAME" "$LIBDIR/$APPNAME"`. Without
 # resolving those there is nothing to follow, and the answer would have to come
-# from the hint scan - a weaker kind of evidence than finding the binary and
-# its markers.
+# from the hint scan, which is weaker evidence than finding the binary and its
+# markers.
 _mca_script_target() {
 	local script="$1" line tok name val skip=0
 	local -a tokens
@@ -537,10 +537,10 @@ _mca_script_target() {
 
 # mca_flags_candidates <program>
 # The flag files a launcher reads, in the order it reads them, taken from the
-# launcher itself rather than assumed from the distribution. Where the wrappers
-# follow that convention - Arch's Electron and Chromium packages do, and take
-# extra arguments from $XDG_CONFIG_HOME/<name>-flags.conf - it is a far better
-# place to inject than a desktop entry: it survives package updates and it
+# launcher itself rather than assumed from the distribution. Arch's Electron
+# and Chromium packages follow that convention and take extra arguments from
+# $XDG_CONFIG_HOME/<name>-flags.conf. Where the wrappers do that, it is a far
+# better place to inject than a desktop entry: it survives package updates and it
 # applies to a launch from the terminal too. Where they do not, this finds
 # nothing and the caller falls back to the desktop entry.
 mca_flags_candidates() {
@@ -553,7 +553,7 @@ mca_flags_candidates() {
 
 	# A wrapper that only execs another wrapper (heroic -> electron43) inherits
 	# that one's flag files, plus the specific name it builds from a variable
-	# at runtime and therefore never writes down - which is why that one is
+	# at runtime and therefore never writes down. That is why that one is
 	# derived from the target's own name rather than found.
 	#
 	# It is derived only once the target has shown that it reads a flag file at
@@ -575,7 +575,7 @@ mca_flags_candidates() {
 # Looking inside an AppImage
 # ---------------------------------------------------------------------------
 #
-# An AppImage is the AppImage runtime - an ordinary ELF executable - with a
+# An AppImage is the AppImage runtime (an ordinary ELF executable) with a
 # squashfs image appended to it. The payload is compressed, so nothing the
 # application ships is on disk where the marker check could find it, and for a
 # long time that made every AppImage a "cannot tell".
@@ -594,7 +594,7 @@ mca_flags_candidates() {
 # _mca_bytes <file> <offset> <count>
 # Count bytes from an offset, as numbers, in MCA_BYTES. od rather than a shell
 # read because a variable cannot hold a NUL byte and these headers are full of
-# them - and a whole header at a time rather than a field at a time, because
+# them. And a whole header at a time rather than a field at a time, because
 # the first question below is asked about every program on the system and one
 # od per field would be four forks per program.
 MCA_BYTES=()
@@ -627,7 +627,7 @@ _mca_slice() {
 #
 # Fails for the all-ones value squashfs writes down for a table that is not in
 # the image, which is a case the callers below have to tell from a real offset
-# and bash arithmetic - signed, 64-bit - cannot represent.
+# and bash arithmetic (signed, 64-bit) cannot represent.
 MCA_WORD=0
 
 _mca_word() {
@@ -650,7 +650,7 @@ _mca_word() {
 #
 # Searching for the squashfs magic instead would not be: the runtime carries a
 # copy of it in its own code. Neither is the AppImage magic at byte 8 of the
-# ELF header a way in - it is there to be zeroed, and a build pipeline that
+# ELF header a way in. It is there to be zeroed, and a build pipeline that
 # does not want its image picked up by a desktop integration daemon does
 # exactly that. So the offset is computed for any ELF at all and the caller
 # finds out whether there is an image at it.
@@ -700,7 +700,7 @@ _mca_inflate() {
 		1)
 			# squashfs stores a zlib stream and gzip only reads its own
 			# container, but underneath both are the same deflate data with a
-			# different wrapper around it - so the wrapper is swapped: zlib's
+			# different wrapper around it. So the wrapper is swapped: zlib's
 			# two header bytes are dropped and a minimal gzip header put in
 			# front. gzip then writes every byte of the block and complains
 			# about the trailer it did not get, which is why its status is
@@ -734,10 +734,10 @@ _mca_inflate() {
 # describe them, and a name is all the caller is looking for.
 #
 # Fails unless the walk lands exactly on the end of the table. That is the
-# integrity check - the block sizes adding up to the table's own length is
-# what says the fields were read from a real superblock and that the output is
-# the whole of the names rather than some of them - and it is why the caller
-# has to collect this before trusting it, never pipe it.
+# integrity check: the block sizes adding up to the table's own length is what
+# says the fields were read from a real superblock, and that the output is the
+# whole of the names rather than some of them. It is also why the caller has
+# to collect this before trusting it, never pipe it.
 _mca_squashfs_names() {
 	local file="$1" base="$2"
 	local comp dir_start end field header size pos
@@ -750,9 +750,9 @@ _mca_squashfs_names() {
 	(( dir_start > 0 )) || return 1
 
 	# Where the names stop: the first table squashfs writes after them. Which
-	# one that is depends on the image - there is no fragment table when
+	# one that is depends on the image. There is no fragment table when
 	# nothing was packed into a fragment, and no export table unless it was
-	# asked for - so they are tried in the order they are written and the
+	# asked for. So they are tried in the order they are written and the
 	# first one that is actually there wins. bytes_used closes the list for an
 	# image that has none of them.
 	end=0
@@ -815,14 +815,14 @@ _mca_appimage_verdict() {
 		&& MCA_BYTES[2] == 113 && MCA_BYTES[3] == 115 )) || return 0
 
 	# From here on there is an image, so the worst this can end on is "cannot
-	# tell" - never "no", which would be an answer about contents that were
+	# tell". Never "no", which would be an answer about contents that were
 	# never read.
 	MCA_APPIMAGE=unknown
 
 	names="$(mktemp "${TMPDIR:-/tmp}/mca-names.XXXXXX")" || return 0
 
-	# Nothing at all in the table means every block failed to inflate - a
-	# compressor whose tool is not installed - which is a "cannot tell" too.
+	# Nothing at all in the table means every block failed to inflate (a
+	# compressor whose tool is not installed). That is a "cannot tell" too.
 	if _mca_squashfs_names "$file" "$base" > "$names" 2>/dev/null \
 		&& [[ -s $names ]]
 	then
@@ -900,7 +900,7 @@ mca_detect_verdict() {
 
 # mca_is_chromium <program>
 # Succeeds when the program is a Chromium, CEF or Electron process. "Cannot
-# tell" is not that, so it fails here - anything that has to treat the two
+# tell" is not that, so it fails here. Anything that has to treat the two
 # differently asks mca_detect_verdict instead.
 mca_is_chromium() {
 	mca_detect_verdict "$1"
@@ -931,13 +931,13 @@ _mca_detect_uncached() {
 	fi
 
 	# A binary. Everything Chromium ships is unpacked next to it, either in the
-	# same directory or - for /opt/thing/bin/Thing layouts - one level up.
+	# same directory or (for /opt/thing/bin/Thing layouts) one level up.
 	dir="$(dirname -- "$real")"
 	_mca_has_markers "$dir" && return 0
 	[[ ${dir##*/} == bin ]] && _mca_has_markers "${dir%/*}" && return 0
 
 	# An AppImage keeps all of that inside a filesystem appended to itself, so
-	# there is nothing next to the binary to find - but the names of everything
+	# there is nothing next to the binary to find. But the names of everything
 	# in there can be read, and that settles it either way.
 	_mca_appimage_verdict "$real"
 	case "$MCA_APPIMAGE" in
@@ -950,8 +950,8 @@ _mca_detect_uncached() {
 	grep -qaFm1 -- 'enable-blink-features' "$real" 2>/dev/null && return 0
 	grep -qaFm1 -- 'CHROME_VERSION_EXTRA' "$real" 2>/dev/null && return 0
 
-	# What is left is an image that could not be read - an unsupported
-	# compressor - or the older AppImage layout, which is an ISO9660 filesystem
+	# What is left is an image that could not be read (an unsupported
+	# compressor) or the older AppImage layout, which is an ISO9660 filesystem
 	# and has no name table of this shape at all. Either way the answer is not
 	# "no", it is "nobody looked".
 	if [[ $MCA_APPIMAGE == unknown || $real == *.AppImage || $real == *.appimage ]]; then
@@ -993,7 +993,7 @@ mca_scan() {
 	MCA_PACKAGING=()
 
 	# Pass one: read the entries and work out what each of them starts. No
-	# detection yet - that needs a stat per program, and those are collected so
+	# detection yet: that needs a stat per program, and those are collected so
 	# they can be asked for all at once.
 	while IFS= read -r dir; do
 		[[ -d $dir ]] || continue
@@ -1031,8 +1031,8 @@ mca_scan() {
 			fi
 
 			# The shortcuts Steam writes for single games are not
-			# applications of their own - a game is whatever engine it was
-			# built with, and none of those reads a Chromium argument - and
+			# applications of their own. A game is whatever engine it was
+			# built with, and none of those reads a Chromium argument. And
 			# starting the client through one needs nothing on its command
 			# line either.
 			mca_exec_is_steam_link "$exec_line" "$prog" && continue
@@ -1047,8 +1047,8 @@ mca_scan() {
 	MCA_STAT=()
 	_mca_stat_batch "${c_stat[@]}"
 
-	# Pass two: decide what each one is. What it does - an application or a
-	# browser - and how it was packaged are two separate questions: a Chromium
+	# Pass two: decide what each one is. What it does (an application or a
+	# browser) and how it was packaged are two separate questions: a Chromium
 	# installed as a snap is still a browser, and somebody who has turned
 	# browsers off means that one too.
 	for i in "${!c_ids[@]}"; do
@@ -1131,8 +1131,8 @@ mca_desktop_is_browser() {
 }
 
 # mca_snap_name <program>
-# The snap an executable belongs to, left in MCA_PROG - assigned rather than
-# printed for the same reason mca_exec_program is: the scan asks this about
+# The snap an executable belongs to, left in MCA_PROG. It is assigned rather
+# than printed for the same reason mca_exec_program is: the scan asks this about
 # every desktop entry on the system, and a command substitution per entry is a
 # fork per entry.
 #

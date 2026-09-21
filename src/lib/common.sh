@@ -3,7 +3,7 @@
 # Paths, translations, output helpers and the change ledger.
 #
 # Everything here runs unprivileged. This tool only ever writes inside the
-# user's own home - flag files, desktop entries, Steam's own scripts - so there
+# user's own home (flag files, desktop entries, Steam's own scripts), so there
 # is no system state to guard and nothing that needs root.
 
 MCA_VERSION="@VERSION@"
@@ -19,7 +19,7 @@ MCA_PRETTY="Middle-Click Autoscroll"
 #
 #   --enable-blink-features=MiddleClickAutoscroll is the one that works
 #   everywhere, and the only one that works in the Chromium versions embedded
-#   applications ship - Steam's CEF, an Electron a few years old, anything
+#   applications ship: Steam's CEF, an Electron a few years old, anything
 #   before Chromium 124. A browser started with it puts a yellow bar above the
 #   page saying an unsupported command line flag is in use, because Chromium
 #   keeps a list of flags worth warning about and this is on it.
@@ -27,7 +27,7 @@ MCA_PRETTY="Middle-Click Autoscroll"
 #   --enable-features=MiddleClickAutoscroll is not on that list, so a browser
 #   started with it says nothing. Blink generates a feature of the same name
 #   for every one of its runtime flags, which is what makes the two the same
-#   request - but only since Chromium 124. Before that the name means nothing
+#   request. But only since Chromium 124. Before that the name means nothing
 #   and is ignored without a word.
 #
 # So a browser, which is the only thing that shows the bar and the one thing
@@ -38,7 +38,7 @@ MCA_FLAG="--enable-blink-features=MiddleClickAutoscroll"
 # Two browsers do not answer to the Chromium name. Helium ships the feature
 # under its own name and sets the runtime flag from that alone. Brave takes
 # the generated feature away and switches the flag on from one of its own,
-# spelled MiddelButtonClickAutoscroll - the typo is in Brave's source, and the
+# spelled MiddelButtonClickAutoscroll. The typo is in Brave's source, and the
 # correct spelling does nothing. So browsers are asked for all three. A name a
 # browser does not know is ignored, which is what makes one list safe to hand
 # to all of them.
@@ -87,7 +87,7 @@ MCA_BACKUPDIR="${MCA_STATEDIR}/backup"
 MCA_LEDGER="${MCA_STATEDIR}/ledger"
 
 # The folder the desktop itself shows. Nothing in the XDG search path looks at
-# it, so an entry that lives only there is invisible to a scan - and a game
+# it, so an entry that lives only there is invisible to a scan. A game
 # shortcut dragged onto the desktop is exactly that.
 #
 # Its name is translated: Schreibtisch, Bureau, Escritorio. The name in use is
@@ -217,8 +217,8 @@ fi
 
 # Set by mca_bad and mca_note. The menu redraws straight after an action, which
 # would wipe the screen; this marks that something was printed the user still
-# has to read. A plain success needs no acknowledgement - the status block at
-# the top of the menu already shows the new state.
+# has to read. A plain success needs no acknowledgement, because the status
+# block at the top of the menu already shows the new state.
 MCA_UI_NEEDS_ACK=''
 
 # --quiet silences progress chatter; errors still go to stderr. Used by the
@@ -275,7 +275,7 @@ mca_state_write() {
 # ---------------------------------------------------------------------------
 # The change ledger
 # ---------------------------------------------------------------------------
-# Reverting by pattern - "delete every desktop entry that mentions the flag" -
+# Reverting by pattern ("delete every desktop entry that mentions the flag")
 # would also delete entries the user wrote by hand. So every change is recorded
 # instead, and `revert` replays the ledger backwards.
 #
@@ -289,7 +289,7 @@ mca_state_write() {
 #
 # The kinds differ in how they are undone: a backup is restored wholesale, a
 # flag file only loses the one line that was added to it, and kwinrc gets one
-# key written back - it is a file KDE writes to itself, and putting a whole
+# key written back. It is a file KDE writes to itself, and putting a whole
 # copy of it back would take everything else settled since with it.
 
 mca_ledger_add() {

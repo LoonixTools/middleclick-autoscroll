@@ -33,7 +33,7 @@ Recommends:     systemd
 Recommends:     desktop-file-utils
 
 %description
-Blink - the engine inside Chromium, Electron and CEF - has had Windows-style
+Blink (the engine inside Chromium, Electron and CEF) has had Windows-style
 autoscroll for years: hold the middle mouse button, move the pointer, the page
 scrolls. On Linux it is switched off, because middle click is already taken by
 primary-selection paste.

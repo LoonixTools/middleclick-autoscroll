@@ -15,7 +15,7 @@ Just run `middleclick-autoscroll`. This will open the configuration TUI that loo
   Autoscroll                     ON
 
   Applications covered           11 of 13
-  Not identified                 1 - see the applications list
+  Not identified                 1 (see the applications list)
   Steam                          ON
   New applications               ON
   Middle-click paste             off
@@ -46,7 +46,7 @@ Pressing `[3]` lets you see every app that was found and toggle each one individ
     Slack                              off
     Cursor                             cannot tell
 
-  Up/Down select - Space turns one on or off - q goes back
+  Up/Down: select, Space: turn on or off, q: back
 ```
 
 You can also press `[4]` for more settings.
@@ -123,7 +123,7 @@ same thing manually.
 
 AppImages get looked into as well. The payload is a squashfs image glued onto
 the runtime, and squashfs keeps a small table with the name of every file in
-there - so that table gets read and unpacked (a few kb, nothing is extracted
+there. So that table gets read and unpacked (a few kb, nothing is extracted
 and the thing is never run) and the Chromium files are looked for in it. An
 Electron AppImage is covered like any other app; a Tauri one is left alone,
 because WebKitGTK simply has no autoscroll to switch on.

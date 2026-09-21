@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: middleclick-autoscroll 1.0.3\n"
-"Report-Msgid-Bugs-To: https://github.com/LoonixTools/middleclick-autoscroll/issues\n"
+"Report-Msgid-Bugs-To: https://github.com/LoonixTools/middleclick-autoscroll/"
+"issues\n"
 "POT-Creation-Date: 2026-08-16 00:00+0200\n"
 "PO-Revision-Date: 2026-08-16 00:00+0200\n"
 "Last-Translator: Felitendo\n"
@@ -43,7 +44,6 @@ msgstr "nicht erkennbar"
 msgid "not patched yet"
 msgstr "noch nicht gepatcht"
 
-
 #. Status block
 msgid "Autoscroll"
 msgstr "Autoscroll"
@@ -57,8 +57,8 @@ msgstr "%d von %d"
 msgid "Not identified"
 msgstr "Nicht erkannt"
 
-msgid "%d - see the applications list"
-msgstr "%d – siehe Anwendungsliste"
+msgid "%d (see the applications list)"
+msgstr "%d (siehe Anwendungsliste)"
 
 msgid "Steam"
 msgstr "Steam"
@@ -74,7 +74,6 @@ msgstr "Zuletzt angewendet"
 
 msgid "Applications pick this up the next time they are started."
 msgstr "Anwendungen übernehmen das beim nächsten Start."
-
 
 #. Menu
 msgid "Turn autoscroll on or off"
@@ -94,7 +93,6 @@ msgstr "Beenden"
 
 msgid "Press any key to continue..."
 msgstr "Beliebige Taste drücken …"
-
 
 #. Settings
 msgid "Electron and CEF applications"
@@ -124,15 +122,14 @@ msgstr "Auf neu installierte Anwendungen anwenden"
 msgid "Additional Chromium arguments"
 msgstr "Zusätzliche Chromium-Argumente"
 
-msgid "Up/Down select - Space or Right changes - q goes back"
-msgstr "Hoch/Runter wählt – Leertaste oder Rechts ändert – q geht zurück"
+msgid "Up/Down: select, Space or Right: change, q: back"
+msgstr "Hoch/Runter: wählen, Leertaste oder Rechts: ändern, q: zurück"
 
 msgid "Arguments separated by spaces, empty for none:"
 msgstr "Argumente mit Leerzeichen getrennt, leer für keine:"
 
 msgid "Could not save the setting."
 msgstr "Einstellung konnte nicht gespeichert werden."
-
 
 #. Applications screen
 msgid "Looking at the installed applications..."
@@ -142,27 +139,34 @@ msgid "No Chromium-based applications found."
 msgstr "Keine Chromium-basierten Anwendungen gefunden."
 
 msgid "Anything not identified is left alone until it is turned on here."
-msgstr "Nicht erkannte Anwendungen bleiben unangetastet, bis sie hier eingeschaltet werden."
+msgstr ""
+"Nicht erkannte Anwendungen bleiben unangetastet, bis sie hier eingeschaltet "
+"werden."
 
-msgid "Autoscroll is off - this is what would be covered."
-msgstr "Autoscroll ist aus – das hier wäre abgedeckt."
+msgid "Autoscroll is off. This is what would be covered."
+msgstr "Autoscroll ist aus. Das hier wäre abgedeckt."
 
-msgid "Up/Down select - Space turns one on or off - q goes back"
-msgstr "Hoch/Runter wählt – Leertaste schaltet einzeln ein oder aus – q geht zurück"
-
+msgid "Up/Down: select, Space: turn on or off, q: back"
+msgstr "Hoch/Runter: wählen, Leertaste: ein- oder ausschalten, q: zurück"
 
 #. Results
 msgid "Autoscroll is on for %d applications."
 msgstr "Autoscroll ist für %d Anwendungen an."
 
-msgid "Applications that are already running pick this up when they are restarted."
+msgid ""
+"Applications that are already running pick this up when they are restarted."
 msgstr "Bereits laufende Anwendungen übernehmen das nach einem Neustart."
 
 msgid "Could not start the watcher for newly installed applications."
-msgstr "Die Überwachung neu installierter Anwendungen konnte nicht gestartet werden."
+msgstr ""
+"Die Überwachung neu installierter Anwendungen konnte nicht gestartet werden."
 
-msgid "No systemd user session - newly installed applications will not be picked up on their own."
-msgstr "Keine systemd-Benutzersitzung – neu installierte Anwendungen werden nicht von selbst erfasst."
+msgid ""
+"No systemd user session, so newly installed applications will not be picked "
+"up on their own."
+msgstr ""
+"Keine systemd-Benutzersitzung, daher werden neu installierte Anwendungen "
+"nicht von selbst erfasst."
 
 msgid "Autoscroll is off and everything that was changed has been put back."
 msgstr "Autoscroll ist aus, alle Änderungen wurden zurückgenommen."
@@ -179,15 +183,23 @@ msgstr "Auf %d Anwendungen angewendet."
 msgid "Already applied to %d applications."
 msgstr "Bereits auf %d Anwendungen angewendet."
 
-msgid "Steam starts its interface in a way this version cannot change without Steam noticing; leaving it alone."
-msgstr "Steam startet seine Oberfläche auf eine Art, die diese Version nicht ändern kann, ohne dass Steam es merkt; Steam bleibt unangetastet."
+msgid ""
+"Steam starts its interface in a way this version cannot change without Steam "
+"noticing; leaving it alone."
+msgstr ""
+"Steam startet seine Oberfläche auf eine Art, die diese Version nicht ändern "
+"kann, ohne dass Steam es merkt; Steam bleibt unangetastet."
 
-msgid "Steam's interface cannot be given the flag without leaving a file Steam would reinstall; the change has been taken back."
-msgstr "Steams Oberfläche lässt sich das Flag nicht geben, ohne eine Datei zu hinterlassen, die Steam neu installieren würde; die Änderung wurde zurückgenommen."
+msgid ""
+"Steam's interface cannot be given the flag without leaving a file Steam "
+"would reinstall; the change has been taken back."
+msgstr ""
+"Steams Oberfläche lässt sich das Flag nicht geben, ohne eine Datei zu "
+"hinterlassen, die Steam neu installieren würde; die Änderung wurde "
+"zurückgenommen."
 
 msgid "Middle click stops pasting at the next login."
 msgstr "Mittelklick fügt ab der nächsten Anmeldung nichts mehr ein."
-
 
 #. Help
 msgid "Usage: middleclick-autoscroll [command]"
@@ -225,7 +237,6 @@ msgstr "Ohne Befehl wird ein interaktives Menü angezeigt."
 
 msgid "Unknown command: %s"
 msgstr "Unbekannter Befehl: %s"
-
 
 #. Time
 msgid "never"

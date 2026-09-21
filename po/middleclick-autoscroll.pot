@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: middleclick-autoscroll 1.0.3\n"
-"Report-Msgid-Bugs-To: https://github.com/LoonixTools/middleclick-autoscroll/issues\n"
+"Report-Msgid-Bugs-To: https://github.com/LoonixTools/middleclick-autoscroll/"
+"issues\n"
 "POT-Creation-Date: 2026-08-16 00:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
@@ -43,7 +44,6 @@ msgstr ""
 msgid "not patched yet"
 msgstr ""
 
-
 #. Status block
 msgid "Autoscroll"
 msgstr ""
@@ -57,7 +57,7 @@ msgstr ""
 msgid "Not identified"
 msgstr ""
 
-msgid "%d - see the applications list"
+msgid "%d (see the applications list)"
 msgstr ""
 
 msgid "Steam"
@@ -74,7 +74,6 @@ msgstr ""
 
 msgid "Applications pick this up the next time they are started."
 msgstr ""
-
 
 #. Menu
 msgid "Turn autoscroll on or off"
@@ -94,7 +93,6 @@ msgstr ""
 
 msgid "Press any key to continue..."
 msgstr ""
-
 
 #. Settings
 msgid "Electron and CEF applications"
@@ -124,7 +122,7 @@ msgstr ""
 msgid "Additional Chromium arguments"
 msgstr ""
 
-msgid "Up/Down select - Space or Right changes - q goes back"
+msgid "Up/Down: select, Space or Right: change, q: back"
 msgstr ""
 
 msgid "Arguments separated by spaces, empty for none:"
@@ -132,7 +130,6 @@ msgstr ""
 
 msgid "Could not save the setting."
 msgstr ""
-
 
 #. Applications screen
 msgid "Looking at the installed applications..."
@@ -144,24 +141,26 @@ msgstr ""
 msgid "Anything not identified is left alone until it is turned on here."
 msgstr ""
 
-msgid "Autoscroll is off - this is what would be covered."
+msgid "Autoscroll is off. This is what would be covered."
 msgstr ""
 
-msgid "Up/Down select - Space turns one on or off - q goes back"
+msgid "Up/Down: select, Space: turn on or off, q: back"
 msgstr ""
-
 
 #. Results
 msgid "Autoscroll is on for %d applications."
 msgstr ""
 
-msgid "Applications that are already running pick this up when they are restarted."
+msgid ""
+"Applications that are already running pick this up when they are restarted."
 msgstr ""
 
 msgid "Could not start the watcher for newly installed applications."
 msgstr ""
 
-msgid "No systemd user session - newly installed applications will not be picked up on their own."
+msgid ""
+"No systemd user session, so newly installed applications will not be picked "
+"up on their own."
 msgstr ""
 
 msgid "Autoscroll is off and everything that was changed has been put back."
@@ -179,15 +178,18 @@ msgstr ""
 msgid "Already applied to %d applications."
 msgstr ""
 
-msgid "Steam starts its interface in a way this version cannot change without Steam noticing; leaving it alone."
+msgid ""
+"Steam starts its interface in a way this version cannot change without Steam "
+"noticing; leaving it alone."
 msgstr ""
 
-msgid "Steam's interface cannot be given the flag without leaving a file Steam would reinstall; the change has been taken back."
+msgid ""
+"Steam's interface cannot be given the flag without leaving a file Steam "
+"would reinstall; the change has been taken back."
 msgstr ""
 
 msgid "Middle click stops pasting at the next login."
 msgstr ""
-
 
 #. Help
 msgid "Usage: middleclick-autoscroll [command]"
@@ -225,7 +227,6 @@ msgstr ""
 
 msgid "Unknown command: %s"
 msgstr ""
-
 
 #. Time
 msgid "never"

@@ -21,16 +21,16 @@ and puts that argument somewhere the application will actually read it, then
 keeps doing so for anything installed later.
 
 A browser is given *--enable-features=MiddleClickAutoscroll* instead. It asks
-for the same feature - Blink generates a feature of that name for each of its
-runtime flags - but it is not on the list of flags Chromium warns about, so the
-browser does not put a bar reading "You are using an unsupported command-line
+for the same feature, because Blink generates a feature of that name for each
+of its runtime flags. But it is not on the list of flags Chromium warns about,
+so the browser does not put a bar reading "You are using an unsupported command-line
 flag" above every page. That spelling only works from Chromium 124 onwards,
 which is why everything else keeps the first one: an application that embeds an
 older Chromium, such as Steam's CEF, has no such bar to show anyway. Two
 browsers know the feature under a name of their own and ignore Chromium's:
 Helium, which is asked for *HeliumMiddleClickAutoscroll* as well, and Brave,
-which is asked for *MiddelButtonClickAutoscroll* - spelled the way Brave spells
-it. A name a browser does not know is ignored. It works on any distribution:
+which is asked for *MiddelButtonClickAutoscroll* (spelled the way Brave spells
+it). A name a browser does not know is ignored. It works on any distribution:
 which of the routes below an application takes is read off its launcher, not
 assumed from where the launcher came from.
 
@@ -55,7 +55,7 @@ is refused.
 	watcher calls; running it by hand is only needed when the watcher is off.
 
 	Entries left behind by an application that has since been uninstalled are
-	removed here too - the entry shadowing it lives in the user's home, where
+	removed here too. The entry shadowing it lives in the user's home, where
 	the package manager that removed the application cannot see it.
 
 	With *--rebuild* everything is taken back first and written again from
@@ -85,7 +85,7 @@ Two ways, chosen per application.
 	the supported way to pass arguments, it survives package upgrades, and it
 	applies to a launch from a terminal as much as one from the menu. A
 	feature list that is already in the file is extended rather than
-	duplicated - Chromium keeps only the last occurrence of such an option, so
+	duplicated. Chromium keeps only the last occurrence of such an option, so
 	a second one would switch the first one off.
 
 	Arch's Electron and Chromium packages all wrap their binaries this way, and
@@ -97,8 +97,8 @@ Two ways, chosen per application.
 	For applications that ship their own binary with no wrapper, and for
 	everything inside a Flatpak or a snap, a copy of the desktop entry with the
 	argument appended is written to _~/.local/share/applications_, where it
-	shadows the system one. Entries that already live there - AppImages, web
-	app shortcuts - are edited in place, with the original kept.
+	shadows the system one. Entries that already live there (AppImages, web
+	app shortcuts) are edited in place, with the original kept.
 
 	This is the route everything takes on the distributions whose Chromium
 	wrappers keep their equivalent file under _/etc_, where it is the system's
@@ -116,7 +116,7 @@ entry entirely. Those are patched in place as well.
 
 Shortcuts on the desktop itself are patched in place too. Nothing in the XDG
 search path looks at that folder, so a shortcut that lives only there would
-otherwise be invisible - and Steam puts one there for every game somebody asks
+otherwise be invisible. And Steam puts one there for every game somebody asks
 for a shortcut to. The folder's name is translated, and the name in use is read
 from _~/.config/user-dirs.dirs_ rather than guessed; the watcher is told about
 it in a drop-in written when autoscroll is turned on.
@@ -134,14 +134,14 @@ _~/.local/share/Steam_ for Valve's own package and Arch's,
 _~/.steam/debian-installation_ for Debian's, and the private tree of the
 sandbox for the Flatpak and the snap. All of them are looked at.
 
-Steam compares the installed files against its manifest at every start - by
-size and timestamp rather than by content - and restores whatever differs. So
+Steam compares the installed files against its manifest at every start (by
+size and timestamp, not by content) and restores whatever differs. So
 the patch is written to look untouched: the bytes the argument costs are taken
 back out of the script's own comments and the timestamp is put back afterwards,
 leaving a file exactly as long and exactly as old as Steam left it. A client
 that checks its files finds nothing to repair, and the argument survives
-however Steam was started - from the menu, from a game shortcut, from a
-launcher like Heroic or Lutris, from a terminal.
+however Steam was started: from the menu, from a game shortcut, from a
+launcher like Heroic or Lutris, or from a terminal.
 
 That is what has to work, because it is the only thing that does. A patch that
 changes the length is never written, whatever else could be done to cover for
@@ -224,9 +224,9 @@ screen.
 # WHAT HAS NO FLAG AT ALL
 
 Autoscroll is a Blink feature, so only an application drawn by Blink can be
-given it. An application built on WebKitGTK - which is what Tauri uses on
-Linux, and GNOME Web, and anything else linked against libwebkit2gtk - is not
-one of those. WebKit has no equivalent feature to ask for, on any command line
+given it. An application built on WebKitGTK is not one of those. That
+includes Tauri on Linux, GNOME Web, and anything else linked against
+libwebkit2gtk. WebKit has no equivalent feature to ask for, on any command line
 or in any configuration file.
 
 Such an application is identified as what it is and then left out of the list
@@ -254,8 +254,8 @@ _~/.config/kwinrc_
 _~/.cache/middleclick-autoscroll/detect_
 	Which programs were found to be Chromium, keyed by size and modification
 	time. Its first line says which version of the program wrote it, and a
-	file from an older one is ignored rather than trusted - an entry for a
-	file that has not changed would otherwise never be looked at again.
+	file from an older one is ignored rather than trusted. Otherwise an entry
+	for a file that has not changed would never be looked at again.
 	Safe to delete.
 
 # ENVIRONMENT

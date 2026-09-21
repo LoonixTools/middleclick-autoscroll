@@ -4,7 +4,7 @@
 #
 # The routing lives in mca_route and is used twice: once by mca_apply to patch
 # and once by the applications screen to show what would happen. Keeping it in
-# one function is what makes that screen trustworthy - it is not a description
+# one function is what makes that screen trustworthy: it is not a description
 # of the behaviour, it is the behaviour.
 
 MCA_CHANGES=0
@@ -56,7 +56,7 @@ mca_route() {
 
 # mca_apply
 # Brings everything into line with the current settings. Safe to run as often
-# as it likes to be - it writes only what differs, which is what keeps the
+# as it likes to be. It writes only what differs, which is what keeps the
 # watcher from chasing its own changes.
 mca_apply() {
 	local i id file prog kind packaging route steam_done=0
@@ -114,7 +114,7 @@ mca_apply() {
 		esac
 	done
 
-	# Steam is worth patching even when its desktop entry is missing - a user
+	# Steam is worth patching even when its desktop entry is missing. A user
 	# who starts it from a script or a game launcher still gets the interface.
 	if [[ $CFG_STEAM == yes ]] && (( ! steam_done )) && mca_steam_installed; then
 		mca_steam_apply
@@ -191,8 +191,8 @@ mca_watch_enabled() {
 
 # _mca_watch_dropin_write
 # Returns 0 when the drop-in changed and systemd has to be told, 1 when it was
-# already right - the same contract as mca_write_if_changed, and for the same
-# reason: the watcher runs after every desktop entry that appears anywhere on
+# already right. That is the same contract as mca_write_if_changed, for the
+# same reason: the watcher runs after every desktop entry that appears anywhere on
 # the system, and a daemon-reload each time would be absurd.
 _mca_watch_dropin_write() {
 	local dir file="$MCA_UNIT_DROPIN/desktop.conf" content

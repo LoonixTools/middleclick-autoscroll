@@ -143,7 +143,7 @@ jobs:
             printf '%s' "$GPG_PRIVATE_KEY" | gpg --batch --import
           else
             echo "present=no" >> "$GITHUB_OUTPUT"
-            echo "::warning::No GPG_PRIVATE_KEY secret - the apt and dnf repositories were not updated. The packages are on the release."
+            echo "::warning::No GPG_PRIVATE_KEY secret, so the apt and dnf repositories were not updated. The packages are on the release."
             exit 0
           fi
           echo "present=yes" >> "$GITHUB_OUTPUT"

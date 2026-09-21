@@ -6,7 +6,7 @@
 # autoscroll on, Blink stops pasting the primary selection on middle click,
 # because the button is doing something else now. Everywhere else on the
 # desktop middle click goes on pasting, which is the behaviour this whole
-# program exists to get away from - so the desktop's own switch for it is
+# program exists to get away from. So the desktop's own switch for it is
 # turned off too.
 #
 # KWin has such a switch, and only for a Wayland session, where the paste is a
@@ -26,7 +26,7 @@ MCA_KWIN_KEY="EnablePrimarySelection"
 
 # The kconfig command line tools, whichever generation this session has. They
 # are what System Settings writes kwinrc with, and worth the fork: the file has
-# a cascade behind it - /etc/xdg, the kdedefaults directory - and entries a
+# a cascade behind it (/etc/xdg, the kdedefaults directory) and entries a
 # distribution can mark immutable, and an edit that reaches past all that with
 # sed writes something KDE goes on to ignore.
 MCA_KDE_TOOL=''
@@ -81,8 +81,8 @@ mca_kde_read() {
 	local file="${1:-$MCA_KWINRC}" gen val
 	gen="$(_mca_kde_tool)" || return 1
 
-	# kreadconfig creates the file it is pointed at, and the status screen -
-	# which asks on every redraw - has no business writing anything. A file
+	# kreadconfig creates the file it is pointed at, and the status screen
+	# (which asks on every redraw) has no business writing anything. A file
 	# that is not there has no value in it to read anyway.
 	[[ -f $file ]] || return 0
 
@@ -124,7 +124,7 @@ mca_kde_paste_apply() {
 
 	if mca_ledger_has "$MCA_KWINRC"; then
 		# Ours already. What goes back is the value recorded the first time
-		# round, not what reading the file now would say - that is false, and
+		# round, not what reading the file now would say. That is false, and
 		# false is what is being undone.
 		previous="$(mca_ledger_detail "$MCA_KWINRC")" || previous=unset
 	elif [[ $current == false ]]; then

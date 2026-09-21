@@ -1,4 +1,4 @@
-# middleclick-autoscroll - build and install
+# middleclick-autoscroll: build and install
 #
 # Everything here is plain shell; "building" only means compiling the gettext
 # catalogs and rendering the man page. Both targets degrade to a no-op when
@@ -19,8 +19,8 @@ LOCALEDIR    ?= $(DATADIR)/locale
 MANDIR       ?= $(DATADIR)/man
 
 # Where systemd looks for user units. For a normal install into /usr this is
-# asked of systemd itself, because the answer is not the same everywhere - a
-# distribution that still keeps /lib separate from /usr/lib says so here - and
+# asked of systemd itself, because the answer is not the same everywhere. A
+# distribution that still keeps /lib separate from /usr/lib says so here. It is
 # only guessed at when there is no systemd installed to ask.
 #
 # A build with a prefix of its own keeps the units under that prefix instead,
@@ -28,7 +28,7 @@ MANDIR       ?= $(DATADIR)/man
 # but only share for a home one: $XDG_DATA_HOME/systemd/user is a search path
 # and ~/.local/lib/systemd/user is not, so an install into ~/.local that put
 # the units in lib would leave the watcher impossible to enable. That prefix is
-# the one an atomic distribution leaves a user - there is no writing to /usr on
+# the one an atomic distribution leaves a user: there is no writing to /usr on
 # Bazzite or Silverblue without layering a package and rebooting.
 ifeq ($(PREFIX),/usr)
 USERUNITDIR  ?= $(shell pkg-config --variable=systemduserunitdir systemd 2>/dev/null || echo /usr/lib/systemd/user)
@@ -61,14 +61,14 @@ po/%.mo: po/%.po
 ifdef MSGFMT
 	$(MSGFMT) --check --output-file=$@ $<
 else
-	@echo "msgfmt not found - skipping $@"
+	@echo "msgfmt not found, skipping $@"
 endif
 
 $(MANPAGE): doc/middleclick-autoscroll.1.scd
 ifdef SCDOC
 	$(SCDOC) < $< > $@
 else
-	@echo "scdoc not found - skipping $@"
+	@echo "scdoc not found, skipping $@"
 endif
 
 # Syntax-check every shell file, and run shellcheck when it is available.
@@ -80,7 +80,7 @@ check:
 		shellcheck -x -e SC1090,SC1091 src/middleclick-autoscroll $(LIBS); \
 		echo "ok  shellcheck"; \
 	else \
-		echo "shellcheck not found - skipped"; \
+		echo "shellcheck not found, skipped"; \
 	fi
 	@if command -v desktop-file-validate >/dev/null 2>&1; then \
 		echo "ok  desktop-file-validate (nothing to check)"; \

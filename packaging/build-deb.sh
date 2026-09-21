@@ -5,7 +5,7 @@
 #
 # Everything the package contains comes out of `make install`. This only wraps
 # what that produced, so there is exactly one description of where a file goes
-# and it is the Makefile - a packaging script that lists the files again is a
+# and it is the Makefile. A packaging script that lists the files again is a
 # second description, and the two drift.
 #
 # Needs: make, dpkg-deb, msgfmt (gettext), scdoc.

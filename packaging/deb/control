@@ -8,7 +8,7 @@ Depends: bash (>= 4.2), coreutils, findutils, grep, sed, mawk | gawk | original-
 Recommends: gettext-base, systemd, desktop-file-utils
 Homepage: https://github.com/LoonixTools/middleclick-autoscroll
 Description: middle-click autoscroll for Chromium-based applications
- Blink - the engine inside Chromium, Electron and CEF - has had Windows-style
+ Blink (the engine inside Chromium, Electron and CEF) has had Windows-style
  autoscroll for years: hold the middle mouse button, move the pointer, the page
  scrolls. On Linux it is switched off, because middle click is already taken by
  primary-selection paste.

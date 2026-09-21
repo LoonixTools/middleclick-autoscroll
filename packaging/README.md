@@ -1,7 +1,7 @@
 # Packaging and releases
 
 The Makefile installs everything; these only wrap what it produced. That is
-deliberate — a packaging script that lists the files again is a second
+on purpose: a packaging script that lists the files again is a second
 description of the layout, and two descriptions drift.
 
 | | |
@@ -44,14 +44,14 @@ gh workflow run release.yml -f dry_run=true
 
 Builds both packages, builds both repositories with a key generated on the
 spot, checks the three signatures it wrote, and then installs the packages back
-out of the repositories — apt on the runner, dnf in a Fedora container. Nothing
+out of the repositories (apt on the runner, dnf in a Fedora container). Nothing
 is pushed and no release is made. This is worth running after any change to the
 packaging, because the alternative is finding out from a tag.
 
 ## Setting up the signing, once
 
 The repositories are signed, so this needs a key. Make one that exists for
-nothing else — not a personal key — and give it no passphrase: it lives as an
+nothing else (not a personal key) and give it no passphrase. It lives as an
 encrypted repository secret, and `rpmsign` cannot be handed a passphrase
 unattended.
 
@@ -66,7 +66,7 @@ gpg --armor --export-secret-keys 'middleclick-autoscroll repository' \
 Without the secret the workflow still builds both packages and attaches them to
 the release; it says so in the log and leaves the repositories alone.
 
-## Pointing Pages at it, once — and in this order
+## Pointing Pages at it, once, in this order
 
 The `gh-pages` branch does not exist until a release has put something on it,
 and a branch that does not exist cannot be picked in the Pages settings. So:
@@ -77,8 +77,8 @@ and a branch that does not exist cannot be picked in the Pages settings. So:
    root.
 
 Doing it the other way round is a wall, and leaving Pages pointed at `main`
-serves the source tree at the address the install instructions name — the key
-and the indexes are 404 and nothing installs.
+serves the source tree at the address the install instructions name. Then the
+key and the indexes are 404 and nothing installs.
 
 ## What users end up with
 

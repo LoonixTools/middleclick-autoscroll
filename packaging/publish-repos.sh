@@ -11,7 +11,7 @@
 # Usage: publish-repos.sh <gh-pages checkout> <directory of new packages>
 #
 # Needs: dpkg-dev, apt-utils, createrepo-c, gpg, and a secret key already
-# imported - its id is taken from the keyring.
+# imported. Its id is taken from the keyring.
 
 set -euo pipefail
 

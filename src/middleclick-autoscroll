@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #
-# middleclick-autoscroll - middle-click autoscroll for Chromium-based
+# middleclick-autoscroll: middle-click autoscroll for Chromium-based
 # applications on Linux
 #
 # Blink has had Windows-style autoscroll for years, behind a runtime flag that
 # is not turned on for Linux because middle click is taken by primary-selection
-# paste there. Turning it on is a matter of one command line argument - the
+# paste there. Turning it on is a matter of one command line argument. The
 # work is finding every application that needs it, putting the argument
 # somewhere it survives an update, and doing the same for the two programs that
 # do not take arguments at all.
@@ -50,7 +50,7 @@ mca_do_enable() {
 		if mca_watch_available; then
 			mca_watch_enable || mca_note "$(mca_msg "Could not start the watcher for newly installed applications.")"
 		else
-			mca_note "$(mca_msg "No systemd user session - newly installed applications will not be picked up on their own.")"
+			mca_note "$(mca_msg "No systemd user session, so newly installed applications will not be picked up on their own.")"
 		fi
 	fi
 

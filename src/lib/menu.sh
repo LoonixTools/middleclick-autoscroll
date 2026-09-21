@@ -32,7 +32,7 @@ mca_ui_term_restore() {
 }
 
 # Runs an action with the terminal handed back to normal line mode, so anything
-# it prints - or prompts for - behaves the way a program expects.
+# it prints or prompts for behaves the way a program expects.
 mca_ui_cooked() {
 	mca_ui_term_restore
 	"$@"
@@ -126,8 +126,8 @@ mca_pause() {
 # _mca_row <label> <value>
 # printf's %-28s pads by bytes, so a label containing "ü" comes out one column
 # short. ${#s} counts characters in a UTF-8 locale, so the padding is computed
-# here instead - and applied inline, because command substitution would eat the
-# trailing spaces again.
+# here instead. It is applied inline, because command substitution would eat
+# the trailing spaces again.
 _mca_row() {
 	local label="$1" value="$2" pad
 	pad=$(( 30 - ${#label} ))
@@ -172,7 +172,7 @@ mca_ui_status() {
 
 	if (( MCA_N_UNKNOWN )); then
 		_mca_row "$(mca_msg "Not identified")" \
-			"${MCA_C_DIM}$(mca_msg "%d - see the applications list" "$MCA_N_UNKNOWN")${MCA_C_RESET}"
+			"${MCA_C_DIM}$(mca_msg "%d (see the applications list)" "$MCA_N_UNKNOWN")${MCA_C_RESET}"
 	fi
 
 	if mca_steam_installed; then
@@ -294,7 +294,7 @@ mca_ui_settings() {
 
 	local title hint
 	mca_msg_into "$locale" "Settings"; title="$MCA_MSG_RESULT"
-	mca_msg_into "$locale" "Up/Down select - Space or Right changes - q goes back"
+	mca_msg_into "$locale" "Up/Down: select, Space or Right: change, q: back"
 	hint="$MCA_MSG_RESULT"
 
 	local clearseq
@@ -387,11 +387,11 @@ mca_ui_apps() {
 
 	local title hint legend warn
 	mca_msg_into "$locale" "Applications"; title="$MCA_MSG_RESULT"
-	mca_msg_into "$locale" "Up/Down select - Space turns one on or off - q goes back"
+	mca_msg_into "$locale" "Up/Down: select, Space: turn on or off, q: back"
 	hint="$MCA_MSG_RESULT"
 	mca_msg_into "$locale" "Anything not identified is left alone until it is turned on here."
 	legend="$MCA_MSG_RESULT"
-	mca_msg_into "$locale" "Autoscroll is off - this is what would be covered."
+	mca_msg_into "$locale" "Autoscroll is off. This is what would be covered."
 	warn="$MCA_MSG_RESULT"
 
 	# The per-row labels are resolved once, here. Looking them up inside the
@@ -554,7 +554,7 @@ mca_ui_menu() {
 				fi
 				;;
 			q|Q) mca_ui_term_restore; trap - EXIT INT TERM; return 0 ;;
-			# Anything else - Enter, arrow keys, stray characters - just
+			# Anything else (Enter, arrow keys, stray characters) just
 			# redraws. Escape is deliberately not a quit key, so a mistyped
 			# arrow key cannot close the menu.
 			*) ;;

@@ -3,12 +3,12 @@
 # Refuses a release whose tag and Makefile disagree.
 #
 # The version is baked into the program at install time from the Makefile, and
-# the packages take theirs from the same place - but the tag is what people see
+# the packages take theirs from the same place. But the tag is what people see
 # and what the release is named after. A tag that says something else produces
 # a package called 1.0.4 containing a program that reports 1.0.3, and nothing
 # would have complained.
 #
-# Anything that is not a v-tag - a run started by hand from a branch - is not a
+# Anything that is not a v-tag (a run started by hand from a branch) is not a
 # release and has nothing to check.
 
 set -euo pipefail
@@ -19,7 +19,7 @@ ref="${1:-}"
 case "$ref" in
 	v[0-9]*) ;;
 	*)
-		echo "not a release tag (${ref:-none}) - nothing to check against"
+		echo "not a release tag (${ref:-none}), nothing to check against"
 		exit 0
 		;;
 esac

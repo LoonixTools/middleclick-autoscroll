@@ -2,25 +2,25 @@
 #
 # Steam.
 #
-# Steam's interface is CEF, so the feature is there - but Steam builds the
+# Steam's interface is CEF, so the feature is there. But Steam builds the
 # command line for its web helper itself and offers no way to add to it. The
 # only place to get an argument in is the shell script that starts the helper,
 # which lives inside Steam's own installation:
 #
 #   ~/.local/share/Steam/ubuntu12_64/steamwebhelper_sniper_wrap.sh
 #
-# Steam compares the installed files against its manifest at every start - by
-# size and timestamp rather than by content - and restores whatever differs.
+# Steam compares the installed files against its manifest at every start (by
+# size and timestamp, not by content) and restores whatever differs.
 # So the patch is written to look untouched: the bytes the flag costs are taken
 # back out of the script's comments and the timestamp is put back afterwards,
 # which leaves a file that is byte-for-byte the size Steam recorded and as old
 # as Steam left it. A client that verifies its files finds nothing to repair
-# and the flag survives however Steam was started - from the menu, from a game
-# shortcut, from a launcher like Heroic, from a terminal.
+# and the flag survives however Steam was started: from the menu, from a game
+# shortcut, from a launcher like Heroic, or from a terminal.
 #
 # A patch that changes the length is not an option, and no switch covers for
 # one. Steam checks its files at a start it was given arguments for, but also
-# at the shutdown it runs itself - and that one has no -noverifyfiles on its
+# at the shutdown it runs itself. That one has no -noverifyfiles on its
 # command line, whatever the session was started with. What a single wrong
 # length costs is the whole client package downloaded, extracted and installed
 # again, and a client that quits at the end of it instead of coming up. So the
@@ -114,8 +114,8 @@ _mca_steam_exec_line() {
 # The patched script on stdout: the flags appended to the line that starts the
 # web helper, and the same number of bytes taken back out of the script's
 # comments, so that the file Steam finds is the length Steam wrote down.
-# Everything else - setting up the container runtime, deciding whether the
-# sandbox can be used - is left alone.
+# Everything else is left alone, like setting up the container runtime or
+# deciding whether the sandbox can be used.
 #
 # Comments are eaten from the bottom up, so the header that says what the
 # script is for is the last thing to lose anything, and the '#' itself always
@@ -180,8 +180,8 @@ _mca_steam_refresh_backup() {
 # The script is already patched. Whether that is a patch Steam can live with is
 # a question of length: an earlier version of this program appended the flag
 # where the comments could not pay for it, which leaves the script longer than
-# the file Steam wrote down - and a client that checks its files reinstalls
-# itself over that, then quits instead of starting.
+# the file Steam wrote down. A client that checks its files reinstalls itself
+# over that, then quits instead of starting.
 #
 # Rebuilt from the untouched original kept when the script was first patched,
 # never from the patched file, the flag either fits this time or the original
@@ -277,7 +277,7 @@ mca_steam_revert() {
 		return 0
 	fi
 
-	# No backup to fall back on - take the flags back out of the exec line.
+	# No backup to fall back on, so take the flags back out of the exec line.
 	[[ -f $script ]] || return 1
 	local tmp
 	tmp="$(mktemp "${script}.XXXXXX")" || return 1
