@@ -72,27 +72,27 @@
 <p>
   This page is the package repository. Set it up once and every new version
   arrives with the rest of your system updates. The
-  <a href="https://github.com/Felitendo/middleclick-autoscroll">source and the
+  <a href="https://github.com/LoonixTools/middleclick-autoscroll">source and the
   documentation</a> are on GitHub.
 </p>
 
 <h2>Debian, Ubuntu, Linux Mint, Pop!_OS</h2>
 <pre><code>sudo install -d -m 0755 /etc/apt/keyrings
-curl -fsSL https://felitendo.github.io/middleclick-autoscroll/KEY.gpg \
+curl -fsSL https://loonixtools.github.io/middleclick-autoscroll/KEY.gpg \
   | sudo gpg --dearmor -o /etc/apt/keyrings/middleclick-autoscroll.gpg
-echo "deb [signed-by=/etc/apt/keyrings/middleclick-autoscroll.gpg] https://felitendo.github.io/middleclick-autoscroll/deb ./" \
+echo "deb [signed-by=/etc/apt/keyrings/middleclick-autoscroll.gpg] https://loonixtools.github.io/middleclick-autoscroll/deb ./" \
   | sudo tee /etc/apt/sources.list.d/middleclick-autoscroll.list
 sudo apt update
 sudo apt install middleclick-autoscroll</code></pre>
 
 <h2>Fedora, RHEL, CentOS Stream</h2>
 <pre><code>sudo curl -fsSL -o /etc/yum.repos.d/middleclick-autoscroll.repo \
-  https://felitendo.github.io/middleclick-autoscroll/middleclick-autoscroll.repo
+  https://loonixtools.github.io/middleclick-autoscroll/middleclick-autoscroll.repo
 sudo dnf install middleclick-autoscroll</code></pre>
 
 <h2>openSUSE</h2>
-<pre><code>sudo rpm --import https://felitendo.github.io/middleclick-autoscroll/KEY.gpg
-sudo zypper addrepo --gpgcheck --refresh https://felitendo.github.io/middleclick-autoscroll/rpm middleclick-autoscroll
+<pre><code>sudo rpm --import https://loonixtools.github.io/middleclick-autoscroll/KEY.gpg
+sudo zypper addrepo --gpgcheck --refresh https://loonixtools.github.io/middleclick-autoscroll/rpm middleclick-autoscroll
 sudo zypper install middleclick-autoscroll</code></pre>
 
 <h2>Arch, CachyOS, EndeavourOS, Manjaro</h2>
@@ -108,7 +108,7 @@ sudo zypper install middleclick-autoscroll</code></pre>
 
 <footer>
   GPL-3.0-or-later. Packages are signed; the public key is
-  <a href="https://felitendo.github.io/middleclick-autoscroll/KEY.gpg">KEY.gpg</a>.
+  <a href="https://loonixtools.github.io/middleclick-autoscroll/KEY.gpg">KEY.gpg</a>.
 </footer>
 
 </body>
