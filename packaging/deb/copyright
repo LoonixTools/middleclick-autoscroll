@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: middleclick-autoscroll
-Source: https://github.com/Felitendo/middleclick-autoscroll
+Source: https://github.com/LoonixTools/middleclick-autoscroll
 
 Files: *
 Copyright: 2026 Felitendo

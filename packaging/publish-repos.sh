@@ -19,7 +19,7 @@ pages="$(cd -- "$1" && pwd)"
 incoming="$(cd -- "$2" && pwd)"
 here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 
-base_url="${MCA_REPO_URL:-https://felitendo.github.io/middleclick-autoscroll}"
+base_url="${MCA_REPO_URL:-https://loonixtools.github.io/middleclick-autoscroll}"
 
 keyid="$(gpg --list-secret-keys --with-colons | awk -F: '/^sec:/ { print $5; exit }')"
 [[ -n $keyid ]] || { echo "$0: no secret key in the keyring" >&2; exit 1; }

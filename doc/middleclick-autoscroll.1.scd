@@ -281,4 +281,4 @@ two formats there is no reader for at all.
 # AUTHORS
 
 Felitendo. Source and issue tracker at
-https://github.com/Felitendo/middleclick-autoscroll
+https://github.com/LoonixTools/middleclick-autoscroll

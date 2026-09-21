@@ -9,7 +9,7 @@ Release:        1%{?dist}
 Summary:        Middle-click autoscroll for Chromium-based applications
 
 License:        GPL-3.0-or-later
-URL:            https://github.com/Felitendo/middleclick-autoscroll
+URL:            https://github.com/LoonixTools/middleclick-autoscroll
 Source0:        %{name}-%{version}.tar.gz
 
 BuildArch:      noarch

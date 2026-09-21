@@ -63,7 +63,7 @@ yay -S middleclick-autoscroll
 
 ```bash
 sudo curl -fsSL -o /etc/yum.repos.d/middleclick-autoscroll.repo \
-  https://felitendo.github.io/middleclick-autoscroll/middleclick-autoscroll.repo
+  https://loonixtools.github.io/middleclick-autoscroll/middleclick-autoscroll.repo
 sudo dnf install middleclick-autoscroll
 ```
 
@@ -71,7 +71,7 @@ sudo dnf install middleclick-autoscroll
 
 ```bash
 sudo curl -fsSL -o /etc/yum.repos.d/middleclick-autoscroll.repo \
-  https://felitendo.github.io/middleclick-autoscroll/middleclick-autoscroll.repo
+  https://loonixtools.github.io/middleclick-autoscroll/middleclick-autoscroll.repo
 sudo rpm-ostree install middleclick-autoscroll
 systemctl reboot
 ```
@@ -80,9 +80,9 @@ systemctl reboot
 
 ```bash
 sudo install -d -m 0755 /etc/apt/keyrings
-curl -fsSL https://felitendo.github.io/middleclick-autoscroll/KEY.gpg \
+curl -fsSL https://loonixtools.github.io/middleclick-autoscroll/KEY.gpg \
   | sudo gpg --dearmor -o /etc/apt/keyrings/middleclick-autoscroll.gpg
-echo "deb [signed-by=/etc/apt/keyrings/middleclick-autoscroll.gpg] https://felitendo.github.io/middleclick-autoscroll/deb ./" \
+echo "deb [signed-by=/etc/apt/keyrings/middleclick-autoscroll.gpg] https://loonixtools.github.io/middleclick-autoscroll/deb ./" \
   | sudo tee /etc/apt/sources.list.d/middleclick-autoscroll.list
 sudo apt update && sudo apt install middleclick-autoscroll
 ```
@@ -90,9 +90,9 @@ sudo apt update && sudo apt install middleclick-autoscroll
 **openSUSE**
 
 ```bash
-sudo rpm --import https://felitendo.github.io/middleclick-autoscroll/KEY.gpg
+sudo rpm --import https://loonixtools.github.io/middleclick-autoscroll/KEY.gpg
 sudo zypper addrepo --gpgcheck --refresh \
-  https://felitendo.github.io/middleclick-autoscroll/rpm middleclick-autoscroll
+  https://loonixtools.github.io/middleclick-autoscroll/rpm middleclick-autoscroll
 sudo zypper install middleclick-autoscroll
 ```
 
