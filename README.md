@@ -13,7 +13,7 @@
 <h5 align="center">
   <a href="#how-to-use">How to use</a> |
   <a href="#how-to-install">Install</a> |
-  <a href="https://ko-fi.com/felitendo">Ko-Fi</a>
+  <a href="https://buymeacoffee.com/felitendo">☕ Buy Me a Coffee</a>
 </h5>
 
 This tool looks at which of your apps run chromium under the hood and applies the necessary steps to get autoscrolling working (often just a feature flag). One install, one command and autoscroll _✨just works✨_ (like on windows).
