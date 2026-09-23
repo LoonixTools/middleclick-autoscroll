@@ -29,12 +29,14 @@ argument.
 ## Making a release
 
 1. Bump `VERSION` in the Makefile.
-2. Commit, then `git tag vX.Y.Z && git push --tags`.
+2. Add the release to `CHANGELOG.md`, in the format CLAUDE.md describes.
+3. Commit, then `git tag vX.Y.Z && git push --tags`.
 
 The `release` workflow builds both packages in a Debian and a Fedora container,
-refuses the tag if it disagrees with the Makefile, attaches the packages to a
-GitHub release, and adds them to the APT and RPM repositories on the `gh-pages`
-branch. Nothing else has to be done by hand.
+refuses the tag if it disagrees with the Makefile or has no changelog entry,
+attaches the packages to a GitHub release with the entry as its notes, and adds
+them to the APT and RPM repositories on the `gh-pages` branch. Nothing else has
+to be done by hand.
 
 ## Trying the release path first
 
