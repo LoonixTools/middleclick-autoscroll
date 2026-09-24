@@ -418,16 +418,12 @@ mca_desktop_apply() {
 # Neither can be shadowed from anywhere, so both are edited where they stand,
 # with the original kept.
 
-# _mca_entry_patch_inplace <file> <gate: autostart|apps>
+# _mca_entry_patch_inplace <file>
 # One desktop entry that lives outside the XDG search path, edited where it is
-# because there is nowhere to shadow it from.
-#
-# What decides whether an application here is in scope differs by where the
-# entry came from, which is what the gate says: an autostart entry follows the
-# autostart setting, a shortcut follows the same rules as the application it is
-# a shortcut to.
+# because there is nowhere to shadow it from. It follows the applications list
+# under its own file name, which is the name of the application's own entry.
 _mca_entry_patch_inplace() {
-	local file="$1" gate="$2"
+	local file="$1"
 	local id prog packaging=native content backup kind copy
 
 	# Already ours, and normally that is the end of it: what is in there is what
@@ -476,12 +472,8 @@ _mca_entry_patch_inplace() {
 
 	mca_desktop_is_browser && kind=browser || kind=app
 
-	if [[ $gate == autostart ]]; then
-		[[ $CFG_AUTOSTART == yes ]] || return 0
-	else
-		id="${file##*/}"; id="${id%.desktop}"
-		mca_kind_wanted "$kind" "$id" "$packaging" || return 0
-	fi
+	id="${file##*/}"; id="${id%.desktop}"
+	mca_kind_wanted "$kind" "$id" || return 0
 
 	content="$(_mca_desktop_transform "$file" "$MCA_MARK_INPLACE" \
 		"$(mca_flags "$kind")")"
@@ -503,7 +495,7 @@ mca_autostart_apply() {
 
 	for file in "$dir"/*.desktop; do
 		[[ -f $file ]] || continue
-		_mca_entry_patch_inplace "$file" autostart
+		_mca_entry_patch_inplace "$file"
 	done
 }
 
@@ -515,7 +507,7 @@ mca_shortcuts_apply() {
 
 	for file in "$dir"/*.desktop; do
 		[[ -f $file ]] || continue
-		_mca_entry_patch_inplace "$file" apps
+		_mca_entry_patch_inplace "$file"
 	done
 }
 

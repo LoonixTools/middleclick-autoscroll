@@ -95,35 +95,28 @@ msgid "Press any key to continue..."
 msgstr "Beliebige Taste drücken …"
 
 #. Settings
-msgid "Electron and CEF applications"
-msgstr "Electron- und CEF-Anwendungen"
+msgid "Turn off middle-click paste"
+msgstr "Mittelklick-Einfügen abschalten"
 
-msgid "Chromium-based browsers"
-msgstr "Chromium-basierte Browser"
+msgid ""
+"Stops middle click from pasting anywhere else. Starts with the next login."
+msgstr ""
+"Mittelklick fügt auch sonst nirgends mehr ein. Ab der nächsten Anmeldung."
 
-msgid "Flatpak applications"
-msgstr "Flatpak-Anwendungen"
+msgid "Cover new applications"
+msgstr "Neue Anwendungen abdecken"
 
-msgid "Snap applications"
-msgstr "Snap-Anwendungen"
+msgid "Applications installed later get autoscroll on their own."
+msgstr "Später installierte Anwendungen bekommen Autoscroll von selbst."
 
-msgid "Programs that start themselves at login"
-msgstr "Programme, die sich beim Anmelden selbst starten"
+msgid "More Chromium arguments"
+msgstr "Weitere Chromium-Argumente"
 
-msgid "Spotify"
-msgstr "Spotify"
+msgid "Passed to every application along with the autoscroll one."
+msgstr "Gehen zusammen mit dem Autoscroll-Argument an jede Anwendung."
 
-msgid "Turn off KDE's middle-click paste"
-msgstr "KDEs Mittelklick-Einfügen abschalten"
-
-msgid "Apply to newly installed applications"
-msgstr "Auf neu installierte Anwendungen anwenden"
-
-msgid "Additional Chromium arguments"
-msgstr "Zusätzliche Chromium-Argumente"
-
-msgid "Up/Down: select, Space or Right: change, q: back"
-msgstr "Hoch/Runter: wählen, Leertaste oder Rechts: ändern, q: zurück"
+msgid "Up/Down: select, Space: change, q: back"
+msgstr "Hoch/Runter: wählen, Leertaste: ändern, q: zurück"
 
 msgid "Arguments separated by spaces, empty for none:"
 msgstr "Argumente mit Leerzeichen getrennt, leer für keine:"

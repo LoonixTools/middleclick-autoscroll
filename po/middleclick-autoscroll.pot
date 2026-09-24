@@ -95,34 +95,26 @@ msgid "Press any key to continue..."
 msgstr ""
 
 #. Settings
-msgid "Electron and CEF applications"
+msgid "Turn off middle-click paste"
 msgstr ""
 
-msgid "Chromium-based browsers"
+msgid ""
+"Stops middle click from pasting anywhere else. Starts with the next login."
 msgstr ""
 
-msgid "Flatpak applications"
+msgid "Cover new applications"
 msgstr ""
 
-msgid "Snap applications"
+msgid "Applications installed later get autoscroll on their own."
 msgstr ""
 
-msgid "Programs that start themselves at login"
+msgid "More Chromium arguments"
 msgstr ""
 
-msgid "Spotify"
+msgid "Passed to every application along with the autoscroll one."
 msgstr ""
 
-msgid "Turn off KDE's middle-click paste"
-msgstr ""
-
-msgid "Apply to newly installed applications"
-msgstr ""
-
-msgid "Additional Chromium arguments"
-msgstr ""
-
-msgid "Up/Down: select, Space or Right: change, q: back"
+msgid "Up/Down: select, Space: change, q: back"
 msgstr ""
 
 msgid "Arguments separated by spaces, empty for none:"

@@ -989,7 +989,7 @@ MCA_IDS=()        # desktop file id, without the .desktop suffix
 MCA_FILES=()      # the desktop entry that is in effect for that id
 MCA_NAMES=()      # display name
 MCA_PROGS=()      # resolved program, or a Flatpak app id or a snap name
-MCA_KINDS=()      # app | browser | steam | unknown | no
+MCA_KINDS=()      # app | browser | steam | spotify | unknown | no
 MCA_PACKAGING=()  # native | flatpak | snap
 
 # A scan reads every desktop entry on the system, so the menu does it once and
@@ -1094,6 +1094,10 @@ mca_scan() {
 			# Steam is Chromium inside, but nothing about it can be changed
 			# from a command line argument; it has its own module.
 			kind=steam
+		elif [[ ${prog##*/} == spotify-launcher ]]; then
+			# Not Chromium itself, but it starts Spotify, which is CEF. It
+			# takes the flag from its own configuration file.
+			kind=spotify
 		else
 			mca_detect_verdict "$prog"
 			case "$MCA_VERDICT" in
@@ -1114,6 +1118,7 @@ mca_scan() {
 
 	mca_cache_flush
 	MCA_SCANNED=1
+	mca_config_migrate
 }
 
 # mca_has_flags_file <program>
@@ -1224,28 +1229,14 @@ mca_flatpak_is_chromium() {
 	return 1
 }
 
-# mca_kind_wanted <kind> <id> [packaging]
-# Whether the current settings say this entry should be patched. Skip beats
-# everything, an explicit include beats detection, and detection beats nothing.
-#
-# Packaging is a gate in front of the category rather than a category of its
-# own: a Flatpak or a snap sees none of the host's configuration and is worth
-# switching off as a group, but it is still an application or a browser and
-# whichever of those the user turned off applies to it too.
+# mca_kind_wanted <kind> <id>
+# Whether this entry should be patched. Skip beats everything, an explicit
+# include beats detection, and detection beats nothing.
 mca_kind_wanted() {
-	local kind="$1" id="$2" packaging="${3:-native}"
+	local kind="$1" id="$2"
 
 	mca_config_list_has Skip "$id" && return 1
 	mca_config_list_has Include "$id" && return 0
 
-	case "$packaging" in
-		flatpak) [[ $CFG_FLATPAK == yes ]] || return 1 ;;
-		snap)    [[ $CFG_SNAP == yes ]] || return 1 ;;
-	esac
-
-	case "$kind" in
-		app)     [[ $CFG_APPS == yes ]] ;;
-		browser) [[ $CFG_BROWSERS == yes ]] ;;
-		*)       return 1 ;;
-	esac
+	[[ $kind == app || $kind == browser ]]
 }

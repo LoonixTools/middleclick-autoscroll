@@ -15,6 +15,7 @@ MCA_ROUTES=()
 #   flags    - the launcher reads a flag file; write it there
 #   desktop  - no flag file; shadow or edit the desktop entry
 #   steam    - Steam's own two-part treatment
+#   spotify  - the flag goes into spotify-launcher's configuration file
 #   unknown  - cannot tell what engine this is (an AppImage), so nothing is done
 #   off      - detected, but switched off
 #
@@ -26,16 +27,16 @@ MCA_ROUTE=''
 mca_route() {
 	local kind="$1" id="$2" prog="$3" packaging="${4:-native}"
 
-	if [[ $kind == steam ]]; then
-		if mca_config_list_has Skip "$id" || [[ $CFG_STEAM != yes ]]; then
+	if [[ $kind == steam || $kind == spotify ]]; then
+		if mca_config_list_has Skip "$id"; then
 			MCA_ROUTE=off
 		else
-			MCA_ROUTE=steam
+			MCA_ROUTE="$kind"
 		fi
 		return
 	fi
 
-	if ! mca_kind_wanted "$kind" "$id" "$packaging"; then
+	if ! mca_kind_wanted "$kind" "$id"; then
 		[[ $kind == unknown ]] && MCA_ROUTE=unknown || MCA_ROUTE=off
 		return
 	fi
@@ -59,7 +60,7 @@ mca_route() {
 # as it likes to be. It writes only what differs, which is what keeps the
 # watcher from chasing its own changes.
 mca_apply() {
-	local i id file prog kind packaging route steam_done=0
+	local i id file prog kind packaging route steam_done=0 spotify_done=0
 
 	MCA_CHANGES=0
 	MCA_ROUTES=()
@@ -111,28 +112,28 @@ mca_apply() {
 					steam_done=1
 				fi
 				;;
+			spotify)
+				(( spotify_done )) || mca_spotify_apply
+				spotify_done=1
+				;;
 		esac
 	done
 
 	# Steam is worth patching even when its desktop entry is missing. A user
 	# who starts it from a script or a game launcher still gets the interface.
-	if [[ $CFG_STEAM == yes ]] && (( ! steam_done )) && mca_steam_installed; then
+	if (( ! steam_done )) && mca_steam_wanted && mca_steam_installed; then
 		mca_steam_apply
 	fi
 
 	# Autostart entries. A Chromium application that starts itself at login
 	# points straight at its binary and never reads the entry in the menu, so
 	# Discord at login used to behave differently from Discord from the menu.
-	if [[ $CFG_AUTOSTART == yes ]]; then
-		mca_autostart_apply
-	fi
+	mca_autostart_apply
 
 	# Shortcuts on the desktop itself, which nothing above has seen: the XDG
 	# search path does not go there. Each entry is gated on its own, so there is
 	# nothing to check out here.
 	mca_shortcuts_apply
-
-	[[ $CFG_SPOTIFY == yes ]] && mca_spotify_apply
 
 	# Not about any one application: middle click goes on pasting everywhere
 	# else on the desktop, and KDE is the one desktop that can be told not to.
@@ -272,12 +273,28 @@ mca_count_routes() {
 	done
 }
 
+# mca_steam_wanted
+# Whether Steam gets patched, from the routes of the last scan: yes unless it
+# was turned off in the applications list. Also yes when it has no entry there
+# at all, so there is nothing to turn off.
+mca_steam_wanted() {
+	local i seen=0
+
+	for i in "${!MCA_KINDS[@]}"; do
+		[[ ${MCA_KINDS[i]} == steam ]] || continue
+		[[ ${MCA_ROUTES[i]} == steam ]] && return 0
+		seen=1
+	done
+	(( ! seen ))
+}
+
 # mca_route_label <route>
 mca_route_label() {
 	case "$1" in
 		flags)   mca_msg "flag file" ;;
 		desktop) mca_msg "launcher" ;;
 		steam)   mca_msg "Steam" ;;
+		spotify) printf 'spotify-launcher' ;;
 		unknown) mca_msg "cannot tell" ;;
 		*)       mca_msg "off" ;;
 	esac

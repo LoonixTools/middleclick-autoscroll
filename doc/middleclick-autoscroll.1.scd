@@ -36,7 +36,10 @@ assumed from where the launcher came from.
 
 Run without a command it shows an interactive menu. Everything it can be told
 is reachable from there; the configuration file behind it does not need to be
-edited by hand.
+edited by hand. Its applications list turns single applications on or off,
+Steam and Spotify included. Its settings hold the rest: the desktop's
+middle-click paste, the watcher, and more Chromium arguments for every
+application.
 
 Nothing outside the user's home directory is written to, and running it as root
 is refused.
@@ -112,7 +115,8 @@ Two ways, chosen per application.
 
 Programs that start themselves at login write their own entry into
 _~/.config/autostart_ pointing straight at their binary, bypassing the menu
-entry entirely. Those are patched in place as well.
+entry entirely. Those are patched in place as well, unless the application is
+turned off in the applications list.
 
 Shortcuts on the desktop itself are patched in place too. Nothing in the XDG
 search path looks at that folder, so a shortcut that lives only there would
@@ -170,7 +174,8 @@ rather than the one from before the update.
 The official client is CEF rather than Electron. Installed through
 *spotify-launcher*, it is started by a program that builds its own command line
 and has a configuration file with a slot for extra arguments; that slot is
-where the flag goes. Installed as a plain package, a Flatpak or a snap, it is
+where the flag goes, and the launcher shows up in the applications list like
+any other application. Installed as a plain package, a Flatpak or a snap, it is
 an ordinary desktop entry and needs nothing special.
 
 # MIDDLE-CLICK PASTE

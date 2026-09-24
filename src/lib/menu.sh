@@ -178,7 +178,7 @@ mca_ui_status() {
 	if mca_steam_installed; then
 		if mca_steam_patched; then
 			_mca_row "$(mca_msg "Steam")" "$(_mca_onoff yes)"
-		elif [[ $CFG_STEAM == yes && $CFG_ENABLED == yes ]]; then
+		elif [[ $CFG_ENABLED == yes ]] && mca_steam_wanted; then
 			_mca_row "$(mca_msg "Steam")" \
 				"${MCA_C_YELLOW}$(mca_msg "not patched yet")${MCA_C_RESET}"
 		else
@@ -218,19 +218,16 @@ mca_ui_status() {
 # ---------------------------------------------------------------------------
 # Settings
 # ---------------------------------------------------------------------------
-# Format: Key|type|default|label-msgid
-# type is bool or text.
+# Only what is not about one application. Which applications get autoscroll is
+# decided in the applications list.
+#
+# Format: Key|type|default|check|label-msgid|help-msgid
+# type is bool or text. The row is only shown when the check passes: a switch
+# for something this system does not have is only noise.
 MCA_SETTINGS=(
-	"PatchApps|bool|yes|Electron and CEF applications"
-	"PatchBrowsers|bool|yes|Chromium-based browsers"
-	"PatchFlatpak|bool|yes|Flatpak applications"
-	"PatchSnap|bool|yes|Snap applications"
-	"PatchAutostart|bool|yes|Programs that start themselves at login"
-	"PatchSteam|bool|yes|Steam"
-	"PatchSpotify|bool|yes|Spotify"
-	"DisablePaste|bool|yes|Turn off KDE's middle-click paste"
-	"WatchNewApps|bool|yes|Apply to newly installed applications"
-	"ExtraFlags|text||Additional Chromium arguments"
+	"DisablePaste|bool|yes|mca_kde_available|Turn off middle-click paste|Stops middle click from pasting anywhere else. Starts with the next login."
+	"WatchNewApps|bool|yes|mca_watch_available|Cover new applications|Applications installed later get autoscroll on their own."
+	"ExtraFlags|text|||More Chromium arguments|Passed to every application along with the autoscroll one."
 )
 
 _mca_is_true() {
@@ -275,10 +272,9 @@ _mca_setting_display() {
 #
 # Returns 0 when something was changed, so the caller knows to re-apply.
 mca_ui_settings() {
-	local count=${#MCA_SETTINGS[@]}
-	local -a names=() types=() defaults=() labels=() values=()
-	local spec name type default label locale i key frame row pad dirty=1 cursor=0
-	local touched=0
+	local -a names=() types=() defaults=() labels=() helps=() values=()
+	local spec name type default check label help locale i key frame row pad
+	local count width=0 dirty=1 cursor=0 touched=0
 
 	locale="$(mca_ui_locale)"
 	mca_msg_into "$locale" "ON";     MCA_LBL_ON="$MCA_MSG_RESULT"
@@ -286,15 +282,20 @@ mca_ui_settings() {
 	mca_msg_into "$locale" "(none)"; MCA_LBL_NONE="$MCA_MSG_RESULT"
 
 	for spec in "${MCA_SETTINGS[@]}"; do
-		IFS='|' read -r name type default label <<< "$spec"
+		IFS='|' read -r name type default check label help <<< "$spec"
+		[[ -z $check ]] || "$check" || continue
 		names+=("$name"); types+=("$type"); defaults+=("$default")
 		mca_msg_into "$locale" "$label"
 		labels+=("$MCA_MSG_RESULT")
+		(( ${#MCA_MSG_RESULT} > width )) && width=${#MCA_MSG_RESULT}
+		mca_msg_into "$locale" "$help"
+		helps+=("$MCA_MSG_RESULT")
 	done
+	count=${#names[@]}
 
 	local title hint
 	mca_msg_into "$locale" "Settings"; title="$MCA_MSG_RESULT"
-	mca_msg_into "$locale" "Up/Down: select, Space or Right: change, q: back"
+	mca_msg_into "$locale" "Up/Down: select, Space: change, q: back"
 	hint="$MCA_MSG_RESULT"
 
 	local clearseq
@@ -314,7 +315,7 @@ mca_ui_settings() {
 		local marker selected="${MCA_C_BLUE}▸${MCA_C_RESET} "
 		for i in "${!names[@]}"; do
 			_mca_setting_display "${types[i]}" "${values[i]}"
-			pad=$(( 46 - ${#labels[i]} ))
+			pad=$(( width + 3 - ${#labels[i]} ))
 			(( pad < 0 )) && pad=0
 			if (( i == cursor )); then marker="$selected"; else marker='  '; fi
 			printf -v row '  %s%s%*s %s' \
@@ -322,6 +323,7 @@ mca_ui_settings() {
 			frame+="$row"$'\n'
 		done
 
+		frame+=$'\n'"  ${helps[cursor]}"$'\n'
 		frame+=$'\n'"  ${MCA_C_DIM}${hint}${MCA_C_RESET}"$'\n'
 		printf '%s' "$frame"
 
@@ -419,6 +421,7 @@ mca_ui_apps() {
 	local s_steam="${s_on} ${MCA_C_DIM}(${l_steam})${MCA_C_RESET}"
 	local s_flags="${s_on} ${MCA_C_DIM}(${l_flagfile})${MCA_C_RESET}"
 	local s_desktop="${s_on} ${MCA_C_DIM}(${l_launcher})${MCA_C_RESET}"
+	local s_spotify="${s_on} ${MCA_C_DIM}(spotify-launcher)${MCA_C_RESET}"
 
 	local clearseq
 	clearseq="$(clear 2>/dev/null)" || clearseq=$'\033[H\033[2J'
@@ -467,6 +470,7 @@ mca_ui_apps() {
 				unknown) shown="$s_cannot" ;;
 				steam)   shown="$s_steam" ;;
 				flags)   shown="$s_flags" ;;
+				spotify) shown="$s_spotify" ;;
 				*)       shown="$s_desktop" ;;
 			esac
 			pad=$(( 34 - ${#labels[idx]} ))
