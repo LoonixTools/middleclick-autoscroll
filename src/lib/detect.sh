@@ -486,6 +486,11 @@ _mca_script_target() {
 
 	MCA_SCRIPT_VARS=()
 
+	# Only assignments and exec lines matter, and the shell is slow at reading
+	# a big script line by line. So grep picks them out, and a script with no
+	# exec at all (winetricks has 20000 lines of that) is not read here at all.
+	grep -qaE '^[[:space:]]*exec[[:space:]]' -- "$script" 2>/dev/null || return 1
+
 	while IFS= read -r line; do
 		if [[ $line =~ $re_assign ]]; then
 			name="${BASH_REMATCH[2]}"
@@ -543,7 +548,8 @@ _mca_script_target() {
 			fi
 			return $?
 		done
-	done < "$script"
+	done < <(grep -aE '^[[:space:]]*((export[[:space:]]+)?[A-Za-z_][A-Za-z0-9_]*=|exec[[:space:]])' \
+		-- "$script" 2>/dev/null)
 	return 1
 }
 
