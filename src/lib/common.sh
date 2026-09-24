@@ -244,10 +244,13 @@ mca_time_ago() {
 	delta=$(( now - ts ))
 	(( delta < 0 )) && delta=0
 
-	if   (( delta < 60 ));    then mca_msg "just now"
-	elif (( delta < 3600 ));  then mca_msg "%d minutes ago" "$(( delta / 60 ))"
-	elif (( delta < 86400 )); then mca_msg "%d hours ago" "$(( delta / 3600 ))"
-	else                           mca_msg "%d days ago" "$(( delta / 86400 ))"
+	if   (( delta < 60 ));     then mca_msg "just now"
+	elif (( delta < 120 ));    then mca_msg "1 minute ago"
+	elif (( delta < 3600 ));   then mca_msg "%d minutes ago" "$(( delta / 60 ))"
+	elif (( delta < 7200 ));   then mca_msg "1 hour ago"
+	elif (( delta < 86400 ));  then mca_msg "%d hours ago" "$(( delta / 3600 ))"
+	elif (( delta < 172800 )); then mca_msg "1 day ago"
+	else                            mca_msg "%d days ago" "$(( delta / 86400 ))"
 	fi
 	printf '\n'
 }

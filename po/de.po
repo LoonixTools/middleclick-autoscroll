@@ -245,11 +245,20 @@ msgstr "nie"
 msgid "just now"
 msgstr "gerade eben"
 
+msgid "1 minute ago"
+msgstr "vor 1 Minute"
+
 msgid "%d minutes ago"
 msgstr "vor %d Minuten"
 
+msgid "1 hour ago"
+msgstr "vor 1 Stunde"
+
 msgid "%d hours ago"
 msgstr "vor %d Stunden"
+
+msgid "1 day ago"
+msgstr "vor 1 Tag"
 
 msgid "%d days ago"
 msgstr "vor %d Tagen"
