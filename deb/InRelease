@@ -4,39 +4,39 @@ Hash: SHA512
 Architectures: all
 Codename: stable
 Components: main
-Date: Thu, 24 Sep 2026 06:26:50 +0000
+Date: Thu, 24 Sep 2026 07:49:25 +0000
 Label: middleclick-autoscroll
 Origin: middleclick-autoscroll
 Suite: stable
 MD5Sum:
- 6ca4ebc5e937570dd9cd95b7e0ff5afe            11744 Packages
- e510d033e3d2259f342630d434ba8391             1746 Packages.gz
- ea57ab8b74ae2dd28ea951513570d68d              166 Release
+ 38c09dd585d533f8f23ca7c857279679            13212 Packages
+ dad4286b05765c567d27e49accfec39f             1859 Packages.gz
+ dab7d47388b6f6f896d1865396c9934f              166 Release
 SHA1:
- 86edf7a5b0c0acf5fbca17cc0612ee1565cb4089            11744 Packages
- c1d375e46be80caf87b7acb8b6f6822734b3cc38             1746 Packages.gz
- 463f4a3e8f95b4e4702a43bddb38aac076188e7e              166 Release
+ b720c9662fcb469fee7a606161fea0aaff65f3e9            13212 Packages
+ 3319c32715c6446c1166107c63cf089b71816bf5             1859 Packages.gz
+ b7ca74bcd27b3183cced3170c2a5e90295e1724f              166 Release
 SHA256:
- fb3181b2a8c01d605bbdae11b5d6fa1ae920233e700a05b9ec3ee5a7c461f37d            11744 Packages
- 197b61d8a3d780ee5cf04322609a5e2f78e094a4a34017e41ba89115fdef4d55             1746 Packages.gz
- 673e4efb58e84712656226275de1b2e189c45edc9d383fb220834e3c11f97747              166 Release
+ b4f8589a5980c766598558ba4c22e9333b255d0dbb337c47c9b7da98fb966786            13212 Packages
+ fc638ab0df3f08dcd9300bff118c55b49b6adc86076aa17cd7cc02078f24a32a             1859 Packages.gz
+ d722e8e3bd76bf560eaf545f7ef00906de554f6a31ca69059ba59caae82bcb19              166 Release
 SHA512:
- 56f1814cb313f52e45291f764b190d7f45ae06da64ba7734c117253a01e945d73c19d80764087ce52c64df10c061711c4eed9c51a1019077c51f2823dceef286            11744 Packages
- a35e693e3ca503a94b12d76a6ba7f55c1469685f82e4faa453e18c8aa123e24982b1f7b675b673ce2e49b391e9e0ccb20aa56bc53bdf016f8e8494a997612e7d             1746 Packages.gz
- f57c09f936d94c7d6290d10b9ec377688cb81b896c57800ea6f001296808b8b7a042d9b0484cb69c7501d59e74ec18cbeaf48631acc5964ac01fb8db0c28cbdb              166 Release
+ edd3e438adb125bd48f9d26293a78c787b13b4d5a976062b12aeb40e274670701dd4ade4c827d6f19ba65bdbe30d0d0057d87006409f43bf861471764bd87482            13212 Packages
+ b1bc4ac846302a1e3320c04172bc6b589db6e17114bf195c730b77353b8133ef4a7ed11ab1945dbec9b9064e1e96860e807250a46809d3b9f7876ebfa0946552             1859 Packages.gz
+ 7e10fbbfe95e7fea962b2af5f2cc2f1e9cc184833aa19962712dc302c22ab8e82b95f95835e4cbbaa2dc460422d2459bdede0b39f350db902cf1dd6a2d0e29c9              166 Release
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEY4PI9Dc7LesUkuKsVaPG3ykUTHkFAmq0wqoACgkQVaPG3ykU
-THkYaQ//cJDdW6GpM1iqULk0pr0EEQckKmlwHmRL9dEofx4IKU7tKXQvp/kxOt82
-sZaB+It7bKzDHoxTHfYve5Z0+h4ZA/2xLf0We/6VxHsO0J3dm87UeI5Ne3WoSQGw
-8o/6bpi9rIkvmOOYhl4yiBU5uXFJtUJlolQKXVlo1jF6qKvsPk+P97LZkJGt9UXz
-yj7djUjcakbGnfwcFgY0hho8sRNjRZCR1s3VFRdo0k1IqJSMC6xU8DbXINoKGbwQ
-jNgodWTbtGRiqK3qjB7zrgBZbfBghuycLCwS2X1uwf05Nb5AeKcZkxQ41jEdm3vW
-nxY9fLKov5+bJH9PzYlsKf3jQm95FOEVLlNMfzxStsNCA25AzxQ/wF3C1mMLdKpV
-03S23ODdbbnzw+jJYsJPBxLDLuzX72O1V5Uyxjd7DH1msg5fqOZnCeyVKdS8ClvC
-7LcgqiitwEn8L2EF1USeCQUYCaGWqYfsdtInRsVgMxNQqJO1j+y0KOhJSPii4YKr
-X/yewiu8jhefX0pOGYr/amAivG+84vvqofgfhZgQafD+1IGf7FFVVzVDxnUXQKm1
-7q8jHUZxECG/8uDLDa0DIgmJWhnndWOchAjAnlCqtProaWrEVHOqFUOD+7AW0BtD
-u4dn5g203hwUyfPxqXHVWnXEDJpSf0e+09YPqn0BAzbdBYzbTN8=
-=Bu0S
+iQIzBAEBCgAdFiEEY4PI9Dc7LesUkuKsVaPG3ykUTHkFAmq01gUACgkQVaPG3ykU
+THlg6Q//Q8TSIREM7U8e5psV5nJzy1QFWJNOB0lvdf7U65RORsHx5LQiLf0AIRe+
+HMISMwUDDinUUz7DCA22r3w+oV7VQzLpMsMbPGDRf7VEw6wsomUn48/1UYDexWuN
+His+OSnR6yVReMvrxH/xEMvnf0UDR/BFempwAhGZ9rhT2QBJ/H+sNdN3wewdwCxq
+4Mxx7rWNpxt40y+dvPe6isYyKtDSwE3EitVhl7hEudr7L8vMejbsuKuyorbl6ZS0
+w2zW66V167pYulbupsbb0IskH50U+V+uQDivMlgT2a0UHr4vfWZqsna1wJUybOfd
+wj2MFV+HW8+qcTO2IA8KIY42+WGrO7MgLDoxId2VnG0lqHL9SlNTvSFbgwkUgJjb
+BSkrlD1mmy6GFqT1oiqX2era9XwkHx7ME45ThpdtyZn6XlEh0q/XdEXu2G0CI4zG
+u04fI4ftXEJspzEfG9QP3tCX67ATTpvBwSf2A3ouXrBxUUxu4ZBXM3t1xfkYCzAF
+4xV7VPzDnCy9q1MUJwK/hfb1uElN7i+JiZ9oHWveSGDbfCh3lg3zVB071WD0aDmx
+lMgOBP42o866ikIplR9sKl0BevubDlhWM7UVosGZ2Z2RZjHUfAHmG64++OoXglrb
+WUQ+H44/P2Zgq2px6lMCyXbMst0BXcX5E+iNVBI6hEmHh6PwdYM=
+=ImQb
 -----END PGP SIGNATURE-----
