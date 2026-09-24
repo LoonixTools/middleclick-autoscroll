@@ -108,22 +108,28 @@ Press **1**. Autoscroll _✨just works✨_, like on Windows.
 <details>
 <summary>How it works</summary>
 
-Chromium, Electron and CEF all have autoscroll built in, but it is off on Linux. One flag turns it on:
+Chromium, Electron and CEF all have autoscroll built in. On Linux it is off, because middle click
+pastes there. One flag turns it back on:
 
 ```
 --enable-blink-features=MiddleClickAutoscroll
 ```
 
-Setting that for every app by hand is a pain and breaks with updates, so this tool does it for you.
-New apps are picked up on their own. AppImages are covered too, without unpacking or starting them.
+Adding it to every app by hand is a pain, and updates can undo it. This tool does it for you:
 
-Some browsers want a different name. Brave and Helium ship the feature under their own, so browsers
-are handed all of the names at once. A name a browser does not know is ignored.
+- It finds every app built on Chromium. AppImages too, without unpacking or starting them.
+- It puts the flag where the app reads it: the app's flags file, or a copy of its menu entry in
+  your home folder.
+- It watches for new apps and covers them on their own.
+- It only writes to your home folder, and `disable` puts everything back.
 
-Steam is its own case. It builds the command line for its interface itself, and repairs every file
-that looks changed. So the flag goes into the script that starts the web helper, written to keep the
-file at the size and date Steam recorded. Steam finds nothing to repair, and autoscroll works in the
-store and the library. After a Steam update the patch is put back on its own.
+**Browsers** get a spelling of the flag that shows no warning bar. Brave and Helium also get their
+own name for the feature. A browser ignores names it does not know.
+
+**Steam** builds its own command line and repairs any file that looks changed. So the flag goes into
+the script that starts its web helper, and the file keeps the size and date Steam expects. Steam
+finds nothing to repair, and autoscroll works in the store and the library. After a Steam update,
+the patch comes back on its own.
 
 </details>
 
