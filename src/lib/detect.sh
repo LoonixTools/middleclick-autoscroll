@@ -74,7 +74,14 @@ MCA_SNAP_DIRS=(/snap /var/lib/snapd/snap)
 # CHROMIUM_FLAGS and CHROME_WRAPPER earn their place: they are the variables
 # the Debian, Fedora and openSUSE Chromium wrappers and Google's own Chrome
 # wrapper build their command line out of, and nothing else sets them.
-MCA_SCRIPT_HINTS='ELECTRON_|app\.asar|chrome-sandbox|libcef|enable-blink-features|ozone-platform-hint|CHROMIUM_FLAGS|CHROME_WRAPPER|CHROME_VERSION_EXTRA'
+#
+# updater_bootstrap is Discord's, and it is the only thing left that names it.
+# Discord no longer ships its application: /usr/bin/discord is a few lines of
+# shell that run that bootstrap, which downloads Electron into the user's
+# config directory on first start and execs it from there. So there is nothing
+# next to the launcher to find, and the path it hands over to is built out of
+# $HOME and the version it just downloaded.
+MCA_SCRIPT_HINTS='ELECTRON_|app\.asar|chrome-sandbox|libcef|enable-blink-features|ozone-platform-hint|CHROMIUM_FLAGS|CHROME_WRAPPER|CHROME_VERSION_EXTRA|updater_bootstrap'
 
 # ---------------------------------------------------------------------------
 # Desktop entries
