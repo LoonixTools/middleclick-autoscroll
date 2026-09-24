@@ -117,6 +117,14 @@ Chromium, Electron and CEF all have autoscroll built in, but it is off on Linux.
 Setting that for every app by hand is a pain and breaks with updates, so this tool does it for you.
 New apps are picked up on their own. AppImages are covered too, without unpacking or starting them.
 
+Some browsers want a different name. Brave and Helium ship the feature under their own, so browsers
+are handed all of the names at once. A name a browser does not know is ignored.
+
+Steam is its own case. It builds the command line for its interface itself, and repairs every file
+that looks changed. So the flag goes into the script that starts the web helper, written to keep the
+file at the size and date Steam recorded. Steam finds nothing to repair, and autoscroll works in the
+store and the library. After a Steam update the patch is put back on its own.
+
 </details>
 
 <details>
