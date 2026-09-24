@@ -2,6 +2,12 @@
 
 What each release brings, newest first. The [GitHub releases](https://github.com/LoonixTools/middleclick-autoscroll/releases) add every commit that went into it. Versions before `v1.1.0` came without notes.
 
+## v1.5.3
+
+_2026-09-24_
+
+A small patch. Discord changed the way it installs itself and slipped out of the list, so autoscroll never reached it. It is back.
+
 ## v1.5.2
 
 _2026-09-24_
