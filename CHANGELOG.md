@@ -2,6 +2,12 @@
 
 What each release brings, newest first. The [GitHub releases](https://github.com/LoonixTools/middleclick-autoscroll/releases) add every commit that went into it. Versions before `v1.1.0` came without notes.
 
+## v1.5.4
+
+_2026-09-24_
+
+A small patch. For some of you Discord was still missing after `v1.5.3`, because an old result from before the update kept it out. Every update now starts with a fresh scan, so Discord shows up again after your next login, or right away with **Re-apply everything**.
+
 ## v1.5.3
 
 _2026-09-24_
