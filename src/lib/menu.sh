@@ -399,7 +399,7 @@ mca_ui_apps() {
 	mca_msg_into "$locale" "Type to search, Down: go to the list, Esc: back"
 	hint_search="$MCA_MSG_RESULT"
 	mca_msg_into "$locale" "No matches."; nomatch="$MCA_MSG_RESULT"
-	mca_msg_into "$locale" "Anything not identified is left alone until it is turned on here."
+	mca_msg_into "$locale" 'Anything marked "cannot tell" stays off until it is turned on here.'
 	legend="$MCA_MSG_RESULT"
 	mca_msg_into "$locale" "Autoscroll is off. This is what would be covered."
 	warn="$MCA_MSG_RESULT"
@@ -487,7 +487,10 @@ mca_ui_apps() {
 		if [[ $CFG_ENABLED != yes ]]; then
 			frame+="  ${MCA_C_YELLOW}${warn}${MCA_C_RESET}"$'\n'
 		fi
-		frame+="  ${MCA_C_DIM}${legend}${MCA_C_RESET}"$'\n'
+		# Only needed while there is something it explains.
+		if (( MCA_N_UNKNOWN )); then
+			frame+="  ${MCA_C_DIM}${legend}${MCA_C_RESET}"$'\n'
+		fi
 		if (( cursor < 0 )); then
 			frame+="  ${MCA_C_DIM}${hint_search}${MCA_C_RESET}"$'\n'
 			# Puts the terminal cursor at the end of the query (row 4).

@@ -130,7 +130,7 @@ msgstr ""
 msgid "No Chromium-based applications found."
 msgstr ""
 
-msgid "Anything not identified is left alone until it is turned on here."
+msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
 msgstr ""
 
 msgid "Autoscroll is off. This is what would be covered."

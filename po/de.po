@@ -131,10 +131,8 @@ msgstr "Installierte Anwendungen werden durchgesehen …"
 msgid "No Chromium-based applications found."
 msgstr "Keine Chromium-basierten Anwendungen gefunden."
 
-msgid "Anything not identified is left alone until it is turned on here."
-msgstr ""
-"Nicht erkannte Anwendungen bleiben unangetastet, bis sie hier eingeschaltet "
-"werden."
+msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
+msgstr "Was „nicht erkennbar“ ist, bleibt aus, bis es hier eingeschaltet wird."
 
 msgid "Autoscroll is off. This is what would be covered."
 msgstr "Autoscroll ist aus. Das hier wäre abgedeckt."
