@@ -378,10 +378,13 @@ mca_ui_edit_text() {
 # turned on, and where a single application gets left out without having to
 # switch off its whole category.
 #
+# The screen opens on a search field above the list, so typing filters it
+# right away. The field is row -1: Down leaves it, Up from the top returns.
+#
 # Returns 0 when something was changed.
 mca_ui_apps() {
-	local count key frame row pad i cursor=0 dirty=1 touched=0 locale
-	local -a labels=() states=()
+	local count key frame row pad i idx cursor=-1 dirty=1 touched=0 locale query=''
+	local -a labels=() lower=() states=() matches=()
 
 	locale="$(mca_ui_locale)"
 
@@ -389,6 +392,11 @@ mca_ui_apps() {
 	mca_msg_into "$locale" "Applications"; title="$MCA_MSG_RESULT"
 	mca_msg_into "$locale" "Up/Down: select, Space: turn on or off, q: back"
 	hint="$MCA_MSG_RESULT"
+	local l_search hint_search nomatch
+	mca_msg_into "$locale" "Search:"; l_search="$MCA_MSG_RESULT"
+	mca_msg_into "$locale" "Type to search, Down: go to the list, Esc: back"
+	hint_search="$MCA_MSG_RESULT"
+	mca_msg_into "$locale" "No matches."; nomatch="$MCA_MSG_RESULT"
 	mca_msg_into "$locale" "Anything not identified is left alone until it is turned on here."
 	legend="$MCA_MSG_RESULT"
 	mca_msg_into "$locale" "Autoscroll is off. This is what would be covered."
@@ -430,31 +438,44 @@ mca_ui_apps() {
 		if (( dirty )); then
 			mca_config_load
 			mca_count_routes
-			labels=(); states=()
+			labels=(); lower=(); states=()
 			for i in "${!MCA_IDS[@]}"; do
 				labels+=("${MCA_NAMES[i]}")
+				lower+=("${MCA_NAMES[i],,}")
 				states+=("${MCA_ROUTES[i]}")
 			done
 			dirty=0
 		fi
 
+		matches=()
+		for i in "${!labels[@]}"; do
+			[[ ${lower[i]} == *"${query,,}"* ]] && matches+=("$i")
+		done
+		count=${#matches[@]}
+		(( cursor >= count )) && cursor=$(( count - 1 ))
+
 		frame="$clearseq"$'\n'"${MCA_C_BOLD}${MCA_C_BLUE}  ${title}${MCA_C_RESET}"$'\n\n'
 
 		local marker selected="${MCA_C_BLUE}▸${MCA_C_RESET} " shown
-		for i in "${!labels[@]}"; do
-			case "${states[i]}" in
+		if (( cursor < 0 )); then marker="$selected"; else marker='  '; fi
+		frame+="  ${marker}${l_search} ${query}"$'\n\n'
+
+		for i in "${!matches[@]}"; do
+			idx=${matches[i]}
+			case "${states[idx]}" in
 				off)     shown="$s_off" ;;
 				unknown) shown="$s_cannot" ;;
 				steam)   shown="$s_steam" ;;
 				flags)   shown="$s_flags" ;;
 				*)       shown="$s_desktop" ;;
 			esac
-			pad=$(( 34 - ${#labels[i]} ))
+			pad=$(( 34 - ${#labels[idx]} ))
 			(( pad < 0 )) && pad=0
 			if (( i == cursor )); then marker="$selected"; else marker='  '; fi
-			printf -v row '  %s%s%*s %s' "$marker" "${labels[i]}" "$pad" '' "$shown"
+			printf -v row '  %s%s%*s %s' "$marker" "${labels[idx]}" "$pad" '' "$shown"
 			frame+="$row"$'\n'
 		done
+		(( count )) || frame+="    ${MCA_C_DIM}${nomatch}${MCA_C_RESET}"$'\n'
 
 		frame+=$'\n'
 		# Without this the list reads as a list of what is switched on, which
@@ -463,23 +484,49 @@ mca_ui_apps() {
 			frame+="  ${MCA_C_YELLOW}${warn}${MCA_C_RESET}"$'\n'
 		fi
 		frame+="  ${MCA_C_DIM}${legend}${MCA_C_RESET}"$'\n'
-		frame+="  ${MCA_C_DIM}${hint}${MCA_C_RESET}"$'\n'
+		if (( cursor < 0 )); then
+			frame+="  ${MCA_C_DIM}${hint_search}${MCA_C_RESET}"$'\n'
+			# Puts the terminal cursor at the end of the query (row 4).
+			printf -v row '\033[4;%dH' $(( 6 + ${#l_search} + ${#query} ))
+			frame+="$row"
+		else
+			frame+="  ${MCA_C_DIM}${hint}${MCA_C_RESET}"$'\n'
+		fi
 		printf '%s' "$frame"
 
 		key="$(mca_read_key)" || return "$(( ! touched ))"
 
+		# In the search field every key that can be typed goes into the query,
+		# q and the vi keys too.
+		if (( cursor < 0 )); then
+			case "$key" in
+				down|enter) (( count )) && cursor=0 ;;
+				up)         cursor=$(( count - 1 )) ;;
+				backspace)  query="${query%?}" ;;
+				space)      query+=' ' ;;
+				escape)
+					[[ -z $query ]] && return "$(( ! touched ))"
+					query=''
+					;;
+				left|right) ;;
+				*) [[ $key == [[:print:]] ]] && query+="$key" ;;
+			esac
+			continue
+		fi
+
+		idx=${matches[cursor]}
 		case "$key" in
-			up|k)   cursor=$(( (cursor - 1 + count) % count )) ;;
-			down|j) cursor=$(( (cursor + 1) % count )) ;;
+			up|k)   cursor=$(( cursor - 1 )) ;;
+			down|j) cursor=$(( cursor + 1 < count ? cursor + 1 : -1 )) ;;
 			space|enter|right|left|l|h)
-				case "${states[cursor]}" in
+				case "${states[idx]}" in
 					off|unknown)
-						mca_config_list_del Skip "${MCA_IDS[cursor]}"
-						mca_config_list_add Include "${MCA_IDS[cursor]}"
+						mca_config_list_del Skip "${MCA_IDS[idx]}"
+						mca_config_list_add Include "${MCA_IDS[idx]}"
 						;;
 					*)
-						mca_config_list_del Include "${MCA_IDS[cursor]}"
-						mca_config_list_add Skip "${MCA_IDS[cursor]}"
+						mca_config_list_del Include "${MCA_IDS[idx]}"
+						mca_config_list_add Skip "${MCA_IDS[idx]}"
 						;;
 				esac
 				touched=1

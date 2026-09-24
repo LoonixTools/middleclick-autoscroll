@@ -147,6 +147,15 @@ msgstr ""
 msgid "Up/Down: select, Space: turn on or off, q: back"
 msgstr ""
 
+msgid "Search:"
+msgstr ""
+
+msgid "Type to search, Down: go to the list, Esc: back"
+msgstr ""
+
+msgid "No matches."
+msgstr ""
+
 #. Results
 msgid "Autoscroll is on for %d applications."
 msgstr ""

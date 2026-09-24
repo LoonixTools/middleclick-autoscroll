@@ -149,6 +149,15 @@ msgstr "Autoscroll ist aus. Das hier wäre abgedeckt."
 msgid "Up/Down: select, Space: turn on or off, q: back"
 msgstr "Hoch/Runter: wählen, Leertaste: ein- oder ausschalten, q: zurück"
 
+msgid "Search:"
+msgstr "Suchen:"
+
+msgid "Type to search, Down: go to the list, Esc: back"
+msgstr "Tippen zum Suchen, Runter: zur Liste, Esc: zurück"
+
+msgid "No matches."
+msgstr "Keine Treffer."
+
 #. Results
 msgid "Autoscroll is on for %d applications."
 msgstr "Autoscroll ist für %d Anwendungen an."
