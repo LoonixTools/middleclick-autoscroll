@@ -26,45 +26,16 @@ This tool looks at which of your apps run chromium under the hood and applies th
 
 Just run `middleclick-autoscroll`. This will open the configuration TUI that looks like this:
 
-```
-  Middle-Click Autoscroll
-
-  Autoscroll                     ON
-
-  Applications covered           11 of 13
-  Not identified                 1 (see the applications list)
-  Steam                          ON
-  New applications               ON
-  Middle-click paste             off
-  Last applied                   2 minutes ago
-
-  Applications pick this up the next time they are started.
-
-  [1] Turn autoscroll on or off
-  [2] Re-apply everything
-  [3] Applications
-  [4] Settings
-  [q] Quit
-
-  >
-```
+<p align="center">
+  <img src="res/screenshots/menu.png" alt="The middleclick-autoscroll menu in Konsole: autoscroll on, 19 of 19 applications covered" width="620">
+</p>
 
 Normally you just need to press `[1]` and the magic is done.
 Pressing `[3]` lets you see every app that was found and toggle each one individually. 
 
-```
-  Applications
-
-  ▸ Steam                              on (Steam)
-    Chromium                           on (launcher)
-    Discord                            on (flag file)
-    Obsidian                           on (launcher)
-    Spotify                            on (launcher)
-    Slack                              off
-    Cursor                             cannot tell
-
-  Up/Down: select, Space: turn on or off, q: back
-```
+<p align="center">
+  <img src="res/screenshots/applications.png" alt="The applications list in Konsole, each with how it gets autoscroll" width="620">
+</p>
 
 You can also press `[4]` for more settings.
 

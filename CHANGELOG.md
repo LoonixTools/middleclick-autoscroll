@@ -14,14 +14,9 @@ _2026-09-08_
 
 Welcome to middleclick-autoscroll `v1.5.0`! A middle click now scrolls everywhere instead of pasting text.
 
-```
-  Autoscroll                     ON
-
-  Applications covered           11 of 13
-  Steam                          ON
-  New applications               ON
-  Middle-click paste             off
-```
+<p align="center">
+  <img width="620" alt="The middleclick-autoscroll menu in Konsole, with middle-click paste off" src="https://raw.githubusercontent.com/LoonixTools/middleclick-autoscroll/22bd4f2a3dd89c4cb90fb497c69762b5df7dc6e7/res/screenshots/menu.png">
+</p>
 
 ### Highlights
 
