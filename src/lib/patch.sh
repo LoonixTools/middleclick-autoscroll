@@ -71,6 +71,11 @@ MCA_FEATURE_OPTS='--enable-blink-features|--enable-features'
 # Where an argument has to go: after the program and its own arguments, but
 # before the first field code (%U and friends) or Flatpak's @@ markers, which
 # are placeholders the launcher expands rather than arguments.
+#
+# A bare "--" stops it too. That is where Chromium stops reading switches and
+# starts treating everything as an address, so a flag put after it is read as a
+# page to open and the feature never comes on. Discord's entry is exactly that
+# shape: `discord --url -- %u`.
 _mca_exec_insert_at() {
 	local rest="$1" tok idx=0
 
@@ -79,7 +84,7 @@ _mca_exec_insert_at() {
 		[[ -n $rest ]] || break
 		tok="${rest%% *}"
 		case "$tok" in
-			%[a-zA-Z]|@@|@@u) printf '%s\n' "$idx"; return 0 ;;
+			%[a-zA-Z]|@@|@@u|--) printf '%s\n' "$idx"; return 0 ;;
 		esac
 		rest="${rest:${#tok}}"
 		idx=$(( idx + ${#tok} ))
