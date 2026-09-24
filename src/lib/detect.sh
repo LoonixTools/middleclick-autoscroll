@@ -336,9 +336,14 @@ _mca_stat_batch() {
 # below it are keyed on size and mtime, so an entry for a file that has not
 # changed is never looked at again. A cache written when a verdict meant
 # something else (before an AppImage could come out as anything but "no")
-# would therefore keep answering the old way forever. Bumping this is how such
-# a cache gets dropped instead.
-MCA_CACHE_FORMAT='# middleclick-autoscroll detect 2'
+# would therefore keep answering the old way forever.
+#
+# So the version is part of it, and every update drops the cache. The rules
+# change far more often than anyone remembers to bump a number by hand: v1.5.3
+# taught the hint scan about Discord's launcher, and Discord stayed out of the
+# list anyway, because /usr/bin/discord had not changed and its old "no" was
+# still in here.
+MCA_CACHE_FORMAT="# middleclick-autoscroll detect 2 $MCA_VERSION"
 
 _mca_cache_load() {
 	local path stamp verdict first=1
