@@ -2,6 +2,12 @@
 
 What each release brings, newest first. The [GitHub releases](https://github.com/LoonixTools/middleclick-autoscroll/releases) add every commit that went into it. Versions before `v1.1.0` came without notes.
 
+## v1.5.2
+
+_2026-09-24_
+
+A small patch. The menu now says "1 minute ago" instead of "1 minutes ago".
+
 ## v1.5.1
 
 _2026-09-15_
