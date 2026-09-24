@@ -56,7 +56,8 @@ mca_do_enable() {
 
 	mca_ok "$(mca_msg "Autoscroll is on for %d applications." "$MCA_N_ON")"
 
-	mca_note "$(mca_msg "Applications that are already running pick this up when they are restarted.")"
+	[[ -n $MCA_IN_MENU ]] \
+		|| mca_note "$(mca_msg "Applications that are already running pick this up when they are restarted.")"
 }
 
 mca_do_disable() {
@@ -107,10 +108,12 @@ mca_do_apply() {
 
 	if (( rebuild )); then
 		mca_ok "$(mca_msg "Applied again to %d applications." "$MCA_N_ON")"
-		mca_say "  $(mca_msg "Applications that are already running pick this up when they are restarted.")"
+		[[ -n $MCA_IN_MENU ]] \
+			|| mca_say "  $(mca_msg "Applications that are already running pick this up when they are restarted.")"
 	elif (( MCA_CHANGES )); then
 		mca_ok "$(mca_msg "Applied to %d applications." "$MCA_N_ON")"
-		mca_say "  $(mca_msg "Applications that are already running pick this up when they are restarted.")"
+		[[ -n $MCA_IN_MENU ]] \
+			|| mca_say "  $(mca_msg "Applications that are already running pick this up when they are restarted.")"
 	else
 		mca_ok "$(mca_msg "Already applied to %d applications." "$MCA_N_ON")"
 	fi

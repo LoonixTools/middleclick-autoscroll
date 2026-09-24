@@ -94,6 +94,9 @@ msgstr ""
 msgid "Press any key to continue..."
 msgstr ""
 
+msgid "One moment..."
+msgstr ""
+
 #. Settings
 msgid "Turn off middle-click paste"
 msgstr ""

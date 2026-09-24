@@ -31,14 +31,25 @@ mca_ui_term_restore() {
 	MCA_TERM_SAVED=''
 }
 
-# Runs an action with the terminal handed back to normal line mode, so anything
-# it prints or prompts for behaves the way a program expects.
-mca_ui_cooked() {
-	mca_ui_term_restore
-	"$@"
-	local rc=$?
-	mca_ui_term_raw
-	return $rc
+# What the last action printed. The menu shows it under the status until the
+# next key, so nothing has to wait for a key on a screen of its own.
+MCA_UI_MSG=''
+
+# Set while the menu runs. Its status block already says that running
+# applications need a restart, so the actions leave that line out there.
+MCA_IN_MENU=''
+
+# mca_ui_run <command...>
+# Runs an action in this shell (so what it scans and loads stays) with its
+# output kept for the menu. None of them asks anything.
+mca_ui_run() {
+	local tmp
+
+	printf '  %s%s%s\n' "$MCA_C_DIM" "$(mca_msg "One moment...")" "$MCA_C_RESET"
+	tmp="$(mktemp)" || { "$@"; return; }
+	"$@" > "$tmp" 2>&1
+	MCA_UI_MSG="$(< "$tmp")"
+	rm -f -- "$tmp"
 }
 
 # mca_read_key
@@ -432,8 +443,7 @@ mca_ui_apps() {
 	count=${#MCA_IDS[@]}
 
 	if (( count == 0 )); then
-		printf '\n  %s\n' "$(mca_msg "No Chromium-based applications found.")"
-		mca_pause
+		MCA_UI_MSG="$(mca_msg "No Chromium-based applications found.")"
 		return 1
 	fi
 
@@ -550,8 +560,9 @@ mca_ui_apps() {
 # ---------------------------------------------------------------------------
 
 mca_ui_menu() {
-	local choice
+	local choice line
 
+	MCA_IN_MENU=1
 	mca_ui_term_raw
 	trap 'mca_ui_term_restore' EXIT INT TERM
 
@@ -562,6 +573,13 @@ mca_ui_menu() {
 		mca_head "  $MCA_PRETTY"
 		mca_ui_status
 		printf '\n'
+		if [[ -n $MCA_UI_MSG ]]; then
+			while IFS= read -r line; do
+				printf '  %s\n' "$line"
+			done <<< "$MCA_UI_MSG"
+			printf '\n'
+			MCA_UI_MSG=''
+		fi
 		printf '  [1] %s\n' "$(mca_msg "Turn autoscroll on or off")"
 		printf '  [2] %s\n' "$(mca_msg "Re-apply everything")"
 		printf '  [3] %s\n' "$(mca_msg "Applications")"
@@ -579,13 +597,11 @@ mca_ui_menu() {
 
 		case "$choice" in
 			1)
-				MCA_UI_NEEDS_ACK=''
 				if [[ $CFG_ENABLED == yes ]]; then
-					mca_ui_cooked mca_do_disable
+					mca_ui_run mca_do_disable
 				else
-					mca_ui_cooked mca_do_enable
+					mca_ui_run mca_do_enable
 				fi
-				[[ -n $MCA_UI_NEEDS_ACK ]] && mca_pause
 				;;
 			# Not a plain apply: with the watcher running there is never
 			# anything left for one to do, and a menu entry that answers
@@ -594,17 +610,16 @@ mca_ui_menu() {
 			# what fixes an application that drifted, a flag file somebody
 			# edited, or Steam after it restored its own script.
 			2)
-				mca_ui_cooked mca_do_apply --rebuild
-				mca_pause
+				mca_ui_run mca_do_apply --rebuild
 				;;
 			3)
 				if mca_ui_apps; then
-					[[ $CFG_ENABLED == yes ]] && mca_ui_cooked mca_do_apply --rebuild
+					[[ $CFG_ENABLED == yes ]] && mca_ui_run mca_do_apply --rebuild
 				fi
 				;;
 			4)
 				if mca_ui_settings; then
-					[[ $CFG_ENABLED == yes ]] && mca_ui_cooked mca_do_apply --rebuild
+					[[ $CFG_ENABLED == yes ]] && mca_ui_run mca_do_apply --rebuild
 				fi
 				;;
 			q|Q) mca_ui_term_restore; trap - EXIT INT TERM; return 0 ;;

@@ -94,6 +94,9 @@ msgstr "Beenden"
 msgid "Press any key to continue..."
 msgstr "Beliebige Taste drücken …"
 
+msgid "One moment..."
+msgstr "Einen Moment …"
+
 #. Settings
 msgid "Turn off middle-click paste"
 msgstr "Mittelklick-Einfügen abschalten"

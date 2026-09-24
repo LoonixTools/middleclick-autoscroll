@@ -215,12 +215,6 @@ else
 	MCA_C_GREEN='' MCA_C_YELLOW='' MCA_C_RED=''
 fi
 
-# Set by mca_bad and mca_note. The menu redraws straight after an action, which
-# would wipe the screen; this marks that something was printed the user still
-# has to read. A plain success needs no acknowledgement, because the status
-# block at the top of the menu already shows the new state.
-MCA_UI_NEEDS_ACK=''
-
 # --quiet silences progress chatter; errors still go to stderr. Used by the
 # systemd unit, which has no terminal and logs to the journal anyway.
 MCA_QUIET=''
@@ -228,8 +222,8 @@ MCA_QUIET=''
 mca_say()  { [[ -n $MCA_QUIET ]] || printf '%s\n' "$*"; }
 mca_head() { printf '\n%s%s%s\n\n' "$MCA_C_BOLD$MCA_C_BLUE" "$*" "$MCA_C_RESET"; }
 mca_ok()   { [[ -n $MCA_QUIET ]] || printf '%s✔%s %s\n' "$MCA_C_GREEN" "$MCA_C_RESET" "$*"; }
-mca_bad()  { MCA_UI_NEEDS_ACK=1; printf '%s✘%s %s\n' "$MCA_C_RED" "$MCA_C_RESET" "$*" >&2; }
-mca_note() { MCA_UI_NEEDS_ACK=1; [[ -n $MCA_QUIET ]] || printf '%s•%s %s\n' "$MCA_C_DIM" "$MCA_C_RESET" "$*"; }
+mca_bad()  { printf '%s✘%s %s\n' "$MCA_C_RED" "$MCA_C_RESET" "$*" >&2; }
+mca_note() { [[ -n $MCA_QUIET ]] || printf '%s•%s %s\n' "$MCA_C_DIM" "$MCA_C_RESET" "$*"; }
 
 mca_have() { command -v "$1" > /dev/null 2>&1; }
 
