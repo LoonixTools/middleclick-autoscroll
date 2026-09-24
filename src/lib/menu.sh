@@ -396,7 +396,7 @@ mca_ui_edit_text() {
 #
 # Returns 0 when something was changed.
 mca_ui_apps() {
-	local count key frame row pad i idx cursor=-1 dirty=1 touched=0 locale query=''
+	local count key frame row pad i idx cursor=-1 dirty=1 touched=0 locale query='' needle
 	local footer flines size rows height top=0
 	local -a labels=() lower=() states=() matches=()
 
@@ -455,15 +455,20 @@ mca_ui_apps() {
 			labels=(); lower=(); states=()
 			for i in "${!MCA_IDS[@]}"; do
 				labels+=("${MCA_NAMES[i]}")
-				lower+=("${MCA_NAMES[i],,}")
+				row="${MCA_NAMES[i],,}"
+				lower+=("${row//ı/i}")
 				states+=("${MCA_ROUTES[i]}")
 			done
 			dirty=0
 		fi
 
+		# In a Turkish locale I lowercases to a dotless ı, so "office" would
+		# not find ONLYOFFICE. Both sides fold it back to i.
+		needle="${query,,}"
+		needle="${needle//ı/i}"
 		matches=()
 		for i in "${!labels[@]}"; do
-			[[ ${lower[i]} == *"${query,,}"* ]] && matches+=("$i")
+			[[ ${lower[i]} == *"$needle"* ]] && matches+=("$i")
 		done
 		count=${#matches[@]}
 		(( cursor >= count )) && cursor=$(( count - 1 ))

@@ -1,4 +1,5 @@
-# Translation template for middleclick-autoscroll.
+# Czech translation for middleclick-autoscroll.
+# Machine translated. Corrections are welcome.
 # Copyright (C) 2026 Felitendo
 # This file is distributed under the same license as middleclick-autoscroll.
 #
@@ -8,251 +9,257 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/LoonixTools/middleclick-autoscroll/"
 "issues\n"
 "POT-Creation-Date: 2026-09-24 00:00+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-09-24 00:00+0200\n"
+"Last-Translator: machine translation\n"
+"Language-Team: Czech\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Status labels
 msgid "ON"
-msgstr ""
+msgstr "ZAPNUTO"
 
 msgid "OFF"
-msgstr ""
+msgstr "VYPNUTO"
 
 msgid "on"
-msgstr ""
+msgstr "zapnuto"
 
 msgid "off"
-msgstr ""
+msgstr "vypnuto"
 
 msgid "(none)"
-msgstr ""
+msgstr "(žádné)"
 
 msgid "flag file"
-msgstr ""
+msgstr "soubor s příznaky"
 
 msgid "launcher"
-msgstr ""
+msgstr "spouštěč"
 
 msgid "cannot tell"
-msgstr ""
+msgstr "nelze určit"
 
 msgid "not patched yet"
-msgstr ""
+msgstr "zatím nepoužito"
 
 #. Status block
 msgid "Autoscroll"
-msgstr ""
+msgstr "Autoscroll"
 
 msgid "Applications covered"
-msgstr ""
+msgstr "Pokryté aplikace"
 
 msgid "%d of %d"
-msgstr ""
+msgstr "%d z %d"
 
 msgid "Not identified"
-msgstr ""
+msgstr "Nerozpoznáno"
 
 msgid "%d (see the applications list)"
-msgstr ""
+msgstr "%d (viz seznam aplikací)"
 
 msgid "Steam"
-msgstr ""
+msgstr "Steam"
 
 msgid "Middle-click paste"
-msgstr ""
+msgstr "Vkládání kolečkem"
 
 msgid "New applications"
-msgstr ""
+msgstr "Nové aplikace"
 
 msgid "Last applied"
-msgstr ""
+msgstr "Naposledy použito"
 
 msgid "Applications pick this up the next time they are started."
-msgstr ""
+msgstr "Aplikace to převezmou při příštím spuštění."
 
 #. Menu
 msgid "Turn autoscroll on or off"
-msgstr ""
+msgstr "Zapnout nebo vypnout autoscroll"
 
 msgid "Re-apply everything"
-msgstr ""
+msgstr "Znovu použít vše"
 
 msgid "Applications"
-msgstr ""
+msgstr "Aplikace"
 
 msgid "Settings"
-msgstr ""
+msgstr "Nastavení"
 
 msgid "Quit"
-msgstr ""
+msgstr "Konec"
 
 msgid "Press any key to continue..."
-msgstr ""
+msgstr "Stiskněte libovolnou klávesu..."
 
 msgid "One moment..."
-msgstr ""
+msgstr "Okamžik..."
 
 #. Settings
 msgid "Turn off middle-click paste"
-msgstr ""
+msgstr "Vypnout vkládání kolečkem"
 
 msgid ""
 "Stops middle click from pasting anywhere else. Starts with the next login."
-msgstr ""
+msgstr "Kolečko už jinde nevkládá. Platí od příštího přihlášení."
 
 msgid "Cover new applications"
-msgstr ""
+msgstr "Pokrýt nové aplikace"
 
 msgid "Applications installed later get autoscroll on their own."
-msgstr ""
+msgstr "Později nainstalované aplikace dostanou autoscroll samy."
 
 msgid "More Chromium arguments"
-msgstr ""
+msgstr "Další argumenty Chromia"
 
 msgid "Passed to every application along with the autoscroll one."
-msgstr ""
+msgstr "Předávají se každé aplikaci spolu s tím pro autoscroll."
 
 msgid "Up/Down: select, Space: change, q: back"
-msgstr ""
+msgstr "Nahoru/Dolů: vybrat, Mezerník: změnit, q: zpět"
 
 msgid "Arguments separated by spaces, empty for none:"
-msgstr ""
+msgstr "Argumenty oddělené mezerami, prázdné pro žádné:"
 
 msgid "Could not save the setting."
-msgstr ""
+msgstr "Nastavení se nepodařilo uložit."
 
 #. Applications screen
 msgid "Looking at the installed applications..."
-msgstr ""
+msgstr "Procházím nainstalované aplikace..."
 
 msgid "No Chromium-based applications found."
-msgstr ""
+msgstr "Nenalezeny žádné aplikace založené na Chromiu."
 
 msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
-msgstr ""
+msgstr "Co je označeno „nelze určit“, zůstane vypnuté, dokud to tu nezapnete."
 
 msgid "Autoscroll is off. This is what would be covered."
-msgstr ""
+msgstr "Autoscroll je vypnutý. Toto by bylo pokryto."
 
 msgid "Up/Down: select, Space: turn on or off, q: back"
-msgstr ""
+msgstr "Nahoru/Dolů: vybrat, Mezerník: zapnout či vypnout, q: zpět"
 
 msgid "Search:"
-msgstr ""
+msgstr "Hledat:"
 
 msgid "Type to search, Down: go to the list, Esc: back"
-msgstr ""
+msgstr "Pište pro hledání, Dolů: do seznamu, Esc: zpět"
 
 msgid "No matches."
-msgstr ""
+msgstr "Žádné výsledky."
 
 #. Results
 msgid "Autoscroll is on for %d applications."
-msgstr ""
+msgstr "Autoscroll je zapnutý. Aplikací: %d."
 
 msgid ""
 "Applications that are already running pick this up when they are restarted."
-msgstr ""
+msgstr "Již spuštěné aplikace to převezmou po restartu."
 
 msgid "Could not start the watcher for newly installed applications."
-msgstr ""
+msgstr "Sledování nových aplikací se nepodařilo spustit."
 
 msgid ""
 "No systemd user session, so newly installed applications will not be picked "
 "up on their own."
 msgstr ""
+"Chybí uživatelská relace systemd, takže nově nainstalované aplikace nebudou "
+"zachyceny samy."
 
 msgid "Autoscroll is off and everything that was changed has been put back."
-msgstr ""
+msgstr "Autoscroll je vypnutý a všechny změny byly vráceny."
 
 msgid "Autoscroll is off. Turn it on first."
-msgstr ""
+msgstr "Autoscroll je vypnutý. Nejdřív ho zapněte."
 
 msgid "Applied again to %d applications."
-msgstr ""
+msgstr "Znovu použito. Aplikací: %d."
 
 msgid "Applied to %d applications."
-msgstr ""
+msgstr "Použito. Aplikací: %d."
 
 msgid "Already applied to %d applications."
-msgstr ""
+msgstr "Už použito. Aplikací: %d."
 
 msgid ""
 "Steam starts its interface in a way this version cannot change without Steam "
 "noticing; leaving it alone."
 msgstr ""
+"Steam spouští své rozhraní způsobem, který tato verze nedokáže změnit, aniž "
+"by si toho Steam všiml; Steam zůstává beze změny."
 
 msgid ""
 "Steam's interface cannot be given the flag without leaving a file Steam "
 "would reinstall; the change has been taken back."
 msgstr ""
+"Rozhraní Steamu nelze dát příznak bez souboru, který by Steam znovu "
+"nainstaloval; změna byla vrácena."
 
 msgid "Middle click stops pasting at the next login."
-msgstr ""
+msgstr "Kolečko přestane vkládat od příštího přihlášení."
 
 #. Help
 msgid "Usage: middleclick-autoscroll [command]"
-msgstr ""
+msgstr "Použití: middleclick-autoscroll [příkaz]"
 
 msgid "Commands:"
-msgstr ""
+msgstr "Příkazy:"
 
 msgid "Turn autoscroll on"
-msgstr ""
+msgstr "Zapnout autoscroll"
 
 msgid "Turn it off and put everything back"
-msgstr ""
+msgstr "Vypnout a vše vrátit"
 
 msgid "Apply to anything installed since the last run"
-msgstr ""
+msgstr "Použít na vše nainstalované od posledního spuštění"
 
 msgid "Take everything back and apply it again"
-msgstr ""
+msgstr "Vše vrátit a použít znovu"
 
 msgid "Show what is covered"
-msgstr ""
+msgstr "Ukázat, co je pokryto"
 
 msgid "List every application that was found"
-msgstr ""
+msgstr "Vypsat všechny nalezené aplikace"
 
 msgid "Show this help"
-msgstr ""
+msgstr "Zobrazit tuto nápovědu"
 
 msgid "Show the version"
-msgstr ""
+msgstr "Zobrazit verzi"
 
 msgid "Without a command an interactive menu is shown."
-msgstr ""
+msgstr "Bez příkazu se zobrazí interaktivní nabídka."
 
 msgid "Unknown command: %s"
-msgstr ""
+msgstr "Neznámý příkaz: %s"
 
 #. Time
 msgid "never"
-msgstr ""
+msgstr "nikdy"
 
 msgid "just now"
-msgstr ""
+msgstr "právě teď"
 
 msgid "1 minute ago"
-msgstr ""
+msgstr "před 1 minutou"
 
 msgid "%d minutes ago"
-msgstr ""
+msgstr "před %d min"
 
 msgid "1 hour ago"
-msgstr ""
+msgstr "před 1 hodinou"
 
 msgid "%d hours ago"
-msgstr ""
+msgstr "před %d h"
 
 msgid "1 day ago"
-msgstr ""
+msgstr "před 1 dnem"
 
 msgid "%d days ago"
-msgstr ""
+msgstr "před %d dny"

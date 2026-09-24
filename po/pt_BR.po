@@ -1,4 +1,5 @@
-# Translation template for middleclick-autoscroll.
+# Brazilian Portuguese translation for middleclick-autoscroll.
+# Machine translated. Corrections are welcome.
 # Copyright (C) 2026 Felitendo
 # This file is distributed under the same license as middleclick-autoscroll.
 #
@@ -8,251 +9,260 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/LoonixTools/middleclick-autoscroll/"
 "issues\n"
 "POT-Creation-Date: 2026-09-24 00:00+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-09-24 00:00+0200\n"
+"Last-Translator: machine translation\n"
+"Language-Team: Brazilian Portuguese\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Status labels
 msgid "ON"
-msgstr ""
+msgstr "LIGADO"
 
 msgid "OFF"
-msgstr ""
+msgstr "DESLIGADO"
 
 msgid "on"
-msgstr ""
+msgstr "ligado"
 
 msgid "off"
-msgstr ""
+msgstr "desligado"
 
 msgid "(none)"
-msgstr ""
+msgstr "(nenhum)"
 
 msgid "flag file"
-msgstr ""
+msgstr "arquivo de flags"
 
 msgid "launcher"
-msgstr ""
+msgstr "lançador"
 
 msgid "cannot tell"
-msgstr ""
+msgstr "indeterminado"
 
 msgid "not patched yet"
-msgstr ""
+msgstr "ainda não aplicado"
 
 #. Status block
 msgid "Autoscroll"
-msgstr ""
+msgstr "Autoscroll"
 
 msgid "Applications covered"
-msgstr ""
+msgstr "Aplicativos cobertos"
 
 msgid "%d of %d"
-msgstr ""
+msgstr "%d de %d"
 
 msgid "Not identified"
-msgstr ""
+msgstr "Não identificados"
 
 msgid "%d (see the applications list)"
-msgstr ""
+msgstr "%d (veja a lista de aplicativos)"
 
 msgid "Steam"
-msgstr ""
+msgstr "Steam"
 
 msgid "Middle-click paste"
-msgstr ""
+msgstr "Colar com clique do meio"
 
 msgid "New applications"
-msgstr ""
+msgstr "Novos aplicativos"
 
 msgid "Last applied"
-msgstr ""
+msgstr "Aplicado pela última vez"
 
 msgid "Applications pick this up the next time they are started."
-msgstr ""
+msgstr "Os aplicativos passam a usar isso na próxima vez que forem abertos."
 
 #. Menu
 msgid "Turn autoscroll on or off"
-msgstr ""
+msgstr "Ligar ou desligar o autoscroll"
 
 msgid "Re-apply everything"
-msgstr ""
+msgstr "Aplicar tudo de novo"
 
 msgid "Applications"
-msgstr ""
+msgstr "Aplicativos"
 
 msgid "Settings"
-msgstr ""
+msgstr "Configurações"
 
 msgid "Quit"
-msgstr ""
+msgstr "Sair"
 
 msgid "Press any key to continue..."
-msgstr ""
+msgstr "Pressione qualquer tecla para continuar..."
 
 msgid "One moment..."
-msgstr ""
+msgstr "Um momento..."
 
 #. Settings
 msgid "Turn off middle-click paste"
-msgstr ""
+msgstr "Desligar colar com clique do meio"
 
 msgid ""
 "Stops middle click from pasting anywhere else. Starts with the next login."
 msgstr ""
+"O clique do meio para de colar em outros lugares. A partir do próximo login."
 
 msgid "Cover new applications"
-msgstr ""
+msgstr "Cobrir novos aplicativos"
 
 msgid "Applications installed later get autoscroll on their own."
-msgstr ""
+msgstr "Aplicativos instalados depois recebem o autoscroll sozinhos."
 
 msgid "More Chromium arguments"
-msgstr ""
+msgstr "Mais argumentos do Chromium"
 
 msgid "Passed to every application along with the autoscroll one."
-msgstr ""
+msgstr "Passados a todo aplicativo junto com o do autoscroll."
 
 msgid "Up/Down: select, Space: change, q: back"
-msgstr ""
+msgstr "Cima/Baixo: escolher, Espaço: mudar, q: voltar"
 
 msgid "Arguments separated by spaces, empty for none:"
-msgstr ""
+msgstr "Argumentos separados por espaços, vazio para nenhum:"
 
 msgid "Could not save the setting."
-msgstr ""
+msgstr "Não foi possível salvar a configuração."
 
 #. Applications screen
 msgid "Looking at the installed applications..."
-msgstr ""
+msgstr "Verificando os aplicativos instalados..."
 
 msgid "No Chromium-based applications found."
-msgstr ""
+msgstr "Nenhum aplicativo baseado em Chromium encontrado."
 
 msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
 msgstr ""
+"O que está marcado como \"indeterminado\" fica desligado até ser ligado aqui."
 
 msgid "Autoscroll is off. This is what would be covered."
-msgstr ""
+msgstr "O autoscroll está desligado. Isto é o que seria coberto."
 
 msgid "Up/Down: select, Space: turn on or off, q: back"
-msgstr ""
+msgstr "Cima/Baixo: escolher, Espaço: ligar ou desligar, q: voltar"
 
 msgid "Search:"
-msgstr ""
+msgstr "Buscar:"
 
 msgid "Type to search, Down: go to the list, Esc: back"
-msgstr ""
+msgstr "Digite para buscar, Baixo: ir para a lista, Esc: voltar"
 
 msgid "No matches."
-msgstr ""
+msgstr "Nenhum resultado."
 
 #. Results
 msgid "Autoscroll is on for %d applications."
-msgstr ""
+msgstr "O autoscroll está ligado para %d aplicativos."
 
 msgid ""
 "Applications that are already running pick this up when they are restarted."
 msgstr ""
+"Aplicativos que já estão abertos passam a usar isso ao serem reiniciados."
 
 msgid "Could not start the watcher for newly installed applications."
-msgstr ""
+msgstr "Não foi possível iniciar o monitoramento de novos aplicativos."
 
 msgid ""
 "No systemd user session, so newly installed applications will not be picked "
 "up on their own."
 msgstr ""
+"Sem sessão de usuário do systemd, então novos aplicativos não serão "
+"detectados sozinhos."
 
 msgid "Autoscroll is off and everything that was changed has been put back."
-msgstr ""
+msgstr "O autoscroll está desligado e tudo o que foi alterado foi restaurado."
 
 msgid "Autoscroll is off. Turn it on first."
-msgstr ""
+msgstr "O autoscroll está desligado. Ligue-o primeiro."
 
 msgid "Applied again to %d applications."
-msgstr ""
+msgstr "Aplicado de novo a %d aplicativos."
 
 msgid "Applied to %d applications."
-msgstr ""
+msgstr "Aplicado a %d aplicativos."
 
 msgid "Already applied to %d applications."
-msgstr ""
+msgstr "Já aplicado a %d aplicativos."
 
 msgid ""
 "Steam starts its interface in a way this version cannot change without Steam "
 "noticing; leaving it alone."
 msgstr ""
+"O Steam inicia sua interface de um jeito que esta versão não consegue mudar "
+"sem que o Steam perceba; ele fica como está."
 
 msgid ""
 "Steam's interface cannot be given the flag without leaving a file Steam "
 "would reinstall; the change has been taken back."
 msgstr ""
+"A interface do Steam não pode receber o flag sem deixar um arquivo que o "
+"Steam reinstalaria; a alteração foi desfeita."
 
 msgid "Middle click stops pasting at the next login."
-msgstr ""
+msgstr "O clique do meio para de colar no próximo login."
 
 #. Help
 msgid "Usage: middleclick-autoscroll [command]"
-msgstr ""
+msgstr "Uso: middleclick-autoscroll [comando]"
 
 msgid "Commands:"
-msgstr ""
+msgstr "Comandos:"
 
 msgid "Turn autoscroll on"
-msgstr ""
+msgstr "Ligar o autoscroll"
 
 msgid "Turn it off and put everything back"
-msgstr ""
+msgstr "Desligar e restaurar tudo"
 
 msgid "Apply to anything installed since the last run"
-msgstr ""
+msgstr "Aplicar a tudo o que foi instalado desde a última vez"
 
 msgid "Take everything back and apply it again"
-msgstr ""
+msgstr "Desfazer tudo e aplicar de novo"
 
 msgid "Show what is covered"
-msgstr ""
+msgstr "Mostrar o que está coberto"
 
 msgid "List every application that was found"
-msgstr ""
+msgstr "Listar todos os aplicativos encontrados"
 
 msgid "Show this help"
-msgstr ""
+msgstr "Mostrar esta ajuda"
 
 msgid "Show the version"
-msgstr ""
+msgstr "Mostrar a versão"
 
 msgid "Without a command an interactive menu is shown."
-msgstr ""
+msgstr "Sem comando, um menu interativo é exibido."
 
 msgid "Unknown command: %s"
-msgstr ""
+msgstr "Comando desconhecido: %s"
 
 #. Time
 msgid "never"
-msgstr ""
+msgstr "nunca"
 
 msgid "just now"
-msgstr ""
+msgstr "agora mesmo"
 
 msgid "1 minute ago"
-msgstr ""
+msgstr "há 1 minuto"
 
 msgid "%d minutes ago"
-msgstr ""
+msgstr "há %d minutos"
 
 msgid "1 hour ago"
-msgstr ""
+msgstr "há 1 hora"
 
 msgid "%d hours ago"
-msgstr ""
+msgstr "há %d horas"
 
 msgid "1 day ago"
-msgstr ""
+msgstr "há 1 dia"
 
 msgid "%d days ago"
-msgstr ""
+msgstr "há %d dias"

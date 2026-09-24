@@ -1,4 +1,5 @@
-# Translation template for middleclick-autoscroll.
+# Dutch translation for middleclick-autoscroll.
+# Machine translated. Corrections are welcome.
 # Copyright (C) 2026 Felitendo
 # This file is distributed under the same license as middleclick-autoscroll.
 #
@@ -8,251 +9,259 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/LoonixTools/middleclick-autoscroll/"
 "issues\n"
 "POT-Creation-Date: 2026-09-24 00:00+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-09-24 00:00+0200\n"
+"Last-Translator: machine translation\n"
+"Language-Team: Dutch\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Status labels
 msgid "ON"
-msgstr ""
+msgstr "AAN"
 
 msgid "OFF"
-msgstr ""
+msgstr "UIT"
 
 msgid "on"
-msgstr ""
+msgstr "aan"
 
 msgid "off"
-msgstr ""
+msgstr "uit"
 
 msgid "(none)"
-msgstr ""
+msgstr "(geen)"
 
 msgid "flag file"
-msgstr ""
+msgstr "flagbestand"
 
 msgid "launcher"
-msgstr ""
+msgstr "starter"
 
 msgid "cannot tell"
-msgstr ""
+msgstr "onbekend"
 
 msgid "not patched yet"
-msgstr ""
+msgstr "nog niet toegepast"
 
 #. Status block
 msgid "Autoscroll"
-msgstr ""
+msgstr "Autoscroll"
 
 msgid "Applications covered"
-msgstr ""
+msgstr "Gedekte toepassingen"
 
 msgid "%d of %d"
-msgstr ""
+msgstr "%d van %d"
 
 msgid "Not identified"
-msgstr ""
+msgstr "Niet herkend"
 
 msgid "%d (see the applications list)"
-msgstr ""
+msgstr "%d (zie de lijst met toepassingen)"
 
 msgid "Steam"
-msgstr ""
+msgstr "Steam"
 
 msgid "Middle-click paste"
-msgstr ""
+msgstr "Plakken met middelklik"
 
 msgid "New applications"
-msgstr ""
+msgstr "Nieuwe toepassingen"
 
 msgid "Last applied"
-msgstr ""
+msgstr "Laatst toegepast"
 
 msgid "Applications pick this up the next time they are started."
-msgstr ""
+msgstr "Toepassingen nemen dit over bij de volgende start."
 
 #. Menu
 msgid "Turn autoscroll on or off"
-msgstr ""
+msgstr "Autoscroll aan- of uitzetten"
 
 msgid "Re-apply everything"
-msgstr ""
+msgstr "Alles opnieuw toepassen"
 
 msgid "Applications"
-msgstr ""
+msgstr "Toepassingen"
 
 msgid "Settings"
-msgstr ""
+msgstr "Instellingen"
 
 msgid "Quit"
-msgstr ""
+msgstr "Afsluiten"
 
 msgid "Press any key to continue..."
-msgstr ""
+msgstr "Druk op een toets om door te gaan..."
 
 msgid "One moment..."
-msgstr ""
+msgstr "Een moment..."
 
 #. Settings
 msgid "Turn off middle-click paste"
-msgstr ""
+msgstr "Plakken met middelklik uitzetten"
 
 msgid ""
 "Stops middle click from pasting anywhere else. Starts with the next login."
 msgstr ""
+"Middelklik plakt dan nergens anders meer. Vanaf de volgende aanmelding."
 
 msgid "Cover new applications"
-msgstr ""
+msgstr "Nieuwe toepassingen meenemen"
 
 msgid "Applications installed later get autoscroll on their own."
-msgstr ""
+msgstr "Later geïnstalleerde toepassingen krijgen vanzelf autoscroll."
 
 msgid "More Chromium arguments"
-msgstr ""
+msgstr "Meer Chromium-argumenten"
 
 msgid "Passed to every application along with the autoscroll one."
-msgstr ""
+msgstr "Gaan samen met dat voor autoscroll naar elke toepassing."
 
 msgid "Up/Down: select, Space: change, q: back"
-msgstr ""
+msgstr "Omhoog/Omlaag: kiezen, Spatie: wijzigen, q: terug"
 
 msgid "Arguments separated by spaces, empty for none:"
-msgstr ""
+msgstr "Argumenten gescheiden door spaties, leeg voor geen:"
 
 msgid "Could not save the setting."
-msgstr ""
+msgstr "De instelling kon niet worden opgeslagen."
 
 #. Applications screen
 msgid "Looking at the installed applications..."
-msgstr ""
+msgstr "Geïnstalleerde toepassingen worden bekeken..."
 
 msgid "No Chromium-based applications found."
-msgstr ""
+msgstr "Geen op Chromium gebaseerde toepassingen gevonden."
 
 msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
 msgstr ""
+"Wat als \"onbekend\" gemarkeerd is, blijft uit tot het hier aangezet wordt."
 
 msgid "Autoscroll is off. This is what would be covered."
-msgstr ""
+msgstr "Autoscroll staat uit. Dit zou gedekt worden."
 
 msgid "Up/Down: select, Space: turn on or off, q: back"
-msgstr ""
+msgstr "Omhoog/Omlaag: kiezen, Spatie: aan- of uitzetten, q: terug"
 
 msgid "Search:"
-msgstr ""
+msgstr "Zoeken:"
 
 msgid "Type to search, Down: go to the list, Esc: back"
-msgstr ""
+msgstr "Typ om te zoeken, Omlaag: naar de lijst, Esc: terug"
 
 msgid "No matches."
-msgstr ""
+msgstr "Geen resultaten."
 
 #. Results
 msgid "Autoscroll is on for %d applications."
-msgstr ""
+msgstr "Autoscroll staat aan voor %d toepassingen."
 
 msgid ""
 "Applications that are already running pick this up when they are restarted."
-msgstr ""
+msgstr "Toepassingen die al draaien, nemen dit over na een herstart."
 
 msgid "Could not start the watcher for newly installed applications."
-msgstr ""
+msgstr "Kon het bewaken van nieuwe toepassingen niet starten."
 
 msgid ""
 "No systemd user session, so newly installed applications will not be picked "
 "up on their own."
 msgstr ""
+"Geen systemd-gebruikerssessie, dus nieuw geïnstalleerde toepassingen worden "
+"niet vanzelf opgepikt."
 
 msgid "Autoscroll is off and everything that was changed has been put back."
-msgstr ""
+msgstr "Autoscroll staat uit en alles wat veranderd was, is teruggezet."
 
 msgid "Autoscroll is off. Turn it on first."
-msgstr ""
+msgstr "Autoscroll staat uit. Zet het eerst aan."
 
 msgid "Applied again to %d applications."
-msgstr ""
+msgstr "Opnieuw toegepast op %d toepassingen."
 
 msgid "Applied to %d applications."
-msgstr ""
+msgstr "Toegepast op %d toepassingen."
 
 msgid "Already applied to %d applications."
-msgstr ""
+msgstr "Al toegepast op %d toepassingen."
 
 msgid ""
 "Steam starts its interface in a way this version cannot change without Steam "
 "noticing; leaving it alone."
 msgstr ""
+"Steam start zijn interface op een manier die deze versie niet kan veranderen "
+"zonder dat Steam het merkt; Steam blijft zoals het is."
 
 msgid ""
 "Steam's interface cannot be given the flag without leaving a file Steam "
 "would reinstall; the change has been taken back."
 msgstr ""
+"De interface van Steam kan de flag niet krijgen zonder een bestand achter te "
+"laten dat Steam opnieuw zou installeren; de wijziging is teruggedraaid."
 
 msgid "Middle click stops pasting at the next login."
-msgstr ""
+msgstr "Middelklik plakt vanaf de volgende aanmelding niet meer."
 
 #. Help
 msgid "Usage: middleclick-autoscroll [command]"
-msgstr ""
+msgstr "Gebruik: middleclick-autoscroll [opdracht]"
 
 msgid "Commands:"
-msgstr ""
+msgstr "Opdrachten:"
 
 msgid "Turn autoscroll on"
-msgstr ""
+msgstr "Autoscroll aanzetten"
 
 msgid "Turn it off and put everything back"
-msgstr ""
+msgstr "Uitzetten en alles terugzetten"
 
 msgid "Apply to anything installed since the last run"
-msgstr ""
+msgstr "Toepassen op alles wat sinds de vorige keer geïnstalleerd is"
 
 msgid "Take everything back and apply it again"
-msgstr ""
+msgstr "Alles terugdraaien en opnieuw toepassen"
 
 msgid "Show what is covered"
-msgstr ""
+msgstr "Tonen wat gedekt is"
 
 msgid "List every application that was found"
-msgstr ""
+msgstr "Alle gevonden toepassingen tonen"
 
 msgid "Show this help"
-msgstr ""
+msgstr "Deze hulp tonen"
 
 msgid "Show the version"
-msgstr ""
+msgstr "De versie tonen"
 
 msgid "Without a command an interactive menu is shown."
-msgstr ""
+msgstr "Zonder opdracht wordt een interactief menu getoond."
 
 msgid "Unknown command: %s"
-msgstr ""
+msgstr "Onbekende opdracht: %s"
 
 #. Time
 msgid "never"
-msgstr ""
+msgstr "nooit"
 
 msgid "just now"
-msgstr ""
+msgstr "zojuist"
 
 msgid "1 minute ago"
-msgstr ""
+msgstr "1 minuut geleden"
 
 msgid "%d minutes ago"
-msgstr ""
+msgstr "%d minuten geleden"
 
 msgid "1 hour ago"
-msgstr ""
+msgstr "1 uur geleden"
 
 msgid "%d hours ago"
-msgstr ""
+msgstr "%d uur geleden"
 
 msgid "1 day ago"
-msgstr ""
+msgstr "1 dag geleden"
 
 msgid "%d days ago"
-msgstr ""
+msgstr "%d dagen geleden"

@@ -36,7 +36,7 @@ else
 USERUNITDIR  ?= $(DATADIR)/systemd/user
 endif
 
-LINGUAS      := de
+LINGUAS      := cs de es fr it nl pl pt_BR ru tr uk
 MOFILES      := $(patsubst %,po/%.mo,$(LINGUAS))
 MANPAGE      := doc/middleclick-autoscroll.1
 

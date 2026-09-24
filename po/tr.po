@@ -1,4 +1,5 @@
-# Translation template for middleclick-autoscroll.
+# Turkish translation for middleclick-autoscroll.
+# Machine translated. Corrections are welcome.
 # Copyright (C) 2026 Felitendo
 # This file is distributed under the same license as middleclick-autoscroll.
 #
@@ -8,251 +9,258 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/LoonixTools/middleclick-autoscroll/"
 "issues\n"
 "POT-Creation-Date: 2026-09-24 00:00+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-09-24 00:00+0200\n"
+"Last-Translator: machine translation\n"
+"Language-Team: Turkish\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Status labels
 msgid "ON"
-msgstr ""
+msgstr "AÇIK"
 
 msgid "OFF"
-msgstr ""
+msgstr "KAPALI"
 
 msgid "on"
-msgstr ""
+msgstr "açık"
 
 msgid "off"
-msgstr ""
+msgstr "kapalı"
 
 msgid "(none)"
-msgstr ""
+msgstr "(yok)"
 
 msgid "flag file"
-msgstr ""
+msgstr "bayrak dosyası"
 
 msgid "launcher"
-msgstr ""
+msgstr "başlatıcı"
 
 msgid "cannot tell"
-msgstr ""
+msgstr "belirsiz"
 
 msgid "not patched yet"
-msgstr ""
+msgstr "henüz uygulanmadı"
 
 #. Status block
 msgid "Autoscroll"
-msgstr ""
+msgstr "Autoscroll"
 
 msgid "Applications covered"
-msgstr ""
+msgstr "Kapsanan uygulamalar"
 
 msgid "%d of %d"
-msgstr ""
+msgstr "%d / %d"
 
 msgid "Not identified"
-msgstr ""
+msgstr "Tanınmadı"
 
 msgid "%d (see the applications list)"
-msgstr ""
+msgstr "%d (uygulama listesine bakın)"
 
 msgid "Steam"
-msgstr ""
+msgstr "Steam"
 
 msgid "Middle-click paste"
-msgstr ""
+msgstr "Orta tıkla yapıştırma"
 
 msgid "New applications"
-msgstr ""
+msgstr "Yeni uygulamalar"
 
 msgid "Last applied"
-msgstr ""
+msgstr "Son uygulanma"
 
 msgid "Applications pick this up the next time they are started."
-msgstr ""
+msgstr "Uygulamalar bunu bir sonraki açılışta alır."
 
 #. Menu
 msgid "Turn autoscroll on or off"
-msgstr ""
+msgstr "Autoscroll'u aç veya kapat"
 
 msgid "Re-apply everything"
-msgstr ""
+msgstr "Her şeyi yeniden uygula"
 
 msgid "Applications"
-msgstr ""
+msgstr "Uygulamalar"
 
 msgid "Settings"
-msgstr ""
+msgstr "Ayarlar"
 
 msgid "Quit"
-msgstr ""
+msgstr "Çık"
 
 msgid "Press any key to continue..."
-msgstr ""
+msgstr "Devam etmek için bir tuşa basın..."
 
 msgid "One moment..."
-msgstr ""
+msgstr "Bir dakika..."
 
 #. Settings
 msgid "Turn off middle-click paste"
-msgstr ""
+msgstr "Orta tıkla yapıştırmayı kapat"
 
 msgid ""
 "Stops middle click from pasting anywhere else. Starts with the next login."
 msgstr ""
+"Orta tık artık başka hiçbir yerde yapıştırmaz. Bir sonraki girişten itibaren."
 
 msgid "Cover new applications"
-msgstr ""
+msgstr "Yeni uygulamaları kapsa"
 
 msgid "Applications installed later get autoscroll on their own."
-msgstr ""
+msgstr "Sonradan kurulan uygulamalar Autoscroll'u kendiliğinden alır."
 
 msgid "More Chromium arguments"
-msgstr ""
+msgstr "Ek Chromium argümanları"
 
 msgid "Passed to every application along with the autoscroll one."
-msgstr ""
+msgstr "Autoscroll argümanıyla birlikte her uygulamaya verilir."
 
 msgid "Up/Down: select, Space: change, q: back"
-msgstr ""
+msgstr "Yukarı/Aşağı: seç, Boşluk: değiştir, q: geri"
 
 msgid "Arguments separated by spaces, empty for none:"
-msgstr ""
+msgstr "Boşlukla ayrılmış argümanlar, hiçbiri için boş bırakın:"
 
 msgid "Could not save the setting."
-msgstr ""
+msgstr "Ayar kaydedilemedi."
 
 #. Applications screen
 msgid "Looking at the installed applications..."
-msgstr ""
+msgstr "Kurulu uygulamalara bakılıyor..."
 
 msgid "No Chromium-based applications found."
-msgstr ""
+msgstr "Chromium tabanlı uygulama bulunamadı."
 
 msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
-msgstr ""
+msgstr "\"belirsiz\" olarak işaretlenenler burada açılana kadar kapalı kalır."
 
 msgid "Autoscroll is off. This is what would be covered."
-msgstr ""
+msgstr "Autoscroll kapalı. Kapsanacak olanlar bunlar."
 
 msgid "Up/Down: select, Space: turn on or off, q: back"
-msgstr ""
+msgstr "Yukarı/Aşağı: seç, Boşluk: aç veya kapat, q: geri"
 
 msgid "Search:"
-msgstr ""
+msgstr "Ara:"
 
 msgid "Type to search, Down: go to the list, Esc: back"
-msgstr ""
+msgstr "Aramak için yazın, Aşağı: listeye git, Esc: geri"
 
 msgid "No matches."
-msgstr ""
+msgstr "Eşleşme yok."
 
 #. Results
 msgid "Autoscroll is on for %d applications."
-msgstr ""
+msgstr "Autoscroll %d uygulama için açık."
 
 msgid ""
 "Applications that are already running pick this up when they are restarted."
-msgstr ""
+msgstr "Zaten çalışan uygulamalar bunu yeniden başlatıldıklarında alır."
 
 msgid "Could not start the watcher for newly installed applications."
-msgstr ""
+msgstr "Yeni uygulamaları izleme başlatılamadı."
 
 msgid ""
 "No systemd user session, so newly installed applications will not be picked "
 "up on their own."
 msgstr ""
+"systemd kullanıcı oturumu yok, bu yüzden yeni kurulan uygulamalar "
+"kendiliğinden algılanmayacak."
 
 msgid "Autoscroll is off and everything that was changed has been put back."
-msgstr ""
+msgstr "Autoscroll kapalı ve değiştirilen her şey geri alındı."
 
 msgid "Autoscroll is off. Turn it on first."
-msgstr ""
+msgstr "Autoscroll kapalı. Önce açın."
 
 msgid "Applied again to %d applications."
-msgstr ""
+msgstr "%d uygulamaya yeniden uygulandı."
 
 msgid "Applied to %d applications."
-msgstr ""
+msgstr "%d uygulamaya uygulandı."
 
 msgid "Already applied to %d applications."
-msgstr ""
+msgstr "Zaten %d uygulamaya uygulanmış."
 
 msgid ""
 "Steam starts its interface in a way this version cannot change without Steam "
 "noticing; leaving it alone."
 msgstr ""
+"Steam arayüzünü, bu sürümün Steam fark etmeden değiştiremeyeceği bir şekilde "
+"başlatıyor; olduğu gibi bırakılıyor."
 
 msgid ""
 "Steam's interface cannot be given the flag without leaving a file Steam "
 "would reinstall; the change has been taken back."
 msgstr ""
+"Steam arayüzüne, Steam'in yeniden kuracağı bir dosya bırakmadan bayrak "
+"verilemiyor; değişiklik geri alındı."
 
 msgid "Middle click stops pasting at the next login."
-msgstr ""
+msgstr "Orta tık bir sonraki girişte yapıştırmayı bırakır."
 
 #. Help
 msgid "Usage: middleclick-autoscroll [command]"
-msgstr ""
+msgstr "Kullanım: middleclick-autoscroll [komut]"
 
 msgid "Commands:"
-msgstr ""
+msgstr "Komutlar:"
 
 msgid "Turn autoscroll on"
-msgstr ""
+msgstr "Autoscroll'u aç"
 
 msgid "Turn it off and put everything back"
-msgstr ""
+msgstr "Kapat ve her şeyi geri al"
 
 msgid "Apply to anything installed since the last run"
-msgstr ""
+msgstr "Son çalıştırmadan beri kurulan her şeye uygula"
 
 msgid "Take everything back and apply it again"
-msgstr ""
+msgstr "Her şeyi geri al ve yeniden uygula"
 
 msgid "Show what is covered"
-msgstr ""
+msgstr "Neyin kapsandığını göster"
 
 msgid "List every application that was found"
-msgstr ""
+msgstr "Bulunan tüm uygulamaları listele"
 
 msgid "Show this help"
-msgstr ""
+msgstr "Bu yardımı göster"
 
 msgid "Show the version"
-msgstr ""
+msgstr "Sürümü göster"
 
 msgid "Without a command an interactive menu is shown."
-msgstr ""
+msgstr "Komut verilmezse etkileşimli bir menü gösterilir."
 
 msgid "Unknown command: %s"
-msgstr ""
+msgstr "Bilinmeyen komut: %s"
 
 #. Time
 msgid "never"
-msgstr ""
+msgstr "hiç"
 
 msgid "just now"
-msgstr ""
+msgstr "az önce"
 
 msgid "1 minute ago"
-msgstr ""
+msgstr "1 dakika önce"
 
 msgid "%d minutes ago"
-msgstr ""
+msgstr "%d dakika önce"
 
 msgid "1 hour ago"
-msgstr ""
+msgstr "1 saat önce"
 
 msgid "%d hours ago"
-msgstr ""
+msgstr "%d saat önce"
 
 msgid "1 day ago"
-msgstr ""
+msgstr "1 gün önce"
 
 msgid "%d days ago"
-msgstr ""
+msgstr "%d gün önce"

@@ -1,0 +1,267 @@
+# Russian translation for middleclick-autoscroll.
+# Machine translated. Corrections are welcome.
+# Copyright (C) 2026 Felitendo
+# This file is distributed under the same license as middleclick-autoscroll.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: middleclick-autoscroll 1.6.0\n"
+"Report-Msgid-Bugs-To: https://github.com/LoonixTools/middleclick-autoscroll/"
+"issues\n"
+"POT-Creation-Date: 2026-09-24 00:00+0200\n"
+"PO-Revision-Date: 2026-09-24 00:00+0200\n"
+"Last-Translator: machine translation\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Status labels
+msgid "ON"
+msgstr "ВКЛ"
+
+msgid "OFF"
+msgstr "ВЫКЛ"
+
+msgid "on"
+msgstr "вкл"
+
+msgid "off"
+msgstr "выкл"
+
+msgid "(none)"
+msgstr "(нет)"
+
+msgid "flag file"
+msgstr "файл флагов"
+
+msgid "launcher"
+msgstr "ярлык"
+
+msgid "cannot tell"
+msgstr "неизвестно"
+
+msgid "not patched yet"
+msgstr "ещё не применено"
+
+#. Status block
+msgid "Autoscroll"
+msgstr "Автопрокрутка"
+
+msgid "Applications covered"
+msgstr "Приложения с автопрокруткой"
+
+msgid "%d of %d"
+msgstr "%d из %d"
+
+msgid "Not identified"
+msgstr "Не распознано"
+
+msgid "%d (see the applications list)"
+msgstr "%d (см. список приложений)"
+
+msgid "Steam"
+msgstr "Steam"
+
+msgid "Middle-click paste"
+msgstr "Вставка средней кнопкой"
+
+msgid "New applications"
+msgstr "Новые приложения"
+
+msgid "Last applied"
+msgstr "Последнее применение"
+
+msgid "Applications pick this up the next time they are started."
+msgstr "Приложения подхватят это при следующем запуске."
+
+#. Menu
+msgid "Turn autoscroll on or off"
+msgstr "Включить или выключить автопрокрутку"
+
+msgid "Re-apply everything"
+msgstr "Применить всё заново"
+
+msgid "Applications"
+msgstr "Приложения"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Quit"
+msgstr "Выход"
+
+msgid "Press any key to continue..."
+msgstr "Нажмите любую клавишу..."
+
+msgid "One moment..."
+msgstr "Минутку..."
+
+#. Settings
+msgid "Turn off middle-click paste"
+msgstr "Отключить вставку средней кнопкой"
+
+msgid ""
+"Stops middle click from pasting anywhere else. Starts with the next login."
+msgstr ""
+"Средняя кнопка больше нигде не вставляет. Со следующего входа в систему."
+
+msgid "Cover new applications"
+msgstr "Охватывать новые приложения"
+
+msgid "Applications installed later get autoscroll on their own."
+msgstr "Приложения, установленные позже, получат автопрокрутку сами."
+
+msgid "More Chromium arguments"
+msgstr "Другие аргументы Chromium"
+
+msgid "Passed to every application along with the autoscroll one."
+msgstr "Передаются каждому приложению вместе с аргументом автопрокрутки."
+
+msgid "Up/Down: select, Space: change, q: back"
+msgstr "Вверх/Вниз: выбор, Пробел: изменить, q: назад"
+
+msgid "Arguments separated by spaces, empty for none:"
+msgstr "Аргументы через пробел (пусто, если не нужны):"
+
+msgid "Could not save the setting."
+msgstr "Не удалось сохранить настройку."
+
+#. Applications screen
+msgid "Looking at the installed applications..."
+msgstr "Просмотр установленных приложений..."
+
+msgid "No Chromium-based applications found."
+msgstr "Приложения на основе Chromium не найдены."
+
+msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
+msgstr ""
+"Помеченное как «неизвестно» остаётся выключенным, пока его здесь не включат."
+
+msgid "Autoscroll is off. This is what would be covered."
+msgstr "Автопрокрутка выключена. Вот что было бы охвачено."
+
+msgid "Up/Down: select, Space: turn on or off, q: back"
+msgstr "Вверх/Вниз: выбор, Пробел: включить или выключить, q: назад"
+
+msgid "Search:"
+msgstr "Поиск:"
+
+msgid "Type to search, Down: go to the list, Esc: back"
+msgstr "Печатайте для поиска, Вниз: к списку, Esc: назад"
+
+msgid "No matches."
+msgstr "Ничего не найдено."
+
+#. Results
+msgid "Autoscroll is on for %d applications."
+msgstr "Автопрокрутка включена. Приложений: %d."
+
+msgid ""
+"Applications that are already running pick this up when they are restarted."
+msgstr "Уже запущенные приложения подхватят это после перезапуска."
+
+msgid "Could not start the watcher for newly installed applications."
+msgstr "Не удалось запустить отслеживание новых приложений."
+
+msgid ""
+"No systemd user session, so newly installed applications will not be picked "
+"up on their own."
+msgstr ""
+"Нет пользовательского сеанса systemd, поэтому новые приложения не будут "
+"подхвачены сами."
+
+msgid "Autoscroll is off and everything that was changed has been put back."
+msgstr "Автопрокрутка выключена, все изменения отменены."
+
+msgid "Autoscroll is off. Turn it on first."
+msgstr "Автопрокрутка выключена. Сначала включите её."
+
+msgid "Applied again to %d applications."
+msgstr "Применено заново. Приложений: %d."
+
+msgid "Applied to %d applications."
+msgstr "Применено. Приложений: %d."
+
+msgid "Already applied to %d applications."
+msgstr "Уже применено. Приложений: %d."
+
+msgid ""
+"Steam starts its interface in a way this version cannot change without Steam "
+"noticing; leaving it alone."
+msgstr ""
+"Steam запускает свой интерфейс так, что эта версия не может это изменить "
+"незаметно для Steam; Steam остаётся без изменений."
+
+msgid ""
+"Steam's interface cannot be given the flag without leaving a file Steam "
+"would reinstall; the change has been taken back."
+msgstr ""
+"Интерфейсу Steam нельзя передать флаг, не оставив файл, который Steam "
+"переустановил бы; изменение отменено."
+
+msgid "Middle click stops pasting at the next login."
+msgstr "Средняя кнопка перестанет вставлять со следующего входа в систему."
+
+#. Help
+msgid "Usage: middleclick-autoscroll [command]"
+msgstr "Использование: middleclick-autoscroll [команда]"
+
+msgid "Commands:"
+msgstr "Команды:"
+
+msgid "Turn autoscroll on"
+msgstr "Включить автопрокрутку"
+
+msgid "Turn it off and put everything back"
+msgstr "Выключить и всё вернуть"
+
+msgid "Apply to anything installed since the last run"
+msgstr "Применить ко всему, что установлено с прошлого запуска"
+
+msgid "Take everything back and apply it again"
+msgstr "Всё отменить и применить заново"
+
+msgid "Show what is covered"
+msgstr "Показать, что охвачено"
+
+msgid "List every application that was found"
+msgstr "Показать все найденные приложения"
+
+msgid "Show this help"
+msgstr "Показать эту справку"
+
+msgid "Show the version"
+msgstr "Показать версию"
+
+msgid "Without a command an interactive menu is shown."
+msgstr "Без команды показывается интерактивное меню."
+
+msgid "Unknown command: %s"
+msgstr "Неизвестная команда: %s"
+
+#. Time
+msgid "never"
+msgstr "никогда"
+
+msgid "just now"
+msgstr "только что"
+
+msgid "1 minute ago"
+msgstr "1 минуту назад"
+
+msgid "%d minutes ago"
+msgstr "%d мин. назад"
+
+msgid "1 hour ago"
+msgstr "1 час назад"
+
+msgid "%d hours ago"
+msgstr "%d ч назад"
+
+msgid "1 day ago"
+msgstr "1 день назад"
+
+msgid "%d days ago"
+msgstr "%d дн. назад"
