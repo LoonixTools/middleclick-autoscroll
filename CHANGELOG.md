@@ -2,6 +2,26 @@
 
 What each release brings, newest first. The [GitHub releases](https://github.com/LoonixTools/middleclick-autoscroll/releases) add every commit that went into it. Versions before `v1.1.0` came without notes.
 
+## v1.6.0
+
+_2026-09-24_
+
+Welcome to middleclick-autoscroll `v1.6.0`! The menu got quicker and simpler: search your apps, fewer settings, and no more waiting for a key. It now speaks eleven languages. The ten new ones are machine translated, so corrections are very welcome.
+
+<p align="center">
+  <img width="620" alt="The applications list in Konsole, with a search field on top" src="https://raw.githubusercontent.com/LoonixTools/middleclick-autoscroll/v1.6.0/res/screenshots/applications.png">
+</p>
+
+### Highlights
+
+- Search field in the applications list
+- Long lists scroll
+- Faster start
+- Simpler settings
+- Spotify in the applications list
+- Results show up in the menu
+- Ten more languages
+
 ## v1.5.4
 
 _2026-09-24_
