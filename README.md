@@ -4,15 +4,15 @@
 
 <h1 align="center">middleclick-autoscroll</h1>
 
-<h3 align="center">Middle-click autoscroll in every application that supports it.</h3>
+<h3 align="center">Middle-click autoscroll in every app that supports it.</h3>
 
 <p align="center">
-  Works with browsers, electron apps like discord and spotify, steam, and anything else that runs on chromium.
+  Browsers, Electron apps like Discord and Spotify, Steam and anything else built on Chromium.
 </p>
 
 <h5 align="center">
+  <a href="#install">Install</a> |
   <a href="#how-to-use">How to use</a> |
-  <a href="#how-to-install">Install</a> |
   <a href="https://github.com/LoonixTools/middleclick-autoscroll/issues">Report a bug</a>
 </h5>
 
@@ -20,34 +20,19 @@
   <a href="https://buymeacoffee.com/felitendo"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="48"></a>
 </p>
 
-This tool looks at which of your apps run chromium under the hood and applies the necessary steps to get autoscrolling working (often just a feature flag). One install, one command and autoscroll _✨just works✨_ (like on windows).
+## Install
 
-## How to use
-
-Just run `middleclick-autoscroll`. This will open the configuration TUI that looks like this:
-
-<p align="center">
-  <img src="res/screenshots/menu.png" alt="The middleclick-autoscroll menu in Konsole: autoscroll on, 19 of 19 applications covered" width="620">
-</p>
-
-Normally you just need to press `[1]` and the magic is done.
-Pressing `[3]` lets you see every app that was found and toggle each one individually. 
-
-<p align="center">
-  <img src="res/screenshots/applications.png" alt="The applications list in Konsole, each with how it gets autoscroll" width="620">
-</p>
-
-You can also press `[4]` for more settings.
-
-## How to install
-
-**Arch**
+<details>
+<summary><b>Arch</b></summary>
 
 ```bash
 yay -S middleclick-autoscroll
 ```
 
-**Fedora**
+</details>
+
+<details>
+<summary><b>Fedora</b></summary>
 
 ```bash
 sudo curl -fsSL -o /etc/yum.repos.d/middleclick-autoscroll.repo \
@@ -55,7 +40,10 @@ sudo curl -fsSL -o /etc/yum.repos.d/middleclick-autoscroll.repo \
 sudo dnf install middleclick-autoscroll
 ```
 
-**Bazzite**
+</details>
+
+<details>
+<summary><b>Bazzite</b></summary>
 
 ```bash
 sudo curl -fsSL -o /etc/yum.repos.d/middleclick-autoscroll.repo \
@@ -64,7 +52,10 @@ sudo rpm-ostree install middleclick-autoscroll
 systemctl reboot
 ```
 
-**Debian**
+</details>
+
+<details>
+<summary><b>Debian</b>, Ubuntu</summary>
 
 ```bash
 sudo install -d -m 0755 /etc/apt/keyrings
@@ -75,7 +66,10 @@ echo "deb [signed-by=/etc/apt/keyrings/middleclick-autoscroll.gpg] https://looni
 sudo apt update && sudo apt install middleclick-autoscroll
 ```
 
-**openSUSE**
+</details>
+
+<details>
+<summary><b>openSUSE</b></summary>
 
 ```bash
 sudo rpm --import https://loonixtools.github.io/middleclick-autoscroll/KEY.gpg
@@ -84,64 +78,71 @@ sudo zypper addrepo --gpgcheck --refresh \
 sudo zypper install middleclick-autoscroll
 ```
 
-## How it works
+</details>
 
-Blink (the engine in Chromium, Electron, and CEF) already has autoscroll, but
-it's off on Linux by default because middle click normally pastes the clipboard (??).
-This flag turns it on:
+## How to use
 
+```bash
+middleclick-autoscroll
+```
+
+<p align="center">
+  <img src="res/screenshots/menu.png" alt="The middleclick-autoscroll menu in Konsole: autoscroll on, 19 of 19 applications covered" width="620">
+</p>
+
+Press **1**. Autoscroll _✨just works✨_, like on Windows.
+
+<details>
+<summary>Applications</summary>
+
+**3** lists every app it found. Space turns one on or off.
+
+<p align="center">
+  <img src="res/screenshots/applications.png" alt="The applications list in Konsole, each with how it gets autoscroll" width="620">
+</p>
+
+</details>
+
+## More
+
+<details>
+<summary>How it works</summary>
+
+Chromium, Electron and CEF all have autoscroll built in, but it is off on Linux. One flag turns it on:
+
+```
 --enable-blink-features=MiddleClickAutoscroll
+```
 
-But doing that for every app is kinda bothersome and it also might break with updates.
-That's why I created this small tool to automate that.
+Setting that for every app by hand is a pain and breaks with updates, so this tool does it for you.
+New apps are picked up on their own. AppImages are covered too, without unpacking or starting them.
 
-Browsers get the same thing but this time without "blink":
+</details>
 
---enable-features=MiddleClickAutoscroll
+<details>
+<summary>Commands</summary>
 
-But both do the same ¯\_(ツ)_/¯
-
-Except in Helium and Brave, which have their own names for it
-(`HeliumMiddleClickAutoscroll`, and Brave's is actually spelled
-`MiddelButtonClickAutoscroll`), so browsers get those as well.
-
-New apps are picked up by a systemd path unit that watches the
-relevant directories. If you hate systemd; `middleclick-autoscroll apply` does the
-same thing manually.
-
-AppImages get looked into as well. The payload is a squashfs image glued onto
-the runtime, and squashfs keeps a small table with the name of every file in
-there. So that table gets read and unpacked (a few kb, nothing is extracted
-and the thing is never run) and the Chromium files are looked for in it. An
-Electron AppImage is covered like any other app; a Tauri one is left alone,
-because WebKitGTK simply has no autoscroll to switch on.
-
-## Commands
-
-| Command | |
+| | |
 |---|---|
-| `middleclick-autoscroll` | Interactive menu |
-| `… enable` | Turn on, apply, start watching |
+| `middleclick-autoscroll` | The menu |
+| `… enable` | Turn on |
 | `… disable` | Undo everything |
-| `… apply` | Apply to new apps |
-| `… apply --rebuild` | Redo from scratch |
-| `… status` | What's covered |
-| `… list` | All apps and how they're handled |
+| `… apply` | Pick up new apps |
+| `… status` | What is covered |
+| `… list` | All apps and how they are handled |
 
-## Building from source
+</details>
+
+<details>
+<summary>Build from source</summary>
 
 ```bash
 make
 sudo make install
 ```
 
-Optionally needs `msgfmt` (gettext) for translations and `scdoc` for the man
-page. Supports `PREFIX` and `DESTDIR`. `make check` runs syntax checks and
-shellcheck.
+Optional: `msgfmt` for translations, `scdoc` for the man page.
 
-See [packaging/README.md](packaging/README.md) for release builds and repo
-signing.
-
-## License
+</details>
 
 GPL-3.0-or-later.
