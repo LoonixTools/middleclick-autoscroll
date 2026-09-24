@@ -98,7 +98,7 @@ Press **1**. Autoscroll _✨just works✨_, like on Windows.
 **3** lists every app it found. Type to search, then Space turns one on or off.
 
 <p align="center">
-  <img src="res/screenshots/applications.png" alt="The applications list in Konsole, each with how it gets autoscroll" width="620">
+  <img src="res/screenshots/applications.png" alt="The applications list in Konsole, with a search field on top and how each app gets autoscroll" width="620">
 </p>
 
 </details>
