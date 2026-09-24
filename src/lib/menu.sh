@@ -397,6 +397,7 @@ mca_ui_edit_text() {
 # Returns 0 when something was changed.
 mca_ui_apps() {
 	local count key frame row pad i idx cursor=-1 dirty=1 touched=0 locale query=''
+	local footer flines size rows height top=0
 	local -a labels=() lower=() states=() matches=()
 
 	locale="$(mca_ui_locale)"
@@ -467,13 +468,52 @@ mca_ui_apps() {
 		count=${#matches[@]}
 		(( cursor >= count )) && cursor=$(( count - 1 ))
 
+		# The footer is built first: the list gets the rows it leaves over.
+		footer='' flines=1
+		# Without this the list reads as a list of what is switched on, which
+		# it is not while the whole thing is off.
+		if [[ $CFG_ENABLED != yes ]]; then
+			footer+="  ${MCA_C_YELLOW}${warn}${MCA_C_RESET}"$'\n'
+			flines=$(( flines + 1 ))
+		fi
+		# Only needed while there is something it explains.
+		if (( MCA_N_UNKNOWN )); then
+			footer+="  ${MCA_C_DIM}${legend}${MCA_C_RESET}"$'\n'
+			flines=$(( flines + 1 ))
+		fi
+		if (( cursor < 0 )); then
+			footer+="  ${MCA_C_DIM}${hint_search}${MCA_C_RESET}"$'\n'
+			# Puts the terminal cursor at the end of the query (row 4).
+			printf -v row '\033[4;%dH' $(( 6 + ${#l_search} + ${#query} ))
+			footer+="$row"
+		else
+			footer+="  ${MCA_C_DIM}${hint}${MCA_C_RESET}"$'\n'
+		fi
+
+		# A list longer than the terminal would scroll the search field off
+		# the top. So only a window of it is drawn, and it follows the cursor.
+		# Five rows above the list, one below it, the footer, and the row the
+		# terminal cursor ends up on.
+		# A terminal that does not know its size says 0; then all of it is drawn.
+		size="$(stty size 2>/dev/null)"
+		rows="${size%% *}"
+		[[ $rows =~ ^[1-9][0-9]*$ ]] || rows=10000
+		height=$(( rows - 7 - flines ))
+		(( height < 1 )) && height=1
+		(( top > count - height )) && top=$(( count - height ))
+		(( top < 0 )) && top=0
+		if (( cursor >= 0 )); then
+			(( cursor < top )) && top=$cursor
+			(( cursor >= top + height )) && top=$(( cursor - height + 1 ))
+		fi
+
 		frame="$clearseq"$'\n'"${MCA_C_BOLD}${MCA_C_BLUE}  ${title}${MCA_C_RESET}"$'\n\n'
 
 		local marker selected="${MCA_C_BLUE}▸${MCA_C_RESET} " shown
 		if (( cursor < 0 )); then marker="$selected"; else marker='  '; fi
 		frame+="  ${marker}${l_search} ${query}"$'\n\n'
 
-		for i in "${!matches[@]}"; do
+		for (( i = top; i < count && i < top + height; i++ )); do
 			idx=${matches[i]}
 			case "${states[idx]}" in
 				off)     shown="$s_off" ;;
@@ -491,24 +531,13 @@ mca_ui_apps() {
 		done
 		(( count )) || frame+="    ${MCA_C_DIM}${nomatch}${MCA_C_RESET}"$'\n'
 
-		frame+=$'\n'
-		# Without this the list reads as a list of what is switched on, which
-		# it is not while the whole thing is off.
-		if [[ $CFG_ENABLED != yes ]]; then
-			frame+="  ${MCA_C_YELLOW}${warn}${MCA_C_RESET}"$'\n'
-		fi
-		# Only needed while there is something it explains.
-		if (( MCA_N_UNKNOWN )); then
-			frame+="  ${MCA_C_DIM}${legend}${MCA_C_RESET}"$'\n'
-		fi
-		if (( cursor < 0 )); then
-			frame+="  ${MCA_C_DIM}${hint_search}${MCA_C_RESET}"$'\n'
-			# Puts the terminal cursor at the end of the query (row 4).
-			printf -v row '\033[4;%dH' $(( 6 + ${#l_search} + ${#query} ))
-			frame+="$row"
+		# Where the window is, in the row under it, when there is more.
+		if (( count > height )); then
+			frame+="    ${MCA_C_DIM}$(( top + 1 ))–$(( i )) / ${count}${MCA_C_RESET}"$'\n'
 		else
-			frame+="  ${MCA_C_DIM}${hint}${MCA_C_RESET}"$'\n'
+			frame+=$'\n'
 		fi
+		frame+="$footer"
 		printf '%s' "$frame"
 
 		key="$(mca_read_key)" || return "$(( ! touched ))"
