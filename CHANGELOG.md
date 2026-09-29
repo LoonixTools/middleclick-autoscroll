@@ -2,6 +2,12 @@
 
 What each release brings, newest first. The [GitHub releases](https://github.com/LoonixTools/middleclick-autoscroll/releases) add every commit that went into it. Versions before `v1.1.0` came without notes.
 
+## v1.6.1
+
+_2026-09-29_
+
+A small patch. Autoscroll now works in Steam with **Use experimental SteamRT3 Steam Client** turned on. And apps that start at login through a link, like Mullvad VPN, get autoscroll now instead of an error.
+
 ## v1.6.0
 
 _2026-09-24_
