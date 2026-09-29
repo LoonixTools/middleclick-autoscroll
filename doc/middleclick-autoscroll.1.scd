@@ -133,6 +133,12 @@ helper, inside Steam's own installation:
 
 	~/.local/share/Steam/ubuntu12_64/steamwebhelper_sniper_wrap.sh
 
+The steamrt3 client, a beta for now, has a script of its own:
+
+	~/.local/share/Steam/steamrt64/steamwebhelper.sh
+
+Both are patched where both are there, so switching clients keeps autoscroll.
+
 Where that installation is depends on how Steam was installed:
 _~/.local/share/Steam_ for Valve's own package and Arch's,
 _~/.steam/debian-installation_ for Debian's, and the private tree of the
@@ -154,11 +160,16 @@ it was given arguments for, and that one carries no arguments of anybody's. One
 wrong length costs the whole client package downloaded, extracted and installed
 again, and a client that quits at the end of it instead of coming up.
 
-So where the comments cannot pay for the argument, or a client update has
-changed how the helper is started, nothing is written and the status screen
-says Steam is not patched. Nothing goes on Steam's launcher entry, its
-autostart entry or the shortcuts it writes for single games either, and Steam
-goes on repairing its own installation.
+The steamrt3 script has no comments to pay with. So it is copied aside as
+_steamwebhelper.sh.orig_, and a stub of the same size takes its place. The stub
+runs the copy with the argument added. Steam only checks the files it knows,
+and the copy is not one of them.
+
+So where neither fits, or a client update has changed how the helper is
+started, nothing is written and the status screen says Steam is not patched.
+Nothing goes on Steam's launcher entry, its autostart entry or the shortcuts it
+writes for single games either, and Steam goes on repairing its own
+installation.
 
 An installation patched by an earlier version, which appended where the
 comments were short, is written again to fit at the next apply, or taken back

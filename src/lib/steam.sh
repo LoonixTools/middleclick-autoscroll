@@ -9,6 +9,10 @@
 #
 #   ~/.local/share/Steam/ubuntu12_64/steamwebhelper_sniper_wrap.sh
 #
+# The steamrt3 client, a beta for now, has a script of its own:
+#
+#   ~/.local/share/Steam/steamrt64/steamwebhelper.sh
+#
 # Steam compares the installed files against its manifest at every start (by
 # size and timestamp, not by content) and restores whatever differs.
 # So the patch is written to look untouched: the bytes the flag costs are taken
@@ -27,6 +31,10 @@
 # flag either fits in the space the comments give back, or it is not written at
 # all: no autoscroll in the interface is a smaller thing than a client that
 # reinstalls itself.
+#
+# The steamrt3 script has no comments to give back. So it is copied aside, as
+# it is, and replaced by a stub of the same size that runs the copy with the
+# flag. See _mca_steam_stub.
 #
 # The file comes back on every client update, and the watcher re-applies the
 # patch when that happens.
@@ -60,24 +68,28 @@ mca_steam_roots() {
 	done
 }
 
-# The script to patch inside a Steam installation. Newer clients start the
-# helper through a wrapper inside the container runtime; older ones exec it
-# from steamwebhelper.sh directly, and that one forwards its arguments too.
-mca_steam_script() {
-	local root="$1" f
+# The scripts to patch inside a Steam installation, one per client. The default
+# client starts the helper through a wrapper inside the container runtime;
+# older ones exec it from steamwebhelper.sh directly, and that one forwards its
+# arguments too. The steamrt3 client has its own. Both clients are patched
+# where both are there, so switching between them keeps autoscroll.
+mca_steam_scripts() {
+	local root="$1" f found=1
 	for f in \
 		"$root/ubuntu12_64/steamwebhelper_sniper_wrap.sh" \
 		"$root/ubuntu12_64/steamwebhelper.sh"
 	do
-		[[ -f $f && -w $f ]] && { printf '%s\n' "$f"; return 0; }
+		[[ -f $f && -w $f ]] && { printf '%s\n' "$f"; found=0; break; }
 	done
-	return 1
+	f="$root/steamrt64/steamwebhelper.sh"
+	[[ -f $f && -w $f ]] && { printf '%s\n' "$f"; found=0; }
+	return "$found"
 }
 
 mca_steam_installed() {
 	local root
 	while IFS= read -r root; do
-		mca_steam_script "$root" > /dev/null && return 0
+		mca_steam_scripts "$root" > /dev/null && return 0
 	done < <(mca_steam_roots)
 	return 1
 }
@@ -87,13 +99,17 @@ mca_steam_script_patched() {
 	grep -q -- "$MCA_FEATURE" "$1" 2>/dev/null
 }
 
+# Whether every script there is patched. One that is not is a client that
+# starts without autoscroll.
 mca_steam_patched() {
-	local root script
+	local root script found=0
 	while IFS= read -r root; do
-		script="$(mca_steam_script "$root")" || continue
-		mca_steam_script_patched "$script" && return 0
+		while IFS= read -r script; do
+			mca_steam_script_patched "$script" || return 1
+			found=1
+		done < <(mca_steam_scripts "$root")
 	done < <(mca_steam_roots)
-	return 1
+	(( found ))
 }
 
 # _mca_steam_exec_line <script>
@@ -163,6 +179,81 @@ _mca_steam_same_size() {
 	(( $(wc -c < "$script") == $(printf '%s\n' "$content" | wc -c) ))
 }
 
+# Where a stub keeps Steam's own script, and the line that runs it from there.
+MCA_STEAM_ORIG=.orig
+MCA_STEAM_STUB="exec \"\$0$MCA_STEAM_ORIG\" \"\$@\""
+
+# _mca_steam_stub <script> <flags>
+# The stub on stdout, for a script with no comments to pay for the flags. It
+# is exactly as long as the script and runs Steam's own script, kept next to
+# it, with the flags added. That script hands its arguments on to the helper.
+# Steam only checks the files in its manifest, and the copy is not one of them.
+# Fails when the script does not hand its arguments on, has no #! line, or is
+# too short to hold the stub.
+_mca_steam_stub() {
+	local script="$1" flags="$2" head body pad
+
+	[[ -n "$(_mca_steam_exec_line "$script")" ]] || return 1
+	head="$(head -n 1 -- "$script")"
+	[[ $head == '#!'* ]] || return 1
+
+	body="$MCA_STEAM_STUB $flags"
+	pad=$(( $(wc -c < "$script") - $(printf '%s\n%s\n' "$head" "$body" | wc -c) ))
+	(( pad >= 0 )) || return 1
+
+	# The bytes left over go into a comment line.
+	printf '%s\n' "$head"
+	if (( pad == 1 )); then
+		printf '\n'
+	elif (( pad > 1 )); then
+		printf '#%*s\n' $(( pad - 2 )) ''
+	fi
+	printf '%s' "$body"
+}
+
+# _mca_steam_is_stub <script>
+_mca_steam_is_stub() {
+	grep -qF -- "$MCA_STEAM_STUB" "$1" 2>/dev/null
+}
+
+# _mca_steam_text <script> <flags>
+# The patched script on stdout: from the comments if they can pay for the
+# flags, as a stub if not. Fails when neither keeps the size.
+_mca_steam_text() {
+	local script="$1" flags="$2" out
+
+	if ! { out="$(_mca_steam_build "$script" "$flags")" \
+		&& _mca_steam_same_size "$script" "$out"; }
+	then
+		out="$(_mca_steam_stub "$script" "$flags")" \
+			&& _mca_steam_same_size "$script" "$out" || return 1
+	fi
+	printf '%s' "$out"
+}
+
+# _mca_steam_write <script> <backup> <content>
+# Writes the patched script. <backup> is the untouched copy kept for undoing.
+_mca_steam_write() {
+	local script="$1" backup="$2" content="$3"
+
+	# A stub needs Steam's script next to it before it can start anything.
+	if [[ $content == *"$MCA_STEAM_STUB"* ]]; then
+		cp -p -- "$backup" "$script$MCA_STEAM_ORIG" 2>/dev/null || return 1
+		chmod +x -- "$script$MCA_STEAM_ORIG" 2>/dev/null || true
+	fi
+
+	if mca_write_if_changed "$script" "$content"$'\n'; then
+		MCA_CHANGES=$(( MCA_CHANGES + 1 ))
+	fi
+	chmod +x -- "$script" 2>/dev/null || true
+
+	# Steam looks at when the file was last written as well as at how big
+	# it is, and the copy taken before the edit still carries the original
+	# timestamp. Putting it back costs nothing and removes the other half
+	# of what the client would notice.
+	touch -r "$backup" -- "$script" 2>/dev/null || true
+}
+
 # _mca_steam_refresh_backup <script>
 # A client update brings a new version of the script, and the copy kept from
 # before it is no longer what putting it back means. Only ever done while the
@@ -195,15 +286,18 @@ _mca_steam_settle() {
 	# Nothing to compare against, so nothing can be said about the length.
 	[[ -f $copy ]] || return 0
 
-	# Already the length Steam expects: the patch is a good one.
-	(( $(wc -c < "$script") == $(wc -c < "$copy") )) && return 0
-
-	if out="$(_mca_steam_build "$copy" "$flags")" && _mca_steam_same_size "$copy" "$out"; then
-		if mca_write_if_changed "$script" "$out"$'\n'; then
-			MCA_CHANGES=$(( MCA_CHANGES + 1 ))
+	# Already the length Steam expects: the patch is a good one. Unless it is
+	# a stub that lost Steam's script next to it, and would start nothing.
+	if (( $(wc -c < "$script") == $(wc -c < "$copy") )); then
+		if _mca_steam_is_stub "$script" && [[ ! -f $script$MCA_STEAM_ORIG ]]; then
+			cp -p -- "$copy" "$script$MCA_STEAM_ORIG" 2>/dev/null || true
 		fi
-		chmod +x -- "$script" 2>/dev/null || true
-		touch -r "$copy" -- "$script" 2>/dev/null || true
+		return 0
+	fi
+
+	if out="$(_mca_steam_text "$copy" "$flags")" \
+		&& _mca_steam_write "$script" "$copy" "$out"
+	then
 		mca_ledger_add steam "$script" "$name"
 		return 0
 	fi
@@ -224,41 +318,31 @@ mca_steam_apply() {
 	flags="$(mca_flags)"
 
 	while IFS= read -r root; do
-		script="$(mca_steam_script "$root")" || continue
-		found=1
+		while IFS= read -r script; do
+			found=1
 
-		if mca_steam_script_patched "$script"; then
-			_mca_steam_settle "$script" "$flags"
-			continue
-		fi
+			if mca_steam_script_patched "$script"; then
+				_mca_steam_settle "$script" "$flags"
+				continue
+			fi
 
-		_mca_steam_refresh_backup "$script"
+			_mca_steam_refresh_backup "$script"
 
-		# Either the comments can pay for the flag or nothing is written.
-		# A longer file is one Steam reinstalls itself over; a client update
-		# that changed how the helper is started leaves no line to patch at
-		# all. Both end here, and this script is what starts Steam's entire
-		# interface, so leaving it alone is the only safe answer to either.
-		if ! { out="$(_mca_steam_build "$script" "$flags")" \
-			&& _mca_steam_same_size "$script" "$out"; }
-		then
-			mca_note "$(mca_msg "Steam starts its interface in a way this version cannot change without Steam noticing; leaving it alone.")"
-			continue
-		fi
+			# Either the file keeps its length or nothing is written. A
+			# longer file is one Steam reinstalls itself over; a client
+			# update that changed how the helper is started leaves no line
+			# to patch at all. Both end here, and this script is what starts
+			# Steam's entire interface, so leaving it alone is the only safe
+			# answer to either.
+			if ! out="$(_mca_steam_text "$script" "$flags")"; then
+				mca_note "$(mca_msg "Steam starts its interface in a way this version cannot change without Steam noticing; leaving it alone.")"
+				continue
+			fi
 
-		backup="$(mca_backup "$script")" || continue
-		if mca_write_if_changed "$script" "$out"$'\n'; then
-			MCA_CHANGES=$(( MCA_CHANGES + 1 ))
-		fi
-		chmod +x -- "$script" 2>/dev/null || true
-
-		# Steam looks at when the file was last written as well as at how big
-		# it is, and the copy taken before the edit still carries the original
-		# timestamp. Putting it back costs nothing and removes the other half
-		# of what the client would notice.
-		touch -r "$MCA_BACKUPDIR/$backup" -- "$script" 2>/dev/null || true
-
-		mca_ledger_add steam "$script" "$backup"
+			backup="$(mca_backup "$script")" || continue
+			_mca_steam_write "$script" "$MCA_BACKUPDIR/$backup" "$out" || continue
+			mca_ledger_add steam "$script" "$backup"
+		done < <(mca_steam_scripts "$root")
 	done < <(mca_steam_roots)
 
 	(( found ))
@@ -266,7 +350,9 @@ mca_steam_apply() {
 
 # mca_steam_revert <script> <backup name>
 mca_steam_revert() {
-	local script="$1" backup="$2"
+	local script="$1" backup="$2" orig="$1$MCA_STEAM_ORIG" stub=1 tmp
+
+	_mca_steam_is_stub "$script" || stub=0
 
 	if [[ -n $backup && -f "$MCA_BACKUPDIR/$backup" ]]; then
 		if [[ -e $script ]]; then
@@ -274,14 +360,21 @@ mca_steam_revert() {
 			chmod +x -- "$script" 2>/dev/null || true
 		fi
 		rm -f -- "$MCA_BACKUPDIR/$backup"
+	elif (( stub )) && [[ -f $orig ]]; then
+		# No backup, but a stub keeps Steam's own script right next to it.
+		cp -p -- "$orig" "$script" 2>/dev/null || return 1
+	else
+		# No backup to fall back on, so take the flags back out of the exec line.
+		[[ -f $script ]] || return 1
+		tmp="$(mktemp "${script}.XXXXXX")" || return 1
+		sed "s| $MCA_FLAG||g" "$script" > "$tmp" && mv -f "$tmp" "$script" || { rm -f "$tmp"; return 1; }
+		chmod +x -- "$script" 2>/dev/null || true
 		return 0
 	fi
 
-	# No backup to fall back on, so take the flags back out of the exec line.
-	[[ -f $script ]] || return 1
-	local tmp
-	tmp="$(mktemp "${script}.XXXXXX")" || return 1
-	sed "s| $MCA_FLAG||g" "$script" > "$tmp" && mv -f "$tmp" "$script" || { rm -f "$tmp"; return 1; }
-	chmod +x -- "$script" 2>/dev/null || true
+	# The copy goes once the stub that ran it is gone.
+	if (( stub )) && ! _mca_steam_is_stub "$script"; then
+		rm -f -- "$orig"
+	fi
 	return 0
 }
