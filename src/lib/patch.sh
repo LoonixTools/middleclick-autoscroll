@@ -375,7 +375,7 @@ mca_desktop_apply() {
 		[[ "$content" == "$(< "$src")" ]] && return 0
 
 		backup="$(mca_backup "$src")" || return 1
-		if mca_write_if_changed "$src" "$content"$'\n'; then
+		if _mca_entry_write "$src" "$content"$'\n'; then
 			MCA_CHANGES=$(( MCA_CHANGES + 1 ))
 		fi
 		mca_ledger_add inplace "$src" "$backup"
@@ -417,6 +417,30 @@ mca_desktop_apply() {
 #
 # Neither can be shadowed from anywhere, so both are edited where they stand,
 # with the original kept.
+
+# _mca_entry_write <file> <content>
+# Writes an entry edited in place, like mca_write_if_changed. A symlink is
+# replaced by the edited file instead of written through: it usually points at
+# a package's entry in /usr, which is not ours to change. Undo puts the link
+# back from the backup.
+_mca_entry_write() {
+	local file="$1" content="$2" tmp
+
+	[[ -L $file ]] || { mca_write_if_changed "$file" "$content"; return; }
+
+	tmp="$(mktemp "$file.XXXXXX")" || return 2
+	chmod --reference="$file" -- "$tmp" 2>/dev/null || chmod 644 -- "$tmp"
+
+	# A link into /usr/share/applications is trusted for where it points. A
+	# copy on the desktop is only trusted by KDE when it can be run.
+	chmod u+x -- "$tmp" 2>/dev/null || true
+
+	if printf '%s' "$content" > "$tmp" && mv -f -- "$tmp" "$file"; then
+		return 0
+	fi
+	rm -f -- "$tmp"
+	return 2
+}
 
 # _mca_entry_patch_inplace <file>
 # One desktop entry that lives outside the XDG search path, edited where it is
@@ -482,7 +506,7 @@ _mca_entry_patch_inplace() {
 	[[ "$content" == "$(< "$file")" ]] && return 0
 
 	backup="$(mca_backup "$file")" || return 0
-	if mca_write_if_changed "$file" "$content"$'\n'; then
+	if _mca_entry_write "$file" "$content"$'\n'; then
 		MCA_CHANGES=$(( MCA_CHANGES + 1 ))
 	fi
 	mca_ledger_add inplace "$file" "$backup"
@@ -607,7 +631,7 @@ mca_prune_orphans() {
 # ---------------------------------------------------------------------------
 
 mca_revert_all() {
-	local kind path detail
+	local kind path detail backup
 
 	[[ -f $MCA_LEDGER ]] || return 0
 
@@ -623,12 +647,15 @@ mca_revert_all() {
 				fi
 				;;
 			inplace)
-				if [[ -n $detail && -f "$MCA_BACKUPDIR/$detail" ]]; then
+				backup="$MCA_BACKUPDIR/$detail"
+				if [[ -n $detail ]] && [[ -f $backup || -L $backup ]]; then
 					if [[ -e $path ]] || [[ -d "$(dirname -- "$path")" ]]; then
-						cp -p -- "$MCA_BACKUPDIR/$detail" "$path" 2>/dev/null \
+						# A link goes back as a link, not written through.
+						[[ -L $backup ]] && rm -f -- "$path"
+						cp -P -p -- "$backup" "$path" 2>/dev/null \
 							&& MCA_CHANGES=$(( MCA_CHANGES + 1 ))
 					fi
-					rm -f -- "$MCA_BACKUPDIR/$detail"
+					rm -f -- "$backup"
 				elif [[ -f $path ]]; then
 					# No backup: the file did not exist before we wrote it.
 					rm -f -- "$path"

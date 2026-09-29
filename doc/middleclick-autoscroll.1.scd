@@ -116,7 +116,9 @@ Two ways, chosen per application.
 Programs that start themselves at login write their own entry into
 _~/.config/autostart_ pointing straight at their binary, bypassing the menu
 entry entirely. Those are patched in place as well, unless the application is
-turned off in the applications list.
+turned off in the applications list. An entry that is a symlink, often to an
+application's entry in _/usr/share/applications_, is replaced by a patched
+file rather than written through, and undoing puts the link back.
 
 Shortcuts on the desktop itself are patched in place too. Nothing in the XDG
 search path looks at that folder, so a shortcut that lives only there would

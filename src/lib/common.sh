@@ -343,12 +343,18 @@ mca_backup_name() {
 # copy was stored under. Existing backups are never overwritten: the first copy
 # is the pristine one, and a second apply must not replace it with an already
 # patched version.
+#
+# A symlink is kept as a symlink, so undo can put the link back. It is taken
+# again every time: this program never writes a link, so one is always pristine.
 mca_backup() {
 	local file="$1" name
 	name="$(mca_backup_name "$file")"
 
 	mkdir -p "$MCA_BACKUPDIR" 2>/dev/null || return 1
-	if [[ ! -e "$MCA_BACKUPDIR/$name" ]]; then
+	if [[ -L $file ]]; then
+		rm -f -- "$MCA_BACKUPDIR/$name"
+		cp -P -p -- "$file" "$MCA_BACKUPDIR/$name" 2>/dev/null || return 1
+	elif [[ ! -e "$MCA_BACKUPDIR/$name" && ! -L "$MCA_BACKUPDIR/$name" ]]; then
 		cp -p -- "$file" "$MCA_BACKUPDIR/$name" 2>/dev/null || return 1
 	fi
 	printf '%s\n' "$name"
