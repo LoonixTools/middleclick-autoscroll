@@ -2,6 +2,19 @@
 
 What each release brings, newest first. The [GitHub releases](https://github.com/LoonixTools/middleclick-autoscroll/releases) add every commit that went into it. Versions before `v1.1.0` came without notes.
 
+## v1.7.0
+
+_2026-10-01_
+
+Welcome to middleclick-autoscroll `v1.7.0`! Firefox gets autoscroll now, and so do LibreWolf, Zen, Floorp, Waterfox and Thunderbird. It starts working after your next login, or right away with **Re-apply everything**. Then restart Firefox.
+
+### Highlights
+
+- Autoscroll in Firefox
+- LibreWolf, Zen, Floorp, Waterfox and Thunderbird too
+- Flatpak and snap included
+- New Firefox profiles get it on their own
+
 ## v1.6.1
 
 _2026-09-29_
