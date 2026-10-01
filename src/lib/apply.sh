@@ -16,6 +16,7 @@ MCA_ROUTES=()
 #   desktop  - no flag file; shadow or edit the desktop entry
 #   steam    - Steam's own two-part treatment
 #   spotify  - the flag goes into spotify-launcher's configuration file
+#   gecko    - a setting in each of the application's profiles
 #   unknown  - cannot tell what engine this is (an AppImage), so nothing is done
 #   off      - detected, but switched off
 #
@@ -27,7 +28,7 @@ MCA_ROUTE=''
 mca_route() {
 	local kind="$1" id="$2" prog="$3" packaging="${4:-native}"
 
-	if [[ $kind == steam || $kind == spotify ]]; then
+	if [[ $kind == steam || $kind == spotify || $kind == gecko ]]; then
 		if mca_config_list_has Skip "$id"; then
 			MCA_ROUTE=off
 		else
@@ -65,6 +66,7 @@ mca_apply() {
 	MCA_CHANGES=0
 	MCA_ROUTES=()
 	MCA_N_ON=0; MCA_N_OFF=0; MCA_N_UNKNOWN=0
+	MCA_GECKO_SEEN=(); MCA_GECKO_WATCH=()
 
 	mca_config_load
 
@@ -115,6 +117,9 @@ mca_apply() {
 			spotify)
 				(( spotify_done )) || mca_spotify_apply
 				spotify_done=1
+				;;
+			gecko)
+				mca_gecko_apply "${MCA_PROFILES[i]}" "$packaging" "$prog"
 				;;
 		esac
 	done
@@ -178,7 +183,8 @@ MCA_UNIT_SERVICE="middleclick-autoscroll.service"
 # The desktop folder is watched like every other directory an entry can turn up
 # in, but its name is translated and the unit that ships with the package
 # cannot know it. So that one path is written here, into a drop-in, from the
-# name this system actually uses.
+# name this system actually uses. The same goes for where Firefox and its forks
+# keep their profiles, which depends on what is installed.
 MCA_UNIT_DROPIN="${MCA_XDG_CONFIG}/systemd/user/${MCA_UNIT_PATH}.d"
 
 mca_watch_available() {
@@ -196,23 +202,47 @@ mca_watch_enabled() {
 # same reason: the watcher runs after every desktop entry that appears anywhere on
 # the system, and a daemon-reload each time would be absurd.
 _mca_watch_dropin_write() {
-	local dir file="$MCA_UNIT_DROPIN/desktop.conf" content
-
-	dir="$(mca_desktop_folder)"
-	[[ -d $dir ]] || { _mca_watch_dropin_remove; return $?; }
+	local dir path content='' changed=1
 
 	# A per cent sign starts a specifier in a unit file and has to be doubled
 	# to mean itself. Rare in a folder name, fatal when it happens.
-	content="[Path]"$'\n'"PathModified=${dir//%/%%}"$'\n'
+	dir="$(mca_desktop_folder)"
+	[[ -d $dir ]] && content="[Path]"$'\n'"PathModified=${dir//%/%%}"$'\n'
+	_mca_watch_conf desktop.conf "$content" && changed=0
 
-	mca_write_if_changed "$file" "$content"
+	# Filled by the apply that ran just before. A new profile is added there.
+	content=''
+	for path in "${MCA_GECKO_WATCH[@]}"; do
+		content+="PathChanged=${path//%/%%}"$'\n'
+	done
+	[[ -n $content ]] && content="[Path]"$'\n'"$content"
+	_mca_watch_conf profiles.conf "$content" && changed=0
+
+	return "$changed"
+}
+
+# _mca_watch_conf <name> <content>
+# Writes one drop-in, or removes it when the content is empty. Returns 0 when
+# it changed.
+_mca_watch_conf() {
+	local file="$MCA_UNIT_DROPIN/$1"
+
+	if [[ -n $2 ]]; then
+		mca_write_if_changed "$file" "$2"
+		return
+	fi
+
+	[[ -e $file ]] || return 1
+	rm -f -- "$file"
+	rmdir "$MCA_UNIT_DROPIN" 2>/dev/null || true
+	return 0
 }
 
 _mca_watch_dropin_remove() {
-	[[ -e "$MCA_UNIT_DROPIN/desktop.conf" ]] || return 1
-	rm -f -- "$MCA_UNIT_DROPIN/desktop.conf"
-	rmdir "$MCA_UNIT_DROPIN" 2>/dev/null || true
-	return 0
+	local changed=1
+	_mca_watch_conf desktop.conf '' && changed=0
+	_mca_watch_conf profiles.conf '' && changed=0
+	return "$changed"
 }
 
 mca_watch_enable() {
@@ -226,7 +256,8 @@ mca_watch_enable() {
 
 # mca_watch_refresh
 # Keeps a running watcher in step with a desktop folder that has been renamed,
-# which is what a change of session language does to it.
+# which is what a change of session language does to it, and with the Firefox
+# profiles there are now.
 mca_watch_refresh() {
 	mca_watch_available || return 0
 	_mca_watch_dropin_write || return 0
@@ -295,6 +326,7 @@ mca_route_label() {
 		desktop) mca_msg "launcher" ;;
 		steam)   mca_msg "Steam" ;;
 		spotify) printf 'spotify-launcher' ;;
+		gecko)   mca_msg "profile" ;;
 		unknown) mca_msg "cannot tell" ;;
 		*)       mca_msg "off" ;;
 	esac

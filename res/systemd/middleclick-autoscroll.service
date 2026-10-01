@@ -1,5 +1,5 @@
 [Unit]
-Description=Apply middle-click autoscroll to Chromium-based applications
+Description=Apply middle-click autoscroll
 Documentation=man:middleclick-autoscroll(1)
 
 [Service]

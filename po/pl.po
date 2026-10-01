@@ -39,6 +39,9 @@ msgstr "plik flag"
 msgid "launcher"
 msgstr "skrót"
 
+msgid "profile"
+msgstr "profil"
+
 msgid "cannot tell"
 msgstr "nie wiadomo"
 
@@ -131,8 +134,8 @@ msgstr "Nie udało się zapisać ustawienia."
 msgid "Looking at the installed applications..."
 msgstr "Przeglądanie zainstalowanych aplikacji..."
 
-msgid "No Chromium-based applications found."
-msgstr "Nie znaleziono aplikacji opartych na Chromium."
+msgid "No supported applications found."
+msgstr "Nie znaleziono obsługiwanych aplikacji."
 
 msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
 msgstr ""

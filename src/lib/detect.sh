@@ -343,7 +343,9 @@ _mca_stat_batch() {
 # taught the hint scan about Discord's launcher, and Discord stayed out of the
 # list anyway, because /usr/bin/discord had not changed and its old "no" was
 # still in here.
-MCA_CACHE_FORMAT="# middleclick-autoscroll detect 2 $MCA_VERSION"
+#
+# 3 adds the gecko verdict.
+MCA_CACHE_FORMAT="# middleclick-autoscroll detect 3 $MCA_VERSION"
 
 _mca_cache_load() {
 	local path stamp verdict first=1
@@ -862,6 +864,8 @@ _mca_appimage_verdict() {
 #   no       - something else
 #   unknown  - an image whose payload could not be read, so neither answer has
 #              been earned and the applications screen offers it as a choice
+#   gecko:<rel> - Firefox or another Gecko application, which keeps its
+#              profiles in <rel>. See gecko.sh.
 #
 # Assigns rather than returns three states through an exit code, and is the one
 # place the memo and the on-disk cache are consulted.
@@ -900,8 +904,11 @@ mca_detect_verdict() {
 	real="$(readlink -f -- "$prog" 2>/dev/null)" || real="$prog"
 
 	MCA_DETECT_UNSURE=0
+	MCA_DETECT_GECKO=''
 	if _mca_detect_uncached "$real"; then
 		MCA_VERDICT=yes
+	elif [[ -n $MCA_DETECT_GECKO ]]; then
+		MCA_VERDICT="gecko:$MCA_DETECT_GECKO"
 	elif (( MCA_DETECT_UNSURE )); then
 		MCA_VERDICT=unknown
 	else
@@ -930,6 +937,10 @@ mca_is_chromium() {
 # was nothing there. Only mca_detect_verdict reads it, straight after the call.
 MCA_DETECT_UNSURE=0
 
+# Set by _mca_detect_uncached to where the profiles are, when the program turned
+# out to be Gecko rather than Chromium.
+MCA_DETECT_GECKO=''
+
 _mca_detect_uncached() {
 	local real="$1" depth="${2:-0}" dir target
 
@@ -943,6 +954,7 @@ _mca_detect_uncached() {
 		if target="$(_mca_script_target "$real")" && [[ -n $target ]]; then
 			_mca_detect_uncached "$(readlink -f -- "$target" 2>/dev/null || printf '%s' "$target")" \
 				$(( depth + 1 )) && return 0
+			[[ -n $MCA_DETECT_GECKO ]] && return 1
 		fi
 		grep -qE "$MCA_SCRIPT_HINTS" -- "$real" 2>/dev/null && return 0
 		return 1
@@ -953,6 +965,14 @@ _mca_detect_uncached() {
 	dir="$(dirname -- "$real")"
 	_mca_has_markers "$dir" && return 0
 	[[ ${dir##*/} == bin ]] && _mca_has_markers "${dir%/*}" && return 0
+
+	# Not Chromium but Gecko, which has autoscroll of its own.
+	if _mca_gecko_rel "$dir" \
+		|| { [[ ${dir##*/} == bin ]] && _mca_gecko_rel "${dir%/*}"; }
+	then
+		MCA_DETECT_GECKO="$MCA_GECKO_REL"
+		return 1
+	fi
 
 	# An AppImage keeps all of that inside a filesystem appended to itself, so
 	# there is nothing next to the binary to find. But the names of everything
@@ -989,8 +1009,9 @@ MCA_IDS=()        # desktop file id, without the .desktop suffix
 MCA_FILES=()      # the desktop entry that is in effect for that id
 MCA_NAMES=()      # display name
 MCA_PROGS=()      # resolved program, or a Flatpak app id or a snap name
-MCA_KINDS=()      # app | browser | steam | spotify | unknown | no
+MCA_KINDS=()      # app | browser | steam | spotify | gecko | unknown | no
 MCA_PACKAGING=()  # native | flatpak | snap
+MCA_PROFILES=()   # where a Gecko application keeps its profiles, see gecko.sh
 
 # A scan reads every desktop entry on the system, so the menu does it once and
 # then redraws from what it found. Applying rescans on its own, so nothing else
@@ -1003,12 +1024,12 @@ mca_scan_once() {
 }
 
 mca_scan() {
-	local dir file id name exec_line prog kind packaging i
+	local dir file id name exec_line prog kind packaging profiles i
 	local -A seen=()
 	local -a c_ids=() c_files=() c_names=() c_progs=() c_browser=() c_stat=()
 
 	MCA_IDS=(); MCA_FILES=(); MCA_NAMES=(); MCA_PROGS=(); MCA_KINDS=()
-	MCA_PACKAGING=()
+	MCA_PACKAGING=(); MCA_PROFILES=()
 
 	# Pass one: read the entries and work out what each of them starts. No
 	# detection yet: that needs a stat per program, and those are collected so
@@ -1073,6 +1094,7 @@ mca_scan() {
 		prog="${c_progs[i]}"
 		kind=no
 		packaging=native
+		profiles=''
 
 		if [[ $prog == flatpak:* ]]; then
 			packaging=flatpak
@@ -1080,6 +1102,8 @@ mca_scan() {
 				kind=steam
 			elif mca_flatpak_is_chromium "${prog#flatpak:}"; then
 				(( c_browser[i] )) && kind=browser || kind=app
+			elif mca_flatpak_gecko "${prog#flatpak:}"; then
+				kind=gecko profiles="$MCA_GECKO_REL"
 			fi
 			prog="${prog#flatpak:}"
 		elif [[ $prog == snap:* ]]; then
@@ -1089,6 +1113,8 @@ mca_scan() {
 				kind=steam
 			elif mca_snap_is_chromium "$prog"; then
 				(( c_browser[i] )) && kind=browser || kind=app
+			elif mca_snap_gecko "$prog"; then
+				kind=gecko profiles="$MCA_GECKO_REL"
 			fi
 		elif mca_prog_is_steam "$prog"; then
 			# Steam is Chromium inside, but nothing about it can be changed
@@ -1103,6 +1129,7 @@ mca_scan() {
 			case "$MCA_VERDICT" in
 				yes)     (( c_browser[i] )) && kind=browser || kind=app ;;
 				unknown) kind=unknown ;;
+				gecko:*) kind=gecko profiles="${MCA_VERDICT#gecko:}" ;;
 			esac
 		fi
 
@@ -1114,6 +1141,7 @@ mca_scan() {
 		MCA_PROGS+=("$prog")
 		MCA_KINDS+=("$kind")
 		MCA_PACKAGING+=("$packaging")
+		MCA_PROFILES+=("$profiles")
 	done
 
 	mca_cache_flush
@@ -1211,22 +1239,39 @@ mca_snap_is_chromium() {
 # Flatpak keeps every application in its own tree, so the marker check works the
 # same way once that tree has been located.
 mca_flatpak_is_chromium() {
-	local id="$1" loc
-	mca_have flatpak || return 1
+	local id="$1"
 
 	if [[ -n ${MCA_DETECT_MEMO[flatpak:$id]+set} ]]; then
 		[[ ${MCA_DETECT_MEMO[flatpak:$id]} == yes ]]
 		return $?
 	fi
 
-	loc="$(flatpak info --show-location "$id" 2>/dev/null)"
-	if [[ -n $loc ]] && _mca_find_markers "$loc/files" 4; then
+	if mca_flatpak_location "$id" && _mca_find_markers "$MCA_FLATPAK_AT/files" 4; then
 		MCA_DETECT_MEMO[flatpak:$id]=yes
 		return 0
 	fi
 
 	MCA_DETECT_MEMO[flatpak:$id]=no
 	return 1
+}
+
+# mca_flatpak_location <app id>
+# Where Flatpak keeps the application, in MCA_FLATPAK_AT. Assigned rather than
+# printed so the memo survives: both the Chromium and the Gecko check ask.
+declare -A MCA_FLATPAK_LOC=()
+MCA_FLATPAK_AT=''
+
+mca_flatpak_location() {
+	local id="$1"
+
+	if [[ -z ${MCA_FLATPAK_LOC[$id]+set} ]]; then
+		MCA_FLATPAK_LOC[$id]=''
+		mca_have flatpak \
+			&& MCA_FLATPAK_LOC[$id]="$(flatpak info --show-location "$id" 2>/dev/null)"
+	fi
+
+	MCA_FLATPAK_AT="${MCA_FLATPAK_LOC[$id]}"
+	[[ -n $MCA_FLATPAK_AT ]]
 }
 
 # mca_kind_wanted <kind> <id>

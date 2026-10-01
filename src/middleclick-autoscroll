@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #
 # middleclick-autoscroll: middle-click autoscroll for Chromium-based
-# applications on Linux
+# applications and Firefox on Linux
 #
 # Blink has had Windows-style autoscroll for years, behind a runtime flag that
 # is not turned on for Linux because middle click is taken by primary-selection
 # paste there. Turning it on is a matter of one command line argument. The
 # work is finding every application that needs it, putting the argument
 # somewhere it survives an update, and doing the same for the two programs that
-# do not take arguments at all.
+# do not take arguments at all. Firefox has the same feature behind a setting.
 #
 # Copyright (C) 2026 Felitendo
 # SPDX-License-Identifier: GPL-3.0-or-later
@@ -17,7 +17,7 @@ set -uo pipefail
 
 MCA_LIBDIR="${MCA_LIBDIR:-@LIBDIR@}"
 
-for _mod in common config detect patch steam kde apply menu; do
+for _mod in common config detect patch steam gecko kde apply menu; do
 	# shellcheck source=/dev/null
 	if ! source "$MCA_LIBDIR/$_mod.sh"; then
 		printf 'middleclick-autoscroll: cannot load %s/%s.sh\n' "$MCA_LIBDIR" "$_mod" >&2
@@ -144,7 +144,7 @@ mca_do_list() {
 	mca_count_routes
 
 	if (( ${#MCA_IDS[@]} == 0 )); then
-		mca_note "$(mca_msg "No Chromium-based applications found.")"
+		mca_note "$(mca_msg "No supported applications found.")"
 		return 0
 	fi
 

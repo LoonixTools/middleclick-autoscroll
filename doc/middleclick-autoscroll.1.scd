@@ -34,10 +34,13 @@ it). A name a browser does not know is ignored. It works on any distribution:
 which of the routes below an application takes is read off its launcher, not
 assumed from where the launcher came from.
 
+Firefox and everything else built on Gecko has autoscroll as well, behind a
+setting rather than a flag. See *FIREFOX*.
+
 Run without a command it shows an interactive menu. Everything it can be told
 is reachable from there; the configuration file behind it does not need to be
 edited by hand. Its applications list turns single applications on or off,
-Steam and Spotify included. Its settings hold the rest: the desktop's
+Steam, Spotify and Firefox included. Its settings hold the rest: the desktop's
 middle-click paste, the watcher, and more Chromium arguments for every
 application.
 
@@ -69,8 +72,7 @@ is refused.
 	last run was.
 
 *list*
-	Every Chromium-based application that was found, and how each one is
-	handled.
+	Every application that was found, and how each one is handled.
 
 *-h*, *--help*
 	Show a summary of the commands.
@@ -191,6 +193,29 @@ where the flag goes, and the launcher shows up in the applications list like
 any other application. Installed as a plain package, a Flatpak or a snap, it is
 an ordinary desktop entry and needs nothing special.
 
+# FIREFOX
+
+Firefox has autoscroll of its own, switched off on Linux. There is no flag for
+it, only a setting: *general.autoScroll*. It goes into _user.js_ in every
+profile, as a marked block, and Firefox reads that file at every start. The
+same goes for everything built on Gecko: LibreWolf, Zen, Floorp, Waterfox and
+Thunderbird.
+
+Where the profiles are is read from the application's own _application.ini_,
+the way Firefox works it out: _~/.mozilla/firefox_, or
+_~/.config/mozilla/firefox_ for a new install of Firefox 147 or later. A Flatpak
+or a snap has the same inside its own folder. Every profile in _profiles.ini_
+is covered. The watcher looks at that file too, so a new profile is covered
+from its second start on.
+
+A profile where the setting is already on, in Firefox's own settings or in
+_user.js_, is left alone and not recorded.
+
+Firefox copies the setting into _prefs.js_, so *disable* takes it out of both
+files. A Firefox that is still open would write it back when it quits. So for
+that profile _user.js_ says *false* instead, and the next *disable* or
+*enable* clears it up.
+
 # MIDDLE-CLICK PASTE
 
 Inside a Chromium application the argument settles this on its own: with
@@ -269,8 +294,12 @@ _~/.config/kwinrc_
 	written when the desktop's middle-click paste is turned off, and put
 	back by *disable*.
 
+_user.js_ in every Firefox profile
+	Gets a block between *// >>> middleclick-autoscroll* and
+	*// <<< middleclick-autoscroll*. Nothing else in the file is touched.
+
 _~/.cache/middleclick-autoscroll/detect_
-	Which programs were found to be Chromium, keyed by size and modification
+	Which programs were found to be Chromium or Gecko, keyed by size and modification
 	time. Its first line says which version of the program wrote it, and a
 	file from an older one is ignored rather than trusted. Otherwise an entry
 	for a file that has not changed would never be looked at again.

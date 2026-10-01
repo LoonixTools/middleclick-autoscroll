@@ -1,5 +1,5 @@
 [Unit]
-Description=Watch for newly installed Chromium-based applications
+Description=Watch for newly installed applications
 Documentation=man:middleclick-autoscroll(1)
 
 [Path]

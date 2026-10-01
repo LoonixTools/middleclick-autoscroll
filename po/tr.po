@@ -39,6 +39,9 @@ msgstr "bayrak dosyası"
 msgid "launcher"
 msgstr "başlatıcı"
 
+msgid "profile"
+msgstr "profil"
+
 msgid "cannot tell"
 msgstr "belirsiz"
 
@@ -132,8 +135,8 @@ msgstr "Ayar kaydedilemedi."
 msgid "Looking at the installed applications..."
 msgstr "Kurulu uygulamalara bakılıyor..."
 
-msgid "No Chromium-based applications found."
-msgstr "Chromium tabanlı uygulama bulunamadı."
+msgid "No supported applications found."
+msgstr "Desteklenen uygulama bulunamadı."
 
 msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
 msgstr "\"belirsiz\" olarak işaretlenenler burada açılana kadar kapalı kalır."

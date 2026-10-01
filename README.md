@@ -7,7 +7,7 @@
 <h3 align="center">Middle-click autoscroll in every app that supports it.</h3>
 
 <p align="center">
-  Browsers, Electron apps like Discord and Spotify, Steam and anything else built on Chromium.
+  Firefox, Chromium browsers, Electron apps like Discord and Spotify, Steam and anything else built on Chromium.
 </p>
 
 <h5 align="center">
@@ -125,6 +125,9 @@ Adding it to every app by hand is a pain, and updates can undo it. This tool doe
 
 **Browsers** get a spelling of the flag that shows no warning bar. Brave and Helium also get their
 own name for the feature. A browser ignores names it does not know.
+
+**Firefox** has autoscroll too, but as a setting, not a flag. It goes into the `user.js` of each
+profile. The same works for LibreWolf, Zen, Floorp, Waterfox and Thunderbird.
 
 **Steam** builds its own command line and repairs any file that looks changed. So the flag goes into
 the script that starts its web helper, and the file keeps the size and date Steam expects. Steam

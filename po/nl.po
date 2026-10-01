@@ -39,6 +39,9 @@ msgstr "flagbestand"
 msgid "launcher"
 msgstr "starter"
 
+msgid "profile"
+msgstr "profiel"
+
 msgid "cannot tell"
 msgstr "onbekend"
 
@@ -132,8 +135,8 @@ msgstr "De instelling kon niet worden opgeslagen."
 msgid "Looking at the installed applications..."
 msgstr "Geïnstalleerde toepassingen worden bekeken..."
 
-msgid "No Chromium-based applications found."
-msgstr "Geen op Chromium gebaseerde toepassingen gevonden."
+msgid "No supported applications found."
+msgstr "Geen ondersteunde toepassingen gevonden."
 
 msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
 msgstr ""

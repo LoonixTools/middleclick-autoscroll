@@ -39,6 +39,9 @@ msgstr "soubor s příznaky"
 msgid "launcher"
 msgstr "spouštěč"
 
+msgid "profile"
+msgstr "profil"
+
 msgid "cannot tell"
 msgstr "nelze určit"
 
@@ -131,8 +134,8 @@ msgstr "Nastavení se nepodařilo uložit."
 msgid "Looking at the installed applications..."
 msgstr "Procházím nainstalované aplikace..."
 
-msgid "No Chromium-based applications found."
-msgstr "Nenalezeny žádné aplikace založené na Chromiu."
+msgid "No supported applications found."
+msgstr "Nenalezeny žádné podporované aplikace."
 
 msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
 msgstr "Co je označeno „nelze určit“, zůstane vypnuté, dokud to tu nezapnete."

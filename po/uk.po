@@ -39,6 +39,9 @@ msgstr "файл прапорців"
 msgid "launcher"
 msgstr "ярлик"
 
+msgid "profile"
+msgstr "профіль"
+
 msgid "cannot tell"
 msgstr "невідомо"
 
@@ -131,8 +134,8 @@ msgstr "Не вдалося зберегти налаштування."
 msgid "Looking at the installed applications..."
 msgstr "Перегляд встановлених застосунків..."
 
-msgid "No Chromium-based applications found."
-msgstr "Застосунків на основі Chromium не знайдено."
+msgid "No supported applications found."
+msgstr "Підтримуваних застосунків не знайдено."
 
 msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
 msgstr ""

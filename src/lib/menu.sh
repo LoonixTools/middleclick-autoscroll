@@ -419,13 +419,14 @@ mca_ui_apps() {
 	# The per-row labels are resolved once, here. Looking them up inside the
 	# drawing loop is a fork per row per keypress, and that is enough to make
 	# the arrow keys feel like the screen is reloading.
-	local l_off l_cannot l_on l_steam l_flagfile l_launcher
+	local l_off l_cannot l_on l_steam l_flagfile l_launcher l_profile
 	mca_msg_into "$locale" "off";         l_off="$MCA_MSG_RESULT"
 	mca_msg_into "$locale" "cannot tell"; l_cannot="$MCA_MSG_RESULT"
 	mca_msg_into "$locale" "on";          l_on="$MCA_MSG_RESULT"
 	mca_msg_into "$locale" "Steam";       l_steam="$MCA_MSG_RESULT"
 	mca_msg_into "$locale" "flag file";   l_flagfile="$MCA_MSG_RESULT"
 	mca_msg_into "$locale" "launcher";    l_launcher="$MCA_MSG_RESULT"
+	mca_msg_into "$locale" "profile";     l_profile="$MCA_MSG_RESULT"
 
 	local s_off="${MCA_C_DIM}${l_off}${MCA_C_RESET}"
 	local s_cannot="${MCA_C_DIM}${l_cannot}${MCA_C_RESET}"
@@ -434,6 +435,7 @@ mca_ui_apps() {
 	local s_flags="${s_on} ${MCA_C_DIM}(${l_flagfile})${MCA_C_RESET}"
 	local s_desktop="${s_on} ${MCA_C_DIM}(${l_launcher})${MCA_C_RESET}"
 	local s_spotify="${s_on} ${MCA_C_DIM}(spotify-launcher)${MCA_C_RESET}"
+	local s_gecko="${s_on} ${MCA_C_DIM}(${l_profile})${MCA_C_RESET}"
 
 	local clearseq
 	clearseq="$(clear 2>/dev/null)" || clearseq=$'\033[H\033[2J'
@@ -444,7 +446,7 @@ mca_ui_apps() {
 	count=${#MCA_IDS[@]}
 
 	if (( count == 0 )); then
-		MCA_UI_MSG="$(mca_msg "No Chromium-based applications found.")"
+		MCA_UI_MSG="$(mca_msg "No supported applications found.")"
 		return 1
 	fi
 
@@ -526,6 +528,7 @@ mca_ui_apps() {
 				steam)   shown="$s_steam" ;;
 				flags)   shown="$s_flags" ;;
 				spotify) shown="$s_spotify" ;;
+				gecko)   shown="$s_gecko" ;;
 				*)       shown="$s_desktop" ;;
 			esac
 			pad=$(( 34 - ${#labels[idx]} ))

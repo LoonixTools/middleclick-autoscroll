@@ -39,6 +39,9 @@ msgstr "файл флагов"
 msgid "launcher"
 msgstr "ярлык"
 
+msgid "profile"
+msgstr "профиль"
+
 msgid "cannot tell"
 msgstr "неизвестно"
 
@@ -132,8 +135,8 @@ msgstr "Не удалось сохранить настройку."
 msgid "Looking at the installed applications..."
 msgstr "Просмотр установленных приложений..."
 
-msgid "No Chromium-based applications found."
-msgstr "Приложения на основе Chromium не найдены."
+msgid "No supported applications found."
+msgstr "Поддерживаемые приложения не найдены."
 
 msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
 msgstr ""

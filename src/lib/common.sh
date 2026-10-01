@@ -283,11 +283,13 @@ mca_state_write() {
 #   inplace <edited file>               <basename of its backup copy>
 #   flags   <flag file>                 created | appended | merged
 #   kwin    <kwinrc>                    what EnablePrimarySelection said before
+#   gecko   <user.js in a profile>      created | block
 #
 # The kinds differ in how they are undone: a backup is restored wholesale, a
 # flag file only loses the one line that was added to it, and kwinrc gets one
 # key written back. It is a file KDE writes to itself, and putting a whole
-# copy of it back would take everything else settled since with it.
+# copy of it back would take everything else settled since with it. A user.js
+# loses its block, and prefs.js the line Firefox copied out of it.
 
 mca_ledger_add() {
 	local kind="$1" path="$2" detail="${3:-}"

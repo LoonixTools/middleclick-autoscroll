@@ -38,6 +38,9 @@ msgstr "Flag-Datei"
 msgid "launcher"
 msgstr "Startereintrag"
 
+msgid "profile"
+msgstr "Profil"
+
 msgid "cannot tell"
 msgstr "nicht erkennbar"
 
@@ -131,8 +134,8 @@ msgstr "Einstellung konnte nicht gespeichert werden."
 msgid "Looking at the installed applications..."
 msgstr "Installierte Anwendungen werden durchgesehen …"
 
-msgid "No Chromium-based applications found."
-msgstr "Keine Chromium-basierten Anwendungen gefunden."
+msgid "No supported applications found."
+msgstr "Keine unterstützten Anwendungen gefunden."
 
 msgid "Anything marked \"cannot tell\" stays off until it is turned on here."
 msgstr "Was „nicht erkennbar“ ist, bleibt aus, bis es hier eingeschaltet wird."

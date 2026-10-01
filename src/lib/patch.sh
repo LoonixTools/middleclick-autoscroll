@@ -260,8 +260,9 @@ _mca_flags_write() {
 	return 0
 }
 
+# _mca_flags_drop_block <file> [begin marker] [end marker]
 _mca_flags_drop_block() {
-	awk -v b="$MCA_MARK_BEGIN" -v e="$MCA_MARK_END" '
+	awk -v b="${2:-$MCA_MARK_BEGIN}" -v e="${3:-$MCA_MARK_END}" '
 		$0 == b { skip = 1; next }
 		$0 == e { skip = 0; next }
 		!skip
@@ -632,6 +633,7 @@ mca_prune_orphans() {
 
 mca_revert_all() {
 	local kind path detail backup
+	local -a keep=()
 
 	[[ -f $MCA_LEDGER ]] || return 0
 
@@ -674,10 +676,17 @@ mca_revert_all() {
 				mca_kde_paste_revert "$path" "$detail" \
 					&& MCA_CHANGES=$(( MCA_CHANGES + 1 ))
 				;;
+			gecko)
+				mca_gecko_revert "$path" "$detail" \
+					&& MCA_CHANGES=$(( MCA_CHANGES + 1 ))
+				# Still open, so not done yet. See gecko.sh.
+				(( MCA_GECKO_PENDING )) && keep+=("$kind"$'\t'"$path"$'\t'"$detail")
+				;;
 		esac
 	done < <(tac "$MCA_LEDGER" 2>/dev/null)
 
 	rm -f -- "$MCA_LEDGER"
+	(( ${#keep[@]} )) && printf '%s\n' "${keep[@]}" > "$MCA_LEDGER"
 	rmdir "$MCA_BACKUPDIR" 2>/dev/null || true
 	return 0
 }
