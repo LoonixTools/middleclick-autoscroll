@@ -328,3 +328,33 @@ Description: middle-click autoscroll for Chromium-based applications
  "middleclick-autoscroll disable" before removing this package, so that
  everything it changed is put back.
 
+Package: middleclick-autoscroll
+Version: 1.7.0
+Architecture: all
+Maintainer: Felitendo <felitendoyt@gmail.com>
+Depends: bash (>= 4.2), coreutils, findutils, grep, sed, mawk | gawk | original-awk
+Recommends: gettext-base, systemd, desktop-file-utils
+Filename: ./middleclick-autoscroll_1.7.0_all.deb
+Size: 65424
+MD5sum: c98e6cce47723c33ced8ebda2883a89e
+SHA1: 876f386d53f142b482c68f8eebc8fa55589d04e3
+SHA256: 9faa1b2e93598594c96eefd3a107f401cd55829e5009c7559492e18f358c8b62
+Section: utils
+Priority: optional
+Homepage: https://github.com/LoonixTools/middleclick-autoscroll
+Description: middle-click autoscroll for Chromium-based applications
+ Blink (the engine inside Chromium, Electron and CEF) has had Windows-style
+ autoscroll for years: hold the middle mouse button, move the pointer, the page
+ scrolls. On Linux it is switched off, because middle click is already taken by
+ primary-selection paste.
+ .
+ This turns it back on for every application on the system that can do it, and
+ for anything installed later. There is no list of supported applications to
+ keep up to date: every launcher is examined, the ones running on Chromium
+ underneath are identified by what they ship rather than by their name, and the
+ argument goes wherever that particular application will actually read it.
+ .
+ Nothing outside the user's home directory is ever written to. Run
+ "middleclick-autoscroll disable" before removing this package, so that
+ everything it changed is put back.
+
