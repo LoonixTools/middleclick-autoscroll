@@ -1,0 +1,48 @@
+name: issues
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  issues: write
+
+jobs:
+  # Users can leave the title alone, it gets the app's name.
+  title:
+    name: name app issues after the app
+    if: github.event.action == 'opened' && contains(github.event.issue.labels.*.name, 'app')
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          BODY: ${{ github.event.issue.body }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          app=$(printf '%s\n' "$BODY" | tr -d '\r' \
+            | awk '/^### /{f = ($0 == "### Which app?"); next} f && NF {print; exit}')
+          if [ -n "$app" ] && [ "$app" != "_No response_" ]; then
+            gh issue edit "$NUMBER" --repo "$GITHUB_REPOSITORY" --title "App: ${app:0:80}"
+          fi
+
+  # The "fixed" and "not chromium" labels answer and close the issue.
+  close:
+    name: close on label
+    if: >-
+      github.event.action == 'labeled' && github.event.issue.state == 'open'
+      && (github.event.label.name == 'fixed' || github.event.label.name == 'not chromium')
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          LABEL: ${{ github.event.label.name }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          if [ "$LABEL" = fixed ]; then
+            reason=completed
+            comment='Fixed, thanks for the report! The fix comes with the next release.'
+          else
+            reason='not planned'
+            comment='Thanks for the report! This app is not built on Chromium, Electron or CEF. So it has no autoscroll built in that this tool could turn on.'
+          fi
+          gh issue close "$NUMBER" --repo "$GITHUB_REPOSITORY" --reason "$reason" --comment "$comment"

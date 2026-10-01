@@ -1,0 +1,27 @@
+name: 🧩 App does not work
+description: Autoscroll does not work in an app. Just tell us which one.
+title: 'App: '
+labels:
+- app
+body:
+- type: input
+  id: app
+  attributes:
+    label: Which app?
+    placeholder: Obsidian
+  validations:
+    required: true
+- type: dropdown
+  id: install
+  attributes:
+    label: How is it installed?
+    description: Skip it if you are not sure.
+    options:
+    - Native package
+    - Flatpak
+    - Snap
+    - AppImage
+- type: textarea
+  id: more
+  attributes:
+    label: Anything else?
