@@ -17,3 +17,7 @@ body:
     - Flatpak
     - Snap
     - AppImage
+- type: textarea
+  id: more
+  attributes:
+    label: More info
