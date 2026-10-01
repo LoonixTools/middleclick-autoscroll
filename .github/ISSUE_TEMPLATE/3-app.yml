@@ -4,13 +4,9 @@ title: 'App: '
 labels:
 - app
 body:
-- type: input
-  id: app
+- type: markdown
   attributes:
-    label: Which app?
-    placeholder: Obsidian
-  validations:
-    required: true
+    value: Just add the app's name to the title. The rest is optional.
 - type: dropdown
   id: install
   attributes:
@@ -21,7 +17,3 @@ body:
     - Flatpak
     - Snap
     - AppImage
-- type: textarea
-  id: more
-  attributes:
-    label: Anything else?
