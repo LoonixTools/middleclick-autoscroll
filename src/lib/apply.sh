@@ -153,6 +153,9 @@ mca_apply() {
 
 	mca_state_write last_apply "$(date +%s)"
 	mca_state_write flag_scheme "$MCA_FLAG_SCHEME"
+	# What the files were written with, for taking it back out. See
+	# _mca_flags_ours.
+	mca_state_write extra_flags "${CFG_EXTRA_FLAGS:-}"
 	return 0
 }
 

@@ -195,39 +195,42 @@ mca_flags_apply() {
 # already in the file.
 _mca_flags_write() {
 	local file="$1" kind="${2:-app}"
-	local content='' line flag opt want existing merged=0 block=''
-	local -a flags
-	local -A merged_opts=()
-	local created=0
+	local content='' line flag opt tok i out='' merged=0 changed block='' created=0
+	local -a flags toks
+	local -A want=() done_opts=()
 
 	read -r -a flags <<< "$(mca_flags "$kind")"
 
+	# One list per option, from the autoscroll flag and the extra arguments
+	# together. Two of the same option would switch each other off.
+	for flag in "${flags[@]}"; do
+		[[ $flag =~ ^($MCA_FEATURE_OPTS)=(.*)$ ]] || continue
+		opt="${BASH_REMATCH[1]}"
+		want["$opt"]="$(_mca_list_merge "${want["$opt"]:-}" "${BASH_REMATCH[2]}")"
+	done
+
 	[[ -f $file ]] || created=1
-	if (( ! created )); then
-		content="$(< "$file")"
-		# Already ours: the block is rewritten below, so drop the old one first.
-		if [[ $content == *"$MCA_MARK_BEGIN"* ]]; then
-			content="$(_mca_flags_drop_block "$file")"
-		fi
-	fi
+	# Already ours: the block is rewritten below, so take the old one out first.
+	(( created )) || content="$(_mca_flags_unblock "$file")"
 
 	# Merge into a feature list the user (or a distribution) put there, rather
-	# than write a second line of the same option further down.
+	# than write a second one of the same option further down. A line can hold
+	# more than one flag: Chrome's launcher splits the file into words.
 	if [[ $content == *--enable-* ]]; then
-		local out=''
 		while IFS= read -r line; do
-			if [[ $line =~ ^[[:space:]]*($MCA_FEATURE_OPTS)=([^[:space:]]*)[[:space:]]*$ ]]; then
-				opt="${BASH_REMATCH[1]}"
-				existing="${BASH_REMATCH[2]}"
-				want=''
-				for flag in "${flags[@]}"; do
-					[[ $flag == "$opt="* ]] && want="${flag#*=}"
-				done
-				if [[ -n $want ]]; then
-					line="$opt=$(_mca_list_merge "$existing" "$want")"
-					merged_opts["$opt"]=1
+			if [[ $line == *--enable-* && $line =~ ^[[:space:]]*[^[:space:]#] ]]; then
+				read -r -a toks <<< "$line"
+				changed=0
+				for i in "${!toks[@]}"; do
+					[[ ${toks[i]} =~ ^($MCA_FEATURE_OPTS)=(.*)$ ]] || continue
+					opt="${BASH_REMATCH[1]}"
+					[[ -n ${want["$opt"]:-} ]] || continue
+					tok="$opt=$(_mca_list_merge "${BASH_REMATCH[2]}" "${want["$opt"]}")"
+					[[ $tok == "${toks[i]}" ]] || { toks[i]="$tok"; changed=1; }
+					done_opts["$opt"]=1
 					merged=1
-				fi
+				done
+				(( changed )) && line="${toks[*]}"
 			fi
 			out+="$line"$'\n'
 		done <<< "$content"
@@ -235,7 +238,12 @@ _mca_flags_write() {
 	fi
 
 	for flag in "${flags[@]}"; do
-		[[ -n ${merged_opts["${flag%%=*}"]:-} ]] && continue
+		if [[ $flag =~ ^($MCA_FEATURE_OPTS)= ]]; then
+			opt="${BASH_REMATCH[1]}"
+			[[ -n ${done_opts["$opt"]:-} ]] && continue
+			flag="$opt=${want["$opt"]}"
+			done_opts["$opt"]=1
+		fi
 		block+="$flag"$'\n'
 	done
 
@@ -260,6 +268,80 @@ _mca_flags_write() {
 	return 0
 }
 
+# _mca_flags_ours
+# What this program puts into a flag file: MCA_OURS_FEATURES holds every
+# feature name it adds to a list, MCA_OURS_FLAGS every other flag. The extra
+# arguments are taken from the last apply, because after a change in the
+# settings the old ones are still what is in the files.
+MCA_OURS_FEATURES=''
+MCA_OURS_FLAGS=''
+
+_mca_flags_ours() {
+	local flag
+	local -a flags
+
+	read -r -a flags <<< "$(mca_state_read extra_flags "${CFG_EXTRA_FLAGS:-}")"
+
+	# Every name, whichever version of this program put it there.
+	MCA_OURS_FEATURES="$MCA_BROWSER_FEATURES"
+	MCA_OURS_FLAGS=''
+	for flag in "${flags[@]}"; do
+		if [[ $flag =~ ^($MCA_FEATURE_OPTS)=(.*)$ ]]; then
+			MCA_OURS_FEATURES+=",${BASH_REMATCH[2]}"
+		else
+			MCA_OURS_FLAGS+=" $flag"
+		fi
+	done
+}
+
+# _mca_flags_line_strip <line> <features> [flags]
+# One line of a flag file without the named features in its lists and without
+# the named flags. Empty when nothing is left of it, and unchanged when nothing
+# matched.
+_mca_flags_line_strip() {
+	local tok opt list
+	local -a toks keep=()
+
+	read -r -a toks <<< "$1"
+	for tok in "${toks[@]}"; do
+		if [[ $tok =~ ^($MCA_FEATURE_OPTS)=(.*)$ ]]; then
+			opt="${BASH_REMATCH[1]}"
+			list="$(_mca_list_strip "${BASH_REMATCH[2]}" "$2")"
+			[[ -n $list ]] && keep+=("$opt=$list")
+		elif [[ " ${3:-} " != *" $tok "* ]]; then
+			keep+=("$tok")
+		fi
+	done
+
+	if [[ "${keep[*]}" == "${toks[*]}" ]]; then
+		printf '%s' "$1"
+	else
+		printf '%s' "${keep[*]}"
+	fi
+}
+
+# _mca_flags_unblock <file>
+# The file without the block this program wrote. Only what it wrote goes: the
+# block holds the one feature list the file has, so that is where a user adds a
+# feature of their own, and that stays where the block was. So does a flag of
+# their own.
+_mca_flags_unblock() {
+	local line inside=0
+
+	_mca_flags_ours
+	while IFS= read -r line || [[ -n $line ]]; do
+		case "$line" in
+			"$MCA_MARK_BEGIN") inside=1; continue ;;
+			"$MCA_MARK_END")   inside=0; continue ;;
+		esac
+		if (( inside )) && [[ $line =~ ^[[:space:]]*[^[:space:]#] ]]; then
+			line="$(_mca_flags_line_strip "$line" "$MCA_OURS_FEATURES" "$MCA_OURS_FLAGS")"
+			[[ -n $line ]] || continue
+		fi
+		printf '%s\n' "$line"
+	done < "$1"
+}
+
 # _mca_flags_drop_block <file> [begin marker] [end marker]
 _mca_flags_drop_block() {
 	awk -v b="${2:-$MCA_MARK_BEGIN}" -v e="${3:-$MCA_MARK_END}" '
@@ -271,39 +353,27 @@ _mca_flags_drop_block() {
 
 # mca_flags_revert <file> <detail>
 mca_flags_revert() {
-	local file="$1" detail="$2" content line out='' opt existing new
+	local file="$1" detail="$2" content line out=''
 
 	[[ -f $file ]] || return 0
 
-	case "$detail" in
-		created)
-			# Only remove the file if nothing but our block ended up in it;
-			# anything else means the user started using it in the meantime.
-			content="$(_mca_flags_drop_block "$file")"
-			if [[ -z ${content//[[:space:]]/} ]]; then
-				rm -f -- "$file"
-				return 0
-			fi
-			;;
-	esac
+	content="$(_mca_flags_unblock "$file")"
 
-	content="$(_mca_flags_drop_block "$file")"
-
+	# The names merged into a list that was there before come back out of it.
 	if [[ $detail == merged* ]]; then
+		_mca_flags_ours
 		while IFS= read -r line; do
-			if [[ $line =~ ^[[:space:]]*($MCA_FEATURE_OPTS)=([^[:space:]]*)[[:space:]]*$ ]]; then
-				opt="${BASH_REMATCH[1]}"
-				existing="${BASH_REMATCH[2]}"
-				# Either name, whichever version of this program put it there.
-				new="$(_mca_list_strip "$existing" "$MCA_BROWSER_FEATURES")"
-				[[ -z $new ]] && continue
-				line="$opt=$new"
+			if [[ $line =~ ^[[:space:]]*[^[:space:]#] ]]; then
+				line="$(_mca_flags_line_strip "$line" "$MCA_OURS_FEATURES")"
+				[[ -n $line ]] || continue
 			fi
 			out+="$line"$'\n'
 		done <<< "$content"
 		content="${out%$'\n'}"
 	fi
 
+	# Nothing but our block in it: a file this program created, or one that
+	# was empty. Anything else means the user uses it.
 	if [[ -z ${content//[[:space:]]/} ]]; then
 		rm -f -- "$file"
 	else
