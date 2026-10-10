@@ -2,6 +2,12 @@
 
 What each release brings, newest first. The [GitHub releases](https://github.com/LoonixTools/middleclick-autoscroll/releases) add every commit that went into it. Versions before `v1.1.0` came without notes.
 
+## v1.7.1
+
+_2026-10-10_
+
+A small patch. Flags you add to a flag file yourself, like `VaapiOnNvidiaGPUs` in `chrome-flags.conf`, now stay there when autoscroll is applied again or turned off for that app. And Discord entries that `v1.5.2` or older set up are written again once, so invite links reach Discord.
+
 ## v1.7.0
 
 _2026-10-01_
