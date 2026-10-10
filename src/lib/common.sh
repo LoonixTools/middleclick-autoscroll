@@ -59,7 +59,10 @@ MCA_BROWSER_FEATURES="MiddleClickAutoscroll,HeliumMiddleClickAutoscroll,MiddelBu
 #
 # 4 adds Brave's name to the browser list, which an entry edited in place would
 # otherwise never get.
-MCA_FLAG_SCHEME=4
+#
+# 5 moves the flag in front of a bare "--" in an entry edited in place. Up to
+# 1.5.2 it went after it, and Discord took the flag for the invite link.
+MCA_FLAG_SCHEME=5
 
 MCA_LIBDIR="${MCA_LIBDIR:-@LIBDIR@}"
 MCA_LOCALEDIR="${MCA_LOCALEDIR:-@LOCALEDIR@}"
