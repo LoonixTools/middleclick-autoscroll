@@ -76,15 +76,23 @@ MCA_FEATURE_OPTS='--enable-blink-features|--enable-features'
 # starts treating everything as an address, so a flag put after it is read as a
 # page to open and the feature never comes on. Discord's entry is exactly that
 # shape: `discord --url -- %u`.
+#
+# An option right in front of the stop takes the address as its value, like
+# Discord's --url. The flag goes in front of that option, so the two stay
+# together and the flag is never read as the address.
 _mca_exec_insert_at() {
-	local rest="$1" tok idx=0
+	local rest="$1" tok idx=0 opt=-1
 
 	while [[ -n $rest ]]; do
 		while [[ $rest == ' '* ]]; do rest="${rest# }"; idx=$(( idx + 1 )); done
 		[[ -n $rest ]] || break
 		tok="${rest%% *}"
 		case "$tok" in
-			%[a-zA-Z]|@@|@@u|--) printf '%s\n' "$idx"; return 0 ;;
+			%[a-zA-Z]|@@|@@u|--)
+				(( opt >= 0 )) && idx=$opt
+				printf '%s\n' "$idx"; return 0 ;;
+			-*) opt=$idx ;;
+			*)  opt=-1 ;;
 		esac
 		rest="${rest:${#tok}}"
 		idx=$(( idx + ${#tok} ))
