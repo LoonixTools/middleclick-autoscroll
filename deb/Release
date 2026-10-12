@@ -1,23 +1,23 @@
 Architectures: all
 Codename: stable
 Components: main
-Date: Sat, 10 Oct 2026 21:42:44 +0000
+Date: Mon, 12 Oct 2026 08:02:04 +0000
 Label: middleclick-autoscroll
 Origin: middleclick-autoscroll
 Suite: stable
 MD5Sum:
- 13b9505b9a5df30e000c33ee71842342            19084 Packages
- 256ef572d5f4d51c06ebc990ada20077             2305 Packages.gz
- bfbc43c730a34a02e15e828f34885e78              166 Release
+ eea3eff55a99ba7d1ce17c9189b3a1bc            20552 Packages
+ b07c159ac98f2521c7b53e5b6b07cd69             2416 Packages.gz
+ 559fdaecea182e649ff6b55c62546018              166 Release
 SHA1:
- 74acb1dc1186b38ef2f2800235f96564ce77acc7            19084 Packages
- 1e955c85907e041dc4ab05b6949d829aead51169             2305 Packages.gz
- fd9836c4dca25439cb433fc2f02feb4a76c4ec35              166 Release
+ d9f4fe12a0a78fe773684f006779fc6592fc8e83            20552 Packages
+ 52a0da4efa73a52763fb25e8643c296bf5240ea4             2416 Packages.gz
+ a45d7d7281df85b9a6dda3afa22a1cab9be9da1f              166 Release
 SHA256:
- 82c69bd4e5beec77d034c0c5e725e80001739ca8183cb3b4ca18283ae116e7d3            19084 Packages
- fe6446358c14ac43c555de7fc4010b697ada6418888355310ca3ca54bb71be44             2305 Packages.gz
- 9894f27b1b25fb854815191389980008e74554e5201470fea01ddc0ca138eaf8              166 Release
+ ef59406dea0ba3f4264ad183a589e74f828521d61561f4091a94302acafb916b            20552 Packages
+ 8cc42f8ea8155e1968436da3b66fe428da05d406a0eb0ca99c1f95a758ba3379             2416 Packages.gz
+ ad1a6a04382a1156c514c4f30ebd7bff907fb1b8c74ceae940d3872b1929eb24              166 Release
 SHA512:
- ea642b10339b4ae0c128dc6b545fcb0458152e16edac5f0fcd73ca1979829c8c3a724fef4695fbddc180ffe00f48659e871347d20895c84364df8792fd2c351a            19084 Packages
- 19b769f0f0001dd46f8fae3fdea0322d2f8151b230803c27302aaae8e1b3d3695c246562d8c5a48edbcc91fb2ae66c8ea9e0d3a2e5e672a701ba69c5c6510be6             2305 Packages.gz
- 4bf52ab0b23f2f84aff48291527685244581aae8f58ce76a80f3e5efb0566073ac0013f171aa656db85cc1227f98cddf640237d9d83b4ec4ea26ab35bb180925              166 Release
+ dcecb5082363380feb7426748f08a5abf6992f7dbd6b4af2eed0ccb8e3506b7d98626d52fd029cee75353eb1b8b799ff368273977e4035d81182141a02bf7f37            20552 Packages
+ 8cead2bc610022449f92a19d3fd4e4747a31e3b6ce41a2272782f4e6ce6fabc7fff8945d1d0838f27e945d898bcfd695e67b77df090f1dd228f2e763cbbd3915             2416 Packages.gz
+ d686585dfbe9f1735690c8f07b8aaadf055161e3a5c084212c7e50c53a51513f7edcedb755469ddcfae59f27d72f89ad23c78564b1154cde9b6f9a074cc6c00f              166 Release
