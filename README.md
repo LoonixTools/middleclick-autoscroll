@@ -90,7 +90,7 @@ middleclick-autoscroll
   <img src="res/screenshots/menu.png" alt="The middleclick-autoscroll menu in Konsole: autoscroll on, 19 of 19 applications covered" width="620">
 </p>
 
-Press **1**. Autoscroll _✨just works✨_, like on Windows.
+Press **1** and autoscroll _✨just works✨_, like on Windows.
 
 <details>
 <summary>Applications</summary>
